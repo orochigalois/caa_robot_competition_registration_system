@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteCupMapper" >
+	
+   <delete id="deleteRaceCupByRid">
+  DELETE FROM ma_cup WHERE rid=#{0}
+  </delete>
+  
+  <select id="findCupListByrid" resultType="HashMap">
+  	SELECT a.rid,a.clev,a.cname FROM ma_cup a WHERE a.rid=#{0}
+	ORDER BY a.clev
+  </select>
+  <select id="findCupNumByRid" resultType="Integer">
+  SELECT COUNT(*) FROM ma_cup a WHERE a.rid=#{0}
+  </select>
+</mapper>

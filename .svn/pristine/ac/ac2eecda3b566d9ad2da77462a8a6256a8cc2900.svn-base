@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{height:500px;width:100%;}
+		/* body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";} */
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AGAbaV2PSZmU2lpjqlpWjonoLuf4Rn9b"></script>
+	
+	<title>中国自动化学会机器人竞赛报名系统</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<div>经纬度：<input id="gps" type="text"/>描述：<input id="gpsdescription" type="text" /><a onclick="">确定</a></div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap",{minZoom:13,maxZoom:18});
+	var point = new BMap.Point(116.331398,39.897445);
+	
+	map.centerAndZoom(point,13);
+	map.enableScrollWheelZoom(true);
+
+	var myValue;
+
+	// 定义一个控件类,即function
+	function ZoomControl(){
+	  // 默认停靠位置和偏移量
+	  this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+	  this.defaultOffset = new BMap.Size(10, 10);
+	}
+
+	// 通过JavaScript的prototype属性继承于BMap.Control
+	ZoomControl.prototype = new BMap.Control();
+
+	// 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+	// 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+	ZoomControl.prototype.initialize = function(map){
+	  // 创建一个DOM元素
+	  var div = document.createElement("div");
+	  div.innerHTML='<div id="r-result">请输入:<input type="text" id="suggestId" size="20" value="百度" style="width:150px;" /><a onclick="setPlace()" >查找</a></div>';
+	  // 添加DOM元素到地图中
+	  map.getContainer().appendChild(div);
+	  // 将DOM元素返回
+	  return div;
+	}
+	// 创建控件
+	var myZoomCtrl = new ZoomControl();
+	// 添加到地图当中
+	map.addControl(myZoomCtrl);	
+	var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+		{"input" : "suggestId"
+		,"location" : map
+	});
+
+
+
+	ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	var _value = e.item.value;
+		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		/*document.getElementById("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;*/
+		
+		setPlace();
+	});
+
+	function setPlace(){
+
+		map.clearOverlays(); 
+		var local = new BMap.LocalSearch(map, { //智能搜索
+		  onSearchComplete: myFun
+		});
+		local.search(myValue);
+		function myFun(){
+			var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+			/*map.centerAndZoom(pp, 18);
+			map.addOverlay(new BMap.Marker(pp));    //添加标注*/
+			createMarker(pp);
+		}
+	}
+	function createMarker(pp){
+		map.centerAndZoom(pp, 16);
+		var marker = new BMap.Marker(pp); // 创建点	
+		var circle = new BMap.Circle(pp,20000,{strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5}); //创建圆	
+  		map.addOverlay(marker);            //增加点
+		map.addOverlay(circle);  
+		document.getElementById("gps").value="("+pp.lng+","+pp.lat+")";
+		//单击获取点击的经纬度
+		map.addEventListener("click",function(e){
+      	map.clearOverlays();
+		alert(e.point.lng + "," + e.point.lat);
+     	var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat)); // 创建点	
+		var circle = new BMap.Circle(new BMap.Point(e.point.lng, e.point.lat),20000,{strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5}); //创建圆
+  		map.addOverlay(marker);//增加点
+		map.addOverlay(circle); 
+		document.getElementById("gps").value="("+e.point.lng+","+e.point.lat+")";
+	});
+
+	}
+
+	
+
+	</script>

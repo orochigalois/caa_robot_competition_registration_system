@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-cache">
+    <title>中国自动化学会机器人竞赛报名系统</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/index.css" rel="stylesheet">
+  	<link href="../css/top.css" rel="stylesheet">
+  	<link href="../css/layerMsg.css" rel="stylesheet">
+  	<link href="../css/teamManage.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div id="top">
+    		<div class="topnav">
+	    		<img src="../images/icon_land_caa.png"/>
+	    		<h1>中国自动化学会机器人竞赛报名系统</h1>
+	    		<div class="navright">
+	    			<img id="avatar" >
+	    			<div id="username" class="username"></div>
+	    			<b class="logout"></b>
+	    		</div>
+    		</div>
+    	</div>
+    	<div class="tabbox">
+    		<ul class="tabul">
+    			<li><a href="main.html" target="_self">用户信息</a></li>
+    			<li><a href="eventList.html" target="_self">赛事报名</a></li>
+    			<li  class="active"><a href="teamList.html" target="_self">队伍管理</a></li>
+    			<li><a href="memberinfo.html" target="_self">成员信息</a></li>
+    			<!-- <li><a href="relativeFile.html" target="_self">相关下载</a></li> -->
+    			<!-- <li><a href="paymentvoucher.html" target="_self">缴费凭证</a></li> -->
+    			<li><a href="payRelevant.html" target="_self">费用缴纳</a></li>
+    		</ul>
+    	</div>
+    	<div class="contentbox">
+    		<p class="location">您的位置：队伍管理<span class="crumbarrow">&gt;</span>队伍详情</p>
+    		<div id="teamDetail">
+    			<div class="teamInfo">
+    				<h1 class="headtitle">队伍信息</h1>
+    				<ul class="inputwrap clearfix">
+    					<li>
+    						<span class="itemname">参赛队名：</span>
+    						<span class="itemspan" id="tname"></span>
+    					</li>
+    					<li>
+    						<span class="itemname">学校：</span>
+    						<span class="itemspan" id="school"></span>
+    					</li>
+    					<li>
+    						<span class="itemname">院系：</span>
+    						<span class="itemspan" id="departname"></span>
+    					</li>
+    					<li>
+    						<span class="itemname">机构类别：</span>
+    						<span class="itemspan" id="orgtype"></span>
+    					</li>
+    					<li>
+    						<span class="itemname">所属地区：</span>
+    						<span class="itemspan" id="region"></span>
+    					</li>
+    					
+    					
+    				</ul>
+    			</div>
+    			<div class="teaList">
+    				<h1 class="headtitle">指导教师</h1>
+    				<table>
+    					<thead>
+    						<tr>
+    							<td style="width:48px">序号</td>
+    							<td style="width:122px">姓名</td>
+    							<td style="width:48px">性别</td>
+    							<td style="width:69px">民族</td>
+    							<td style="width:82px">生日</td>
+    							<td style="width:67px">证件类型</td>
+    							<td style="width:137px">证件号</td>
+    							<td style="width:156px">邮箱</td>
+    							<td style="width:88px">手机</td>
+    							<td style="width:130px">学校</td>
+    							<td style="width:116px">院系</td>
+    							<td style="width:76px">用餐类型</td>
+    						</tr>
+    					</thead>
+    					<tbody>
+    						
+    					</tbody>
+    				</table>
+    			</div>
+    			<div class="stuList">
+    				<h1 class="headtitle">队员</h1>
+    				<table>
+    					<thead>
+    						<tr>
+    							<td style="width:48px">序号</td>
+    							<td style="width:122px">姓名</td>
+    							<td style="width:48px">性别</td>
+    							<td style="width:69px">民族</td>
+    							<td style="width:82px">生日</td>
+    							<td style="width:67px">证件类型</td>
+    							<td style="width:137px">证件号</td>
+    							<td style="width:156px">邮箱</td>
+    							<td style="width:88px">手机</td>
+    							<td style="width:130px">学校</td>
+    							<td style="width:116px">院系</td>
+    							<td style="width:76px">用餐类型</td>
+    						</tr>
+    					</thead>
+    					<tbody>
+    						
+    					</tbody>
+    				</table>
+    			</div>
+    			
+    			<div class="raceList">
+    				<h1 class="headtitle">已报名赛项</h1>
+    				<ul class="raceul">
+    					
+    				</ul>
+    			</div>
+    			<a class="editteam" href="editTeam.html" target="_self">信息修改</a>
+    		</div>
+    	</div>
+    	<p class="support">系统维护：智动天地（北京）科技有限公司</p>
+    </div>
+   
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.form.js"></script>
+    <script src="../js/layerMsg.js"></script>
+    <script src="../json/sys_folk.js"></script>
+    <script src="../js/teamDetail.js"></script>
+  </body>
+</html>

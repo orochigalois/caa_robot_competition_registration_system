@@ -1,0 +1,48 @@
+.competitiondetail{
+	padding:20px 62px;
+	background:#fff;
+}
+.basicul{
+	overflow:hidden;
+}
+.basicul li{
+	float:left;
+	width:33.33%;
+	margin-bottom:15px;
+}
+/* .basicul li:last-child{
+	width:100%;
+} */
+.basicname{
+	display:inline-block;
+	width:84px;
+	text-align:right;
+}
+.infoitem{
+	margin-bottom:15px;
+}
+.itemspan{
+	float:left;
+	width:84px;
+	text-align:right;
+}
+.itemdiv{
+	margin-left:70px;
+}
+.filename,.filename:hover{
+	color:#14a5d5;
+	display:block;
+}
+.editCompetition,.editCompetition:hover{
+	display:block;
+	background:#e21230;
+	color:#fff;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	margin:0 auto;
+	border-radius:4px;
+	text-decoration:none;
+	cursor:pointer;
+}

@@ -1,0 +1,15 @@
+table{
+	word-break:break-all;
+	border-collapse:collapse;
+	border:1px solid #333;
+	margin:0 auto;
+}
+td{
+	border:1px solid #333;
+	height:40px;
+}
+.tablebox{
+	padding:20px 30px;
+	text-align:center;
+	background:#fff;
+}

@@ -1,0 +1,126 @@
+.eventdetail{
+	padding:20px;
+	background:#fff;
+}
+.basicul{
+	overflow:hidden;
+}
+.basicul li{
+	float:left;
+	width:33.33%;
+	margin-bottom:10px;
+	font-size:0
+}
+.basicul li:last-child{
+	width:100%;
+}
+.basicname{
+	display:inline-block;
+	width:112px;
+	text-align:right;
+	font-size:14px;
+}
+.basicinput{
+	width:246px;
+	height:30px;
+	font-size:14px;
+	padding-left:4px;
+	border:1px solid #ccc;
+}
+.coordinate,.coordinate:hover{
+	color:#14a5d5;
+	cursor:pointer;
+	font-size:14px;
+}
+textarea{
+	resize:none;
+	padding:8px 4px;
+}
+.infoitem{
+	margin-bottom:15px;
+}
+.itemspan{
+	float:left;
+	width:112px;
+	text-align:right;
+}
+.itemdiv{
+	margin-left:112px;
+}
+.enclosureitem{
+	margin-bottom:5px;
+}
+.editfile{
+	color:#666;
+	margin:0 10px;
+	cursor:pointer;
+	position:relative;
+}
+.editfile:hover{
+	color:#e21230;
+}
+.addEnclosure,.addEnclosure:hover{
+	padding-left:20px;
+	background:url(../images/jia.png) no-repeat;
+	color:#333;
+	text-decoration:none;
+	position:relative;
+}
+.btnwrap{
+	text-align:center;
+}
+.cancel,.ensure,.ensure:hover{
+	display:inline-block;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	color:#fff;
+	border-radius:4px;
+	background:#e21230;
+	border:1px solid transparent;
+	cursor:pointer;
+	text-decoration:none;
+}
+.cancel,.cancel:hover{
+	color:#333;
+	border:1px solid #ccc;
+	background:#fff;
+	margin-right:10px;
+	cursor:pointer;
+	text-decoration:none;
+}
+.dateinput{
+	padding-right:15px;
+	background:url(../images/rili.png) no-repeat;
+	background-position:222px;
+}
+.laydate_body .laydate_box{
+	width:246px !important;
+}
+#file1,.model{
+	position: absolute;
+    top: 0;
+    width: 48px;
+    height: 16px;
+    opacity: 0;
+}
+.editform{
+	display:inline-block;
+}
+.hidfile{
+	position: absolute;
+    top: 0;
+    width: 28px;
+    height: 16px;
+    opacity: 0;
+    left:0;
+    z-index:4;
+}
+#gps{
+	font-size:14px;
+	margin-right:5px;
+}
+.delfile{
+	position:relative;
+	z-index:5;
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteTeamMapper" >
+  <update id="updatetstatus">
+  UPDATE tm_team a SET a.tstatus='01' WHERE a.mid=#{0}
+  </update>
+  <update id="updatedelflg">
+  UPDATE tm_team a SET a.delflg='01',a.tstatus='01' WHERE a.tid=#{0}
+  </update>
+  <select id="findTeamName" resultType="Integer">
+  SELECT COUNT(a.tid) FROM tm_team a
+	WHERE a.tname=#{0} and a.mid=#{1}
+  </select>
+  <update id="updateshutdownteam">
+  UPDATE tm_team a SET a.tstatus=#{flg},a.delflg=#{flg} WHERE a.signuid IN 
+
+<foreach item="item" index="index" collection="uid" open="("
+					separator="," close=")">
+					#{item}
+</foreach>
+
+  </update>
+  <select id="findCountByTempTcode" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM tm_team a WHERE a.tcode=#{0}
+  </select>
+  <delete id="deleteTeamBySignuid">
+  DELETE FROM tm_team WHERE signuid=#{0}
+  </delete>
+</mapper>

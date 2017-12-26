@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WritePayorderMapper" >
+  <select id="findyizhifuconfirmjeByMidSiginuid" resultType="Integer">
+  	SELECT IF(ISNULL(SUM(a.txnamt)),0,SUM(a.txnamt)) AS yizhifuconfirmje FROM pay_order a 
+	WHERE a.mid=#{0} AND a.signuid=#{1} AND a.txnstatus='00'
+  </select>
+  <select id="findyizhifunotconfirmjeByMidSiginuid" resultType="Integer">
+  	SELECT IF(ISNULL(SUM(a.txnamt)),0,SUM(a.txnamt)) AS yizhifunotconfirmje FROM pay_order a 
+	WHERE a.mid=#{0} AND a.signuid=#{1} AND a.txnstatus='01'
+  </select>
+  <select id="findOrderListByMidSiginuid" resultType="HashMap">
+  	SELECT a.orderid,a.txntime,a.txntype,a.paymenturl,a.txnamt,a.txnstatus FROM pay_order a 
+	WHERE a.mid=#{0} AND a.signuid=#{1}
+	ORDER BY a.txnstatus DESC
+  </select>
+ <select id="signuidPayListByMidTotalSize" resultType="Integer">
+ 	SELECT COUNT(*) FROM pay_order a 
+	LEFT JOIN os_user b ON b.uid = a.signuid
+	WHERE a.mid=#{mid}
+	<if test="orderid != null and orderid !=''.toString()">
+	AND a.orderid=#{orderid}
+	</if>
+	<if test="signuid != null and signuid !=''.toString()">
+	AND a.signuid=#{signuid}
+	</if>
+	<if test="school != null and school !=''.toString()">
+	AND b.school=#{school}
+	</if>
+	<if test="txntype != null and txntype !=''.toString()">
+	AND a.txntype=#{txntype}
+	</if>
+	<if test="txnstatus != null and txnstatus !=''.toString()">
+	AND a.txnstatus=#{txnstatus}
+	</if>
+
+ </select>
+ <select id="signuidPayListByMid" resultType="HashMap">
+ 	SELECT a.orderid,a.txntime,a.txntype,a.paymenturl,a.txnamt,a.signuid,b.uname,b.email,b.phone,b.school,a.txnstatus FROM pay_order a 
+	LEFT JOIN os_user b ON b.uid = a.signuid
+	WHERE a.mid=#{mid}
+	<if test="orderid != null and orderid !=''.toString()">
+	AND a.orderid=#{orderid}
+	</if>
+	<if test="signuid != null and signuid !=''.toString()">
+	AND a.signuid=#{signuid}
+	</if>
+	<if test="school != null and school !=''.toString()">
+	AND b.school=#{school}
+	</if>
+	<if test="txntype != null and txntype !=''.toString()">
+	AND a.txntype=#{txntype}
+	</if>
+	<if test="txnstatus != null and txnstatus !=''.toString()">
+	AND a.txnstatus=#{txnstatus}
+	</if>
+	ORDER BY a.txntime DESC
+	limit #{beginNo}, #{endNo}
+ </select>
+</mapper>

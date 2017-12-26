@@ -1,0 +1,71 @@
+ul,li{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+html,body{
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0
+}
+.container-fluid{
+	padding:0;
+	height:100%;
+}
+#left{
+	position:fixed;
+	left:0;
+	top:0;
+	bottom:0;
+	width:200px;
+}
+.sidebar{
+	background:#333;
+	height:100%;
+}
+.sidebar-icon{
+	padding:10px 0;
+	text-align:center;
+	background:#242424;
+}
+.sidebar-ul li{
+	height:60px;
+	line-height:60px;
+	padding-left:40px;	
+	border-bottom:1px solid #414141;
+}
+.sidebar-ul li.active{
+	background:#454545;
+}
+.sidebar-ul li a{
+	color:#fff;
+	font-size:16px;
+	padding-left:28px;
+	background-image:url(../images/saishi2.png);
+	background-repeat:no-repeat;
+}
+.sidebar-ul li.eventManage-li a{
+	background-image:url(../images/saixiang.png);
+}
+.sidebar-ul li.teamManage-li a{
+	background-image:url(../images/duiwu2.png);
+}
+.sidebar-ul li.players-li a{
+	background-image:url(../images/cansai.png);
+}
+.sidebar-ul li.userManage-li a{
+	background-image:url(../images/yonghu.png);
+}
+.sidebar-ul li:nth-child(5) a{
+	background-image:url(../images/tongji.png);
+}
+.sidebar-ul li:nth-child(6) a{
+	background-image:url(../images/daochu.png);
+}
+.sidebar-ul li:nth-child(7) a{
+	background-image:url(../images/chengji.png);
+}
+.sidebar-ul li:nth-child(8) a{
+	background-image:url(../images/jiaofeiguanli.png);
+}

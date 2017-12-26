@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.MatchMapper" >
+  <resultMap id="BaseResultMap" type="com.zts.robot.pojo.Match" >
+    <id column="mid" property="mid" jdbcType="VARCHAR" />
+    <result column="mcode" property="mcode" jdbcType="VARCHAR" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="organizer" property="organizer" jdbcType="VARCHAR" />
+    <result column="organizertel" property="organizertel" jdbcType="VARCHAR" />
+    <result column="manager" property="manager" jdbcType="VARCHAR" />
+    <result column="mstatus" property="mstatus" jdbcType="VARCHAR" />
+    <result column="startdate" property="startdate" jdbcType="VARCHAR" />
+    <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+    <result column="signstartdate" property="signstartdate" jdbcType="VARCHAR" />
+    <result column="signenddate" property="signenddate" jdbcType="VARCHAR" />
+    <result column="mincnt" property="mincnt" jdbcType="INTEGER" />
+    <result column="maxcnt" property="maxcnt" jdbcType="INTEGER" />
+    <result column="attachurl" property="attachurl" jdbcType="VARCHAR" />
+    <result column="gps" property="gps" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="createuid" property="createuid" jdbcType="VARCHAR" />
+    <result column="delflg" property="delflg" jdbcType="VARCHAR" />
+    <result column="awardsmodel" property="awardsmodel" jdbcType="VARCHAR" />
+    <result column="cupmodel" property="cupmodel" jdbcType="VARCHAR" />
+    <result column="entrymodel" property="entrymodel" jdbcType="VARCHAR" />
+    <result column="unitprice" property="unitprice" jdbcType="INTEGER" />
+    <result column="badgeurl" property="badgeurl" jdbcType="VARCHAR" />
+    <result column="badgemodel" property="badgemodel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mid, mcode, mname, year, address, introduce, description, organizer, organizertel, 
+    manager, mstatus, startdate, enddate, signstartdate, signenddate, mincnt, maxcnt, 
+    attachurl, gps, createdate, createuid, delflg, awardsmodel, cupmodel, entrymodel, 
+    unitprice, badgeurl, badgemodel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ma_match
+    where mid = #{mid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ma_match
+    where mid = #{mid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zts.robot.pojo.Match" >
+    insert into ma_match (mid, mcode, mname, 
+      year, address, introduce, 
+      description, organizer, organizertel, 
+      manager, mstatus, startdate, 
+      enddate, signstartdate, signenddate, 
+      mincnt, maxcnt, attachurl, 
+      gps, createdate, createuid, 
+      delflg, awardsmodel, cupmodel, 
+      entrymodel, unitprice, badgeurl, 
+      badgemodel)
+    values (#{mid,jdbcType=VARCHAR}, #{mcode,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}, 
+      #{year,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{organizer,jdbcType=VARCHAR}, #{organizertel,jdbcType=VARCHAR}, 
+      #{manager,jdbcType=VARCHAR}, #{mstatus,jdbcType=VARCHAR}, #{startdate,jdbcType=VARCHAR}, 
+      #{enddate,jdbcType=VARCHAR}, #{signstartdate,jdbcType=VARCHAR}, #{signenddate,jdbcType=VARCHAR}, 
+      #{mincnt,jdbcType=INTEGER}, #{maxcnt,jdbcType=INTEGER}, #{attachurl,jdbcType=VARCHAR}, 
+      #{gps,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{createuid,jdbcType=VARCHAR}, 
+      #{delflg,jdbcType=VARCHAR}, #{awardsmodel,jdbcType=VARCHAR}, #{cupmodel,jdbcType=VARCHAR}, 
+      #{entrymodel,jdbcType=VARCHAR}, #{unitprice,jdbcType=INTEGER}, #{badgeurl,jdbcType=VARCHAR}, 
+      #{badgemodel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zts.robot.pojo.Match" >
+    insert into ma_match
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="mcode != null" >
+        mcode,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="organizer != null" >
+        organizer,
+      </if>
+      <if test="organizertel != null" >
+        organizertel,
+      </if>
+      <if test="manager != null" >
+        manager,
+      </if>
+      <if test="mstatus != null" >
+        mstatus,
+      </if>
+      <if test="startdate != null" >
+        startdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="signstartdate != null" >
+        signstartdate,
+      </if>
+      <if test="signenddate != null" >
+        signenddate,
+      </if>
+      <if test="mincnt != null" >
+        mincnt,
+      </if>
+      <if test="maxcnt != null" >
+        maxcnt,
+      </if>
+      <if test="attachurl != null" >
+        attachurl,
+      </if>
+      <if test="gps != null" >
+        gps,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createuid != null" >
+        createuid,
+      </if>
+      <if test="delflg != null" >
+        delflg,
+      </if>
+      <if test="awardsmodel != null" >
+        awardsmodel,
+      </if>
+      <if test="cupmodel != null" >
+        cupmodel,
+      </if>
+      <if test="entrymodel != null" >
+        entrymodel,
+      </if>
+      <if test="unitprice != null" >
+        unitprice,
+      </if>
+      <if test="badgeurl != null" >
+        badgeurl,
+      </if>
+      <if test="badgemodel != null" >
+        badgemodel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="mcode != null" >
+        #{mcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="organizer != null" >
+        #{organizer,jdbcType=VARCHAR},
+      </if>
+      <if test="organizertel != null" >
+        #{organizertel,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="mstatus != null" >
+        #{mstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="signstartdate != null" >
+        #{signstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="signenddate != null" >
+        #{signenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="mincnt != null" >
+        #{mincnt,jdbcType=INTEGER},
+      </if>
+      <if test="maxcnt != null" >
+        #{maxcnt,jdbcType=INTEGER},
+      </if>
+      <if test="attachurl != null" >
+        #{attachurl,jdbcType=VARCHAR},
+      </if>
+      <if test="gps != null" >
+        #{gps,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        #{createuid,jdbcType=VARCHAR},
+      </if>
+      <if test="delflg != null" >
+        #{delflg,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsmodel != null" >
+        #{awardsmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="cupmodel != null" >
+        #{cupmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="entrymodel != null" >
+        #{entrymodel,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=INTEGER},
+      </if>
+      <if test="badgeurl != null" >
+        #{badgeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        #{badgemodel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.Match" >
+    update ma_match
+    <set >
+      <if test="mcode != null" >
+        mcode = #{mcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="organizer != null" >
+        organizer = #{organizer,jdbcType=VARCHAR},
+      </if>
+      <if test="organizertel != null" >
+        organizertel = #{organizertel,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        manager = #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="mstatus != null" >
+        mstatus = #{mstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        startdate = #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="signstartdate != null" >
+        signstartdate = #{signstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="signenddate != null" >
+        signenddate = #{signenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="mincnt != null" >
+        mincnt = #{mincnt,jdbcType=INTEGER},
+      </if>
+      <if test="maxcnt != null" >
+        maxcnt = #{maxcnt,jdbcType=INTEGER},
+      </if>
+      <if test="attachurl != null" >
+        attachurl = #{attachurl,jdbcType=VARCHAR},
+      </if>
+      <if test="gps != null" >
+        gps = #{gps,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        createuid = #{createuid,jdbcType=VARCHAR},
+      </if>
+      <if test="delflg != null" >
+        delflg = #{delflg,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsmodel != null" >
+        awardsmodel = #{awardsmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="cupmodel != null" >
+        cupmodel = #{cupmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="entrymodel != null" >
+        entrymodel = #{entrymodel,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        unitprice = #{unitprice,jdbcType=INTEGER},
+      </if>
+      <if test="badgeurl != null" >
+        badgeurl = #{badgeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        badgemodel = #{badgemodel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zts.robot.pojo.Match" >
+    update ma_match
+    set mcode = #{mcode,jdbcType=VARCHAR},
+      mname = #{mname,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      organizer = #{organizer,jdbcType=VARCHAR},
+      organizertel = #{organizertel,jdbcType=VARCHAR},
+      manager = #{manager,jdbcType=VARCHAR},
+      mstatus = #{mstatus,jdbcType=VARCHAR},
+      startdate = #{startdate,jdbcType=VARCHAR},
+      enddate = #{enddate,jdbcType=VARCHAR},
+      signstartdate = #{signstartdate,jdbcType=VARCHAR},
+      signenddate = #{signenddate,jdbcType=VARCHAR},
+      mincnt = #{mincnt,jdbcType=INTEGER},
+      maxcnt = #{maxcnt,jdbcType=INTEGER},
+      attachurl = #{attachurl,jdbcType=VARCHAR},
+      gps = #{gps,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      createuid = #{createuid,jdbcType=VARCHAR},
+      delflg = #{delflg,jdbcType=VARCHAR},
+      awardsmodel = #{awardsmodel,jdbcType=VARCHAR},
+      cupmodel = #{cupmodel,jdbcType=VARCHAR},
+      entrymodel = #{entrymodel,jdbcType=VARCHAR},
+      unitprice = #{unitprice,jdbcType=INTEGER},
+      badgeurl = #{badgeurl,jdbcType=VARCHAR},
+      badgemodel = #{badgemodel,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=VARCHAR}
+  </update>
+</mapper>

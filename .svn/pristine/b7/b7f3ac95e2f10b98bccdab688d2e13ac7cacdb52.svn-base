@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>中国自动化学会机器人竞赛报名系统</title>
+	<link href="../css/BMS-Top.css" rel="stylesheet">
+  </head>
+  <body>
+    	<div class="topnav">
+    		<h1>中国自动化学会机器人竞赛后台管理系统</h1>
+    		<div class="navright hidenavright">
+    			<img id="avatar" >
+    			<div id="username" class="username"></div>
+    			<b class="logout"></b>
+    		</div>
+    	</div>
+    	<script type="text/javascript">
+    		$(function(){
+				//回显顶部信息
+				findUserHead();
+				
+				//退出登录
+				logout();
+				
+			})
+
+			var uid = sessionStorage.getItem("uid");
+			//回显顶部信息
+			function findUserHead(){
+				$.ajax({
+					type: "GET",
+			        url: "../findLoginUser",
+			        dataType: "JSON",
+			        async:false,
+			        data: {"uid":uid},
+			        success:function(data){
+			        	$("#avatar").attr("src",data.user.picurl);
+			        	$("#username").text(data.user.uname);
+			        }
+				})
+			}
+
+			//退出登录
+			function logout(){
+				$(".logout").click(function(){
+					$.ajax({
+						type: "GET",
+						url: "../logout",
+						dataType: "JSON",
+	        			async:false,
+	        			data:{},
+	        			success:function(data){
+				        	window.location.href = "login.html";
+				        	$(".navright").addClass("hidenavright");
+				        	if(($("#autologin").prop("checked"))){
+				        		$("#uname").val("");
+				        		$("#pwd").val("");
+				        	}
+				        },
+				        error:function(data){
+				        	      	
+				        }
+					})
+				})
+			}
+    	</script>
+  </body>
+</html>

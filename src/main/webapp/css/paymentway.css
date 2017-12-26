@@ -1,0 +1,172 @@
+body{
+	background:#f2f2f2;
+}
+.tabbox{
+	background:#fff;
+}
+.tabul{
+	width:1200px;
+	margin:0 auto;
+	overflow:hidden
+}
+.tabul li{
+	float:left;
+	width:140px;
+	height:58px;
+	text-align:center;
+	font-size:18px;
+	line-height:58px;
+}
+.tabul li.active{
+	border-bottom:4px solid #e21230;
+}
+.contentbox{
+	width:1200px;
+	margin:0 auto;
+}
+.location{
+	color:#999;
+	margin-top:10px;
+	margin-bottom:4px;
+}
+.location img{
+	vertical-align: sub;
+	margin-right: 5px;
+}
+.crumbarrow{
+	margin:0 5px;
+}
+.wrap{
+	padding:12px 30px;
+	background:#fff;
+}
+.lefttop{
+	height:22px;
+	line-height:22px;
+	padding-left:27px;
+	background:url(../images/zhifudingdan.png) no-repeat left;
+	font-size:14px;
+	font-weight:bold;
+	margin:0;
+	margin-bottom:12px;
+}
+.orderinfo li{
+	height:30px;
+	line-height:30px;
+}
+.orderinfo li input{
+	width: 182px;
+	height: 30px;
+	border: 1px solid #ccc;
+	padding-left:10px;
+}
+.methodbox{
+	height:120px;
+	padding:10px;
+	box-shadow: 0px 0px 5px 3px #F4F4F3;
+	margin-bottom:25px;
+}
+.payinfo{
+	margin-top:40px;
+	margin-left:60px;
+	color:#666;
+}
+.payway,.payway:hover{
+	color:#666;
+	cursor:pointer;
+}
+.shade{
+    position:fixed;
+    z-index:2;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.44);
+}
+
+.payorder{
+	position:fixed;
+    z-index:4;
+    width:400px;
+    max-height:500px;
+	background: #fff;
+	border-radius: 4px;
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	padding:20px 30px;
+	transform: translateY(-50%);
+}
+.btnwrap{
+	text-align:center;
+	margin-top:20px;
+}
+.btnwrap span{
+	display:inline-block;
+	color:#fff;
+	font-size:14px;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	text-decoration:none;
+	border-radius:4px;
+	cursor:pointer;
+}
+.photowall{
+	
+}
+.addbtn,.addbtn:hover{
+	display:inline-block;
+	width:90px;
+	height:26px;
+	line-height:26px;
+	padding-left:30px;
+	background:url(../images/tianjia.png) no-repeat;
+	margin-top:10px;
+	color:#666;
+	text-decoration:none;
+	cursor:pointer;
+	position:relative;
+}
+#file{
+	position: absolute;
+    left: 0;
+    top: 0;
+    width: 90px;
+    height: 26px;
+    opacity: 0
+}
+.uploadbtn,.uploadbtn:hover{
+	width: 100px;
+	height: 30px;
+	background: #e21230;
+	color:#fff;
+	font-size: 14px;
+	border-radius:4px;
+	text-decoration: none;
+	text-align: center;
+	line-height: 30px;
+    display: block;
+    margin-top:30px;
+    cursor:pointer;
+}
+.photoul li{
+	float:left;
+	margin-right:20px;
+	width:56px;
+	height:84px;
+	text-align:center;
+}
+.photoul li img{
+	width:100%;
+	height:100%;
+	margin-bottom:10px;
+}
+.fork,.fork:hover{
+	color:#333;
+	cursor:pointer;
+}
+#myform{
+	margin-top:30px;
+}

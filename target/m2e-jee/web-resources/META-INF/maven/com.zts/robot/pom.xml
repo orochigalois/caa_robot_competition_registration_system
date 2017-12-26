@@ -1,0 +1,347 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.zts</groupId>
+	<artifactId>robot</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>robot</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- spring版本号 -->
+		<spring.version>4.3.8.RELEASE</spring.version>
+		<!-- mybatis版本号 -->
+		<mybatis.version>3.2.6</mybatis.version>
+		<!-- log4j日志文件管理包版本 -->
+		<slf4j.version>1.7.7</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcprov-jdk15on</artifactId>
+		    <version>1.57</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.directory.studio</groupId>
+			<artifactId>org.apache.commons.codec</artifactId>
+			<version>1.8</version>
+		</dependency>
+		<!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.3</version>
+		</dependency>
+		<!-- 导入java ee jar 包 -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+		<!-- spring核心包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- mybatis核心包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<!-- mybatis/spring包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- 导入Mysql数据库链接jar包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+		</dependency>
+		<!-- json数据 -->
+
+		<!-- JSTL标签类 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- 日志文件管理包 -->
+		<!-- log start -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- json -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<!-- 指定jar包jdk版本的依赖 -->
+			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.0.pr3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.0.pr3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.4.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<!-- POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.16</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>3.16</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml-schemas</artifactId>
+		    <version>3.16</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-scratchpad</artifactId>
+		    <version>3.16</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.libreoffice</groupId>
+		    <artifactId>juh</artifactId>
+		    <version>5.2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.libreoffice</groupId>
+		    <artifactId>jurt</artifactId>
+		    <version>5.2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.libreoffice</groupId>
+		    <artifactId>ridl</artifactId>
+		    <version>5.2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.libreoffice</groupId>
+		    <artifactId>unoil</artifactId>
+		    <version>5.2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.github.jeremysolarz</groupId>
+		    <artifactId>bootstrap-connector</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		
+		<!-- aop切面 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<!-- redis -->
+		<dependency>
+    	<groupId>org.springframework.data</groupId>
+    	<artifactId>spring-data-redis</artifactId>
+    	<version>1.7.2.RELEASE</version>
+	</dependency>
+	<dependency>
+	    <groupId>redis.clients</groupId>
+	    <artifactId>jedis</artifactId>
+	    <version>2.9.0</version>
+	</dependency>
+		<!-- 原始 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- <dependency>
+		    <groupId>com.bbossgroups.plugins</groupId>
+		    <artifactId>bboss-jodconverter-core</artifactId>
+		    <version>5.0.3.6.3</version>
+		</dependency> -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+	    </dependency>		
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itextpdf</artifactId>
+		    <version>5.5.10</version>
+		</dependency>
+		<!-- itextpdf的亚洲字体支持 -->
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itext-asian</artifactId>
+		    <version>5.2.0</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.artofsolving</groupId> -->
+<!-- 			<artifactId>jodconverter</artifactId> -->
+<!-- 			<version>2.2.1</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jodconverter</groupId> -->
+<!-- 			<artifactId>jodconverter-core</artifactId> -->
+<!-- 			<version>4.0.0-RELEASE</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.artofsolving</groupId> -->
+<!-- 			<artifactId>jodconverter-maven-plugin</artifactId> -->
+<!-- 			<version>2.2.1</version> -->
+<!-- 			<type>maven-plugin</type> -->
+<!-- 		</dependency> -->
+	</dependencies>
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<finalName>robot</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>src/main/resources</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<version>3.0</version>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

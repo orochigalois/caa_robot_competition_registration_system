@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.PayorderMapper" >
+  <resultMap id="BaseResultMap" type="com.zts.robot.pojo.Payorder" >
+    <id column="mid" property="mid" jdbcType="VARCHAR" />
+    <id column="orderid" property="orderid" jdbcType="VARCHAR" />
+    <id column="signuid" property="signuid" jdbcType="VARCHAR" />
+    <result column="txntime" property="txntime" jdbcType="VARCHAR" />
+    <result column="txntype" property="txntype" jdbcType="VARCHAR" />
+    <result column="txnamt" property="txnamt" jdbcType="INTEGER" />
+    <result column="txnstatus" property="txnstatus" jdbcType="VARCHAR" />
+    <result column="paymenturl" property="paymenturl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mid, orderid, signuid, txntime, txntype, txnamt, txnstatus, paymenturl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zts.robot.pojo.PayorderKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from pay_order
+    where mid = #{mid,jdbcType=VARCHAR}
+      and orderid = #{orderid,jdbcType=VARCHAR}
+      and signuid = #{signuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zts.robot.pojo.PayorderKey" >
+    delete from pay_order
+    where mid = #{mid,jdbcType=VARCHAR}
+      and orderid = #{orderid,jdbcType=VARCHAR}
+      and signuid = #{signuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zts.robot.pojo.Payorder" >
+    insert into pay_order (mid, orderid, signuid, 
+      txntime, txntype, txnamt, 
+      txnstatus, paymenturl)
+    values (#{mid,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, #{signuid,jdbcType=VARCHAR}, 
+      #{txntime,jdbcType=VARCHAR}, #{txntype,jdbcType=VARCHAR}, #{txnamt,jdbcType=INTEGER}, 
+      #{txnstatus,jdbcType=VARCHAR}, #{paymenturl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zts.robot.pojo.Payorder" >
+    insert into pay_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="orderid != null" >
+        orderid,
+      </if>
+      <if test="signuid != null" >
+        signuid,
+      </if>
+      <if test="txntime != null" >
+        txntime,
+      </if>
+      <if test="txntype != null" >
+        txntype,
+      </if>
+      <if test="txnamt != null" >
+        txnamt,
+      </if>
+      <if test="txnstatus != null" >
+        txnstatus,
+      </if>
+      <if test="paymenturl != null" >
+        paymenturl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="signuid != null" >
+        #{signuid,jdbcType=VARCHAR},
+      </if>
+      <if test="txntime != null" >
+        #{txntime,jdbcType=VARCHAR},
+      </if>
+      <if test="txntype != null" >
+        #{txntype,jdbcType=VARCHAR},
+      </if>
+      <if test="txnamt != null" >
+        #{txnamt,jdbcType=INTEGER},
+      </if>
+      <if test="txnstatus != null" >
+        #{txnstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenturl != null" >
+        #{paymenturl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.Payorder" >
+    update pay_order
+    <set >
+      <if test="txntime != null" >
+        txntime = #{txntime,jdbcType=VARCHAR},
+      </if>
+      <if test="txntype != null" >
+        txntype = #{txntype,jdbcType=VARCHAR},
+      </if>
+      <if test="txnamt != null" >
+        txnamt = #{txnamt,jdbcType=INTEGER},
+      </if>
+      <if test="txnstatus != null" >
+        txnstatus = #{txnstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenturl != null" >
+        paymenturl = #{paymenturl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=VARCHAR}
+      and orderid = #{orderid,jdbcType=VARCHAR}
+      and signuid = #{signuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zts.robot.pojo.Payorder" >
+    update pay_order
+    set txntime = #{txntime,jdbcType=VARCHAR},
+      txntype = #{txntype,jdbcType=VARCHAR},
+      txnamt = #{txnamt,jdbcType=INTEGER},
+      txnstatus = #{txnstatus,jdbcType=VARCHAR},
+      paymenturl = #{paymenturl,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=VARCHAR}
+      and orderid = #{orderid,jdbcType=VARCHAR}
+      and signuid = #{signuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

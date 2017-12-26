@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-cache">
+    <title>中国自动化学会机器人竞赛报名系统</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/index.css" rel="stylesheet">
+	<link href="../css/top.css" rel="stylesheet">
+	<link href="../css/layerMsg.css" rel="stylesheet">
+	<link href="../css/forgetPwd.css" rel="stylesheet">
+  	
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div id="top">
+    		<div class="topnav">
+	    		<img src="../images/icon_land_caa.png"/>
+	    		<h1>中国自动化学会机器人竞赛报名系统</h1>
+	    		<div class="navright hidenavright">
+	    			<img id="avatar" >
+	    			<div id="username" class="username"></div>
+	    			<b class="logout"></b>
+	    		</div>
+    		</div>
+    	</div>
+    	<h1 class="heading">找回密码</h1>
+    	<div class="regbox">
+    		<ul class="regtitle clearfix">
+    			<li><b>1</b><span>输入邮箱</span><i></i></li>
+    			<li class="active"><b>2</b><span>设置密码</span><i></i></li>
+    		</ul>
+    		<div class="codebox">
+    			<div class="codeitem">
+    				<span>设置密码</span>
+    				<input type="password"  id="pwd1" onblur="checkPwd()" placeholder="密码应包含8位及以上的数字,字母或下划线">
+    			</div>
+    			<div class="codeitem">
+    				<span>确认密码</span>
+    				<input type="password" placeholder="请确认密码" id="pwd2" onblur="isPwdEqual()">
+    			</div>
+    			<div class="codeitem">
+    				<span>验证码</span>
+    				<input type="text" placeholder="请输入验证码" id="code">
+    			</div>
+    			<div class="codeitem">
+    				<p>我们已经向您注册的邮箱发送了一封密码验证邮件</p>
+    				<p>请登录您的邮箱<span id="mailspan">765***@qq.com</span>进行验证</p>
+    			</div>
+    			<a id="nextstep" class="Abtn" onclick="checkCode()">完成</a>
+    		</div>
+    		<img src="../images/left.png" id="leftrobot">
+    		<img src="../images/right.png" id="rightrobot">
+    	</div>
+    </div>
+
+   
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../js/layerMsg.js"></script>
+    <script src="../js/forgetPwd.js"></script>
+    <script>
+    	$(function(){
+    		$("#top").load("top.html"); 
+    		var emailstr=sessionStorage.getItem("email");
+    		var emailname=emailstr.split("@")[0];
+    		if(emailname.length>3){
+    			var html=emailname.slice(0,3);
+    			for( var i=0;i<emailname.slice(3).length;i++){
+    				html+="*"
+    			}
+    			html+="@"+emailstr.split("@")[1];
+    			$("#mailspan").html(html)
+    		}else{
+    			$("#mailspan").html(emailstr)
+    		}
+    	})
+    </script>
+  </body>
+</html>

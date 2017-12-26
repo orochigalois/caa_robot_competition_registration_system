@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.RaceMapper" >
+  <resultMap id="BaseResultMap" type="com.zts.robot.pojo.Race" >
+    <id column="rid" property="rid" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="VARCHAR" />
+    <result column="frname" property="frname" jdbcType="VARCHAR" />
+    <result column="rname" property="rname" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="startdate" property="startdate" jdbcType="VARCHAR" />
+    <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+    <result column="rules" property="rules" jdbcType="VARCHAR" />
+    <result column="attachurl" property="attachurl" jdbcType="VARCHAR" />
+    <result column="delflg" property="delflg" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="createuid" property="createuid" jdbcType="VARCHAR" />
+    <result column="rcode" property="rcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, mid, frname, rname, introduce, description, startdate, enddate, rules, attachurl, 
+    delflg, createdate, createuid, rcode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ma_race
+    where rid = #{rid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ma_race
+    where rid = #{rid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zts.robot.pojo.Race" >
+    insert into ma_race (rid, mid, frname, 
+      rname, introduce, description, 
+      startdate, enddate, rules, 
+      attachurl, delflg, createdate, 
+      createuid, rcode)
+    values (#{rid,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR}, #{frname,jdbcType=VARCHAR}, 
+      #{rname,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{startdate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, #{rules,jdbcType=VARCHAR}, 
+      #{attachurl,jdbcType=VARCHAR}, #{delflg,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, 
+      #{createuid,jdbcType=VARCHAR}, #{rcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zts.robot.pojo.Race" >
+    insert into ma_race
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="frname != null" >
+        frname,
+      </if>
+      <if test="rname != null" >
+        rname,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="startdate != null" >
+        startdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="rules != null" >
+        rules,
+      </if>
+      <if test="attachurl != null" >
+        attachurl,
+      </if>
+      <if test="delflg != null" >
+        delflg,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createuid != null" >
+        createuid,
+      </if>
+      <if test="rcode != null" >
+        rcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="frname != null" >
+        #{frname,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="rules != null" >
+        #{rules,jdbcType=VARCHAR},
+      </if>
+      <if test="attachurl != null" >
+        #{attachurl,jdbcType=VARCHAR},
+      </if>
+      <if test="delflg != null" >
+        #{delflg,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        #{createuid,jdbcType=VARCHAR},
+      </if>
+      <if test="rcode != null" >
+        #{rcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.Race" >
+    update ma_race
+    <set >
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="frname != null" >
+        frname = #{frname,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        rname = #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        startdate = #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="rules != null" >
+        rules = #{rules,jdbcType=VARCHAR},
+      </if>
+      <if test="attachurl != null" >
+        attachurl = #{attachurl,jdbcType=VARCHAR},
+      </if>
+      <if test="delflg != null" >
+        delflg = #{delflg,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        createuid = #{createuid,jdbcType=VARCHAR},
+      </if>
+      <if test="rcode != null" >
+        rcode = #{rcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zts.robot.pojo.Race" >
+    update ma_race
+    set mid = #{mid,jdbcType=VARCHAR},
+      frname = #{frname,jdbcType=VARCHAR},
+      rname = #{rname,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      startdate = #{startdate,jdbcType=VARCHAR},
+      enddate = #{enddate,jdbcType=VARCHAR},
+      rules = #{rules,jdbcType=VARCHAR},
+      attachurl = #{attachurl,jdbcType=VARCHAR},
+      delflg = #{delflg,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      createuid = #{createuid,jdbcType=VARCHAR},
+      rcode = #{rcode,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+</mapper>

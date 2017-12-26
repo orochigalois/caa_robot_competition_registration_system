@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.UserMatchRaceMapper" >
+  <resultMap id="BaseResultMap" type="com.zts.robot.pojo.UserMatchRace" >
+    <id column="mid" property="mid" jdbcType="VARCHAR" />
+    <id column="rid" property="rid" jdbcType="VARCHAR" />
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="upduid" property="upduid" jdbcType="VARCHAR" />
+    <result column="upddate" property="upddate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mid, rid, uid, upduid, upddate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zts.robot.pojo.UserMatchRaceKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from re_usermatchrace
+    where mid = #{mid,jdbcType=VARCHAR}
+      and rid = #{rid,jdbcType=VARCHAR}
+      and uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zts.robot.pojo.UserMatchRaceKey" >
+    delete from re_usermatchrace
+    where mid = #{mid,jdbcType=VARCHAR}
+      and rid = #{rid,jdbcType=VARCHAR}
+      and uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zts.robot.pojo.UserMatchRace" >
+    insert into re_usermatchrace (mid, rid, uid, 
+      upduid, upddate)
+    values (#{mid,jdbcType=VARCHAR}, #{rid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+      #{upduid,jdbcType=VARCHAR}, #{upddate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zts.robot.pojo.UserMatchRace" >
+    insert into re_usermatchrace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="upduid != null" >
+        upduid,
+      </if>
+      <if test="upddate != null" >
+        upddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="upduid != null" >
+        #{upduid,jdbcType=VARCHAR},
+      </if>
+      <if test="upddate != null" >
+        #{upddate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.UserMatchRace" >
+    update re_usermatchrace
+    <set >
+      <if test="upduid != null" >
+        upduid = #{upduid,jdbcType=VARCHAR},
+      </if>
+      <if test="upddate != null" >
+        upddate = #{upddate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=VARCHAR}
+      and rid = #{rid,jdbcType=VARCHAR}
+      and uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zts.robot.pojo.UserMatchRace" >
+    update re_usermatchrace
+    set upduid = #{upduid,jdbcType=VARCHAR},
+      upddate = #{upddate,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=VARCHAR}
+      and rid = #{rid,jdbcType=VARCHAR}
+      and uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

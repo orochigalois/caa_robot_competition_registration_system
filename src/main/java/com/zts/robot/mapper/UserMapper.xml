@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zts.robot.pojo.User" >
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="roleflg" property="roleflg" jdbcType="VARCHAR" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="picurl" property="picurl" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="did" property="did" jdbcType="VARCHAR" />
+    <result column="didtype" property="didtype" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="VARCHAR" />
+    <result column="delflg" property="delflg" jdbcType="VARCHAR" />
+    <result column="invoicename" property="invoicename" jdbcType="VARCHAR" />
+    <result column="taxpayernumber" property="taxpayernumber" jdbcType="VARCHAR" />
+    <result column="banknumber" property="banknumber" jdbcType="VARCHAR" />
+    <result column="addressphone" property="addressphone" jdbcType="VARCHAR" />
+    <result column="receiveaddress" property="receiveaddress" jdbcType="VARCHAR" />
+    <result column="paymenturl" property="paymenturl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, email, password, roleflg, uname, phone, school, department, status, picurl, 
+    sex, did, didtype, qq, createdate, delflg, invoicename, taxpayernumber, banknumber, 
+    addressphone, receiveaddress, paymenturl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from os_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from os_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zts.robot.pojo.User" >
+    insert into os_user (uid, email, password, 
+      roleflg, uname, phone, 
+      school, department, status, 
+      picurl, sex, did, didtype, 
+      qq, createdate, delflg, 
+      invoicename, taxpayernumber, banknumber, 
+      addressphone, receiveaddress, paymenturl
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{roleflg,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{school,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{picurl,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{did,jdbcType=VARCHAR}, #{didtype,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{delflg,jdbcType=VARCHAR}, 
+      #{invoicename,jdbcType=VARCHAR}, #{taxpayernumber,jdbcType=VARCHAR}, #{banknumber,jdbcType=VARCHAR}, 
+      #{addressphone,jdbcType=VARCHAR}, #{receiveaddress,jdbcType=VARCHAR}, #{paymenturl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zts.robot.pojo.User" >
+    insert into os_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="roleflg != null" >
+        roleflg,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="picurl != null" >
+        picurl,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="did != null" >
+        did,
+      </if>
+      <if test="didtype != null" >
+        didtype,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="delflg != null" >
+        delflg,
+      </if>
+      <if test="invoicename != null" >
+        invoicename,
+      </if>
+      <if test="taxpayernumber != null" >
+        taxpayernumber,
+      </if>
+      <if test="banknumber != null" >
+        banknumber,
+      </if>
+      <if test="addressphone != null" >
+        addressphone,
+      </if>
+      <if test="receiveaddress != null" >
+        receiveaddress,
+      </if>
+      <if test="paymenturl != null" >
+        paymenturl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleflg != null" >
+        #{roleflg,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="did != null" >
+        #{did,jdbcType=VARCHAR},
+      </if>
+      <if test="didtype != null" >
+        #{didtype,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="delflg != null" >
+        #{delflg,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicename != null" >
+        #{invoicename,jdbcType=VARCHAR},
+      </if>
+      <if test="taxpayernumber != null" >
+        #{taxpayernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="banknumber != null" >
+        #{banknumber,jdbcType=VARCHAR},
+      </if>
+      <if test="addressphone != null" >
+        #{addressphone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveaddress != null" >
+        #{receiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenturl != null" >
+        #{paymenturl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.User" >
+    update os_user
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleflg != null" >
+        roleflg = #{roleflg,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="did != null" >
+        did = #{did,jdbcType=VARCHAR},
+      </if>
+      <if test="didtype != null" >
+        didtype = #{didtype,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="delflg != null" >
+        delflg = #{delflg,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicename != null" >
+        invoicename = #{invoicename,jdbcType=VARCHAR},
+      </if>
+      <if test="taxpayernumber != null" >
+        taxpayernumber = #{taxpayernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="banknumber != null" >
+        banknumber = #{banknumber,jdbcType=VARCHAR},
+      </if>
+      <if test="addressphone != null" >
+        addressphone = #{addressphone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveaddress != null" >
+        receiveaddress = #{receiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenturl != null" >
+        paymenturl = #{paymenturl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zts.robot.pojo.User" >
+    update os_user
+    set email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      roleflg = #{roleflg,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      did = #{did,jdbcType=VARCHAR},
+      didtype = #{didtype,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=VARCHAR},
+      delflg = #{delflg,jdbcType=VARCHAR},
+      invoicename = #{invoicename,jdbcType=VARCHAR},
+      taxpayernumber = #{taxpayernumber,jdbcType=VARCHAR},
+      banknumber = #{banknumber,jdbcType=VARCHAR},
+      addressphone = #{addressphone,jdbcType=VARCHAR},
+      receiveaddress = #{receiveaddress,jdbcType=VARCHAR},
+      paymenturl = #{paymenturl,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

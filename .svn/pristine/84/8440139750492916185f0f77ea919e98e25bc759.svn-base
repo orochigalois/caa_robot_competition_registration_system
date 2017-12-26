@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-cache">
+    <title>中国自动化学会机器人竞赛报名系统</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/BMS-Left.css" rel="stylesheet">
+    <link href="../css/BMS-Top.css" rel="stylesheet">
+    <link href="../css/BMS-allpayorder.css" rel="stylesheet">
+    <link href="../css/layerMsg.css" rel="stylesheet">
+    <link href="../css/mricode.pagination.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div id="left">
+    		<div class="sidebar">
+	    		<div class="sidebar-icon">
+	    			<img src="../images/icon_land_caa.png">
+	    		</div>
+	    		<ul class="sidebar-ul">
+	    			<!-- <li class="matchInfo-li"><a href="BMS-matchInfo.html" target="_self">赛事信息</a></li> -->
+	    			<li class="eventManage-li"><a href="BMS-competitionList.html" target="_self">赛项管理</a></li>
+	    			<li class="teamManage-li"><a href="BMS-teamList.html" target="_self">队伍管理</a></li>
+	    			<li class="players-li"><a href="BMS-playerList.html" target="_self">参赛人员</a></li>
+	    			<li class="userManage-li"><a href="BMS-userManage.html" target="_self">用户管理</a></li>
+	    			<li><a href="BMS-statistics.html" target="_self">数据统计</a></li>
+	    			<li><a href="BMS-export.html" target="_self">数据导出</a></li>
+					<li><a href="BMS-gradeManage.html" target="_self">成绩管理</a></li>
+					<li class="active"><a href="BMS-allpayorder.html" target="_self">缴费管理</a></li>
+	    		</ul>
+    		</div>
+    	</div>
+    	<div class="rightpart">
+    		<div id="top">
+    			<div class="topnav">
+		    		<h1>中国自动化学会机器人竞赛后台管理系统</h1>
+		    		<div class="navright hidenavright">
+		    			<img id="avatar" >
+		    			<div id="username" class="username"></div>
+		    			<b class="logout"></b>
+		    		</div>
+		    		<div class="navcenter bmsnavcenter">
+		    			<span>当前赛事：</span>
+		    			<span class="currentmatch"></span>
+		    			<span class="changebtn bmschangebtn" onclick="window.open('BMS-matchInfo.html','_self')">赛事管理</span>
+		    		</div>
+		    	</div>
+    		</div>
+    		<div class="contentwrap">
+    			<div class="crumb">
+    				<p class="location">您的位置：缴费管理<span class="crumbarrow">&gt;</span>订单列表</p>
+    			</div>
+    			<div class="searchbox">
+    				<h1 class="searchtitle">搜索查询</h1>
+    				<ul class="searchul clearfix">
+    					<li>
+    						<span class="infoname">缴费单号：</span>
+    						<input type="text" class="searchinput" placeholder="" id="orderid">	
+    					</li>
+    					<li>
+    						<span class="infoname">交易方式：</span>
+    						<input type="text" class="searchinput selinput" readonly placeholder="请选择" id="txntype">
+    						<ul class="emulate">
+	    						<li altvalue="00">线下支付</li>
+	    						<li altvalue="01">线上支付</li>
+	    						<li altvalue="02">其它支付</li>
+    						</ul>	
+    					</li>
+    					<li>
+    						<span class="infoname">交易状态：</span>
+    						<input type="text" class="searchinput selinput" readonly placeholder="请选择" id="" altvalue="txnstatus">
+    						<ul class="emulate">
+	    						<li altvalue="00">已支付确认</li>
+	    						<li altvalue="01">待支付确认</li>
+	    						<li altvalue="02">废除</li>
+    						</ul>	
+    					</li>
+    					
+    				</ul>
+    				<div class="btnwrap">
+    					<a class="clear" onclick="clearSearch()">清空搜索</a>
+    					<a class="search" onclick="getallorder()">立即搜索</a>
+    				</div>
+    			</div>
+    			<div class="listbox">
+	    			<table>
+	    				<thead>
+	    					<tr>
+	    						<td style="width:190px">缴费单号</td>
+	    						<td style="width:160px">订单时间</td>
+	    						<td style="width:80px">交易方式</td>
+	    						<td style="width:90px">交易金额(元)</td>
+	    						<td style="width:80px">交易人</td>
+	    						<!-- <td style="width:120px">邮箱</td>
+	    						<td style="width:120px">联系电话</td> -->
+	    						<td style="width:150px">邮箱/电话</td>
+	    						<td style="width:90px">交易状态</td>
+	    						<td>操作</td>
+	    					</tr>
+	    				</thead>
+	    				<tbody>
+	    					<tr>
+	    						
+	    					</tr>
+	    				</tbody>
+	    			</table>
+    				<div class="m-pagination" id="page"></div>
+    			</div>
+    		</div>
+    		<p class="support">系统维护：智动天地（北京）科技有限公司</p>
+    	</div>
+    	<div id="popup">
+    		<div class="bg" ><img src="" alt=""/></div>
+		</div>
+    </div>
+   
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.form.js"></script>
+    <script src="../static/js/mricode.pagination.js"></script>
+    <script src="../js/layerMsg.js"></script>
+    <script src="../json/sys_folk.js"></script>
+    <script src="../js/BMS-allpayorder.js"></script>
+    
+  </body>
+</html>

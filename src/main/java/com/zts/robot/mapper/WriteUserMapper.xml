@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteUserMapper" >
+  
+	<select id="LogonByEmail" resultType="java.util.Map" parameterType="String">
+ 	  	select *
+ 	  	FROM os_user a 
+ 	  	where a.email=#{email} and delflg='00'  
+  	</select>
+  	<select id="findAllregisteredTotalSize" resultType="Integer">
+  	SELECT COUNT(a.uid) FROM os_user a
+	WHERE a.roleflg=#{roleflg} and a.delflg='00'
+	<if test="email != null and email !=''.toString()">
+			 AND a.email LIKE '%${email}%'
+	</if> 
+	<if test="status != null and status !=''.toString()">
+			 AND a.status =#{status}
+	</if>  
+	<if test="phone != null and phone !=''.toString()">
+			AND a.phone LIKE '%${phone}%'
+	</if> 
+	 <if test="name != null and name !=''.toString()">
+			AND a.uname LIKE '%${name}%'
+	</if>  
+	<if test="sex != null and sex !=''.toString()">
+			AND a.sex =#{sex}
+	</if> 
+	 <if test="school != null and school !=''.toString()">
+			 AND a.school LIKE '%${school}%'
+	</if>
+	 <if test="departname != null and departname !=''.toString()">
+			AND a.department LIKE '%${departname}%'
+	</if>
+  	</select>
+  	<select id="findAllregistered" resultType="HashMap">
+  	SELECT * FROM os_user a
+	WHERE a.roleflg=#{roleflg} and a.delflg='00'
+	 <if test="email != null and email !=''.toString()">
+			 AND a.email LIKE '%${email}%'
+	</if>  
+	<if test="status != null and status !=''.toString()">
+			 AND a.status =#{status}
+	</if> 
+	<if test="phone != null and phone !=''.toString()">
+			AND a.phone LIKE '%${phone}%'
+	</if> 
+	 <if test="name != null and name !=''.toString()">
+			AND a.uname LIKE '%${name}%'
+	</if>  
+	<if test="sex != null and sex !=''.toString()">
+			AND a.sex =#{sex}
+	</if> 
+	 <if test="school != null and school !=''.toString()">
+			 AND a.school LIKE '%${school}%'
+	</if>
+	 <if test="departname != null and departname !=''.toString()">
+			AND a.department LIKE '%${departname}%'
+	</if>
+	limit #{beginNo}, #{endNo} 
+  	</select>
+  	<select id="finduser" resultType="Integer">
+  	SELECT COUNT(a.uid) FROM os_user a
+	WHERE a.email=#{0} 
+  	</select>
+  	<update id="uodateRegisteredUserBatch">
+  	UPDATE os_user a set a.`status`=#{status} WHERE a.uid in
+  	<foreach item="item" index="index" collection="uid" open="("
+					separator="," close=")">
+					#{item}
+	</foreach>
+  	</update>
+  	<select id="findTCUser" resultType="HashMap">
+	  	SELECT a.uid,a.uname FROM(
+	SELECT a.uid,a.uname FROM os_user a
+	WHERE a.roleflg='02' AND a.delflg='00'
+	) a
+	LEFT JOIN (
+	SELECT * FROM re_usermatchrace b 
+	WHERE b.rid=#{0}
+	) b ON a.uid=b.uid
+	WHERE ISNULL(b.uid)
+  	</select>
+</mapper>

@@ -1,0 +1,278 @@
+body{
+	background:#f2f2f2;
+}
+input{padding:0px;}
+.tabbox{
+	background:#fff;
+}
+.tabul{
+	width:1200px;
+	margin:0 auto;
+	overflow:hidden
+}
+.tabul li{
+	float:left;
+	width:140px;
+	height:58px;
+	text-align:center;
+	font-size:18px;
+	line-height:58px;
+}
+.tabul li.active{
+	border-bottom:4px solid #e21230;
+}
+.contentbox{
+	width:1200px;
+	margin:0 auto;
+	
+}
+.location{
+	color:#999;
+	margin-top:10px;
+	margin-bottom:4px;
+}
+#userinfo,#editInfo,#changepwd{
+	background:#fff;
+	text-align:center;
+	padding-bottom:30px
+}
+.userphoto,.editPhone{
+	width:105px;
+	height:158px;
+	margin-top:50px;
+	margin-bottom:30px;
+}
+.infolist,.editlist{
+	width:600px;
+	margin:0 auto;
+	overflow:hidden;
+}
+.infolist li{
+	float:left;
+	width:50%;
+	font-size:0;
+	margin-bottom:15px;
+}
+.infospan-l{
+	display:inline-block;
+	width:104px;
+	font-size:14px;
+	text-align:right;
+	margin-right:3px;
+}
+.infospan-r{
+	display:inline-block;
+	width:163px;
+	font-size:14px;
+	text-align:left;
+	vertical-align:top;
+	word-break:break-all;
+}
+.infobtn a,.infobtn a:hover{
+	display:inline-block;
+	width:120px;
+	height:30px;
+	color:#fff;
+	background:#e21230;
+	line-height:30px;
+	text-decoration:none;
+	cursor:pointer;
+}
+#editinfo{margin-right:20px}
+.hideInfo{display:none}
+.editlist li{
+	float: left;
+	font-size: 0;
+	margin-bottom: 14px;
+	width:50%;
+	height:24px;	
+}
+.editlist-l{text-align: right;}
+.editlist-r{text-align: left;font-size:14px;}
+.editspan-l{
+	display:inline-block;
+	width:104px;
+	font-size:14px;
+	text-align:right;
+	margin-right:3px;
+}
+.editspan-r{
+	display:inline-block;
+	font-size:14px;
+	text-align:right;
+	margin-right:3px;
+	margin-left: 20px;
+	width:104px;
+}
+#editphoto{cursor: pointer;}
+.infoinput-r[type=text]{
+	width: 170px;
+	height: 24px;
+	padding-left: 10px;
+	border: 1px solid #ccc;
+	vertical-align: top;
+	color: #999;
+	font-size: 14px;
+}
+.infoinput-r[type=radio]{
+	margin:0 5px 0 7px;
+}
+.sex{font-size:14px;}
+.famale[type=radio]{margin-left:20px}
+.editbtn a,.editbtn a:hover{
+	display:inline-block;
+	width:120px;
+	height:30px;
+	color:#fff;
+	background:#e21230;
+	line-height:30px;
+	text-decoration:none;
+	cursor:pointer;
+}
+.cancel {margin-right: 20px;}
+
+#changepwd .userphoto{
+	margin-top:20px;
+	margin-bottom:20px;
+}
+.cpwdul li{
+	margin-bottom:14px;
+}
+.cpwdul li input{
+	width: 222px;
+	height: 24px;
+	padding-left: 10px;
+	border: 1px solid #ccc;
+	vertical-align: top;
+	color: #999;
+	font-size: 14px;
+}  
+.pwdspan-l{
+	display:inline-block;
+	width:70px;
+	font-size:14px;
+	margin-right:5px;
+	text-align:right;
+}
+.editbtn{
+	margin-top:20px;
+}
+#matchEnroll{
+	background:#fff;
+}
+.matchrel{
+	padding-top:80px;
+	height:250px;
+	background:#383836
+}
+.matchrel h1{
+	margin:0;
+	font-size:36px;
+	color:#fff;
+	margin-left:40px;
+}
+.holdTandP{
+	float:left;
+	color:#fff;
+	font-size:18px;
+	margin-top:50px;
+	margin-left:40px;
+}
+#holdtime{
+	margin-bottom:5px;
+}
+#enroll{
+	float:right;
+	width:124px;
+	height:38px;
+	line-height:38px;
+	font-size:20px;
+	color:#fff;
+	text-decoration:none;
+	margin-top:65px;
+	background:#e21230;
+	border-radius:4px;
+	text-align:center;
+	margin-right:30px;
+	cursor:pointer;
+}
+.matchdetail{
+	font-size:18px;
+	line-height:30px;
+	padding:15px 30px 0 40px;
+	text-indent:2em;
+}
+#cover{
+    display:none;
+    position:fixed;
+    z-index:2;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.44);
+}
+#selImg{
+    display:none;
+    position:fixed;
+    z-index:3;
+    top:50%;
+    left:50%;
+    border:1px solid #127386;
+    width:530px;
+    height:440px;
+    margin-left:-265px;
+    margin-top:-220px;
+    background:#fff;
+    padding:0 30px;
+}
+#chooseImg,#chooseImg:hover{
+	text-decoration:none;
+	display:block;
+	width:116px;
+	height:36px;
+	color:#fff;
+	line-height:36px;
+	background-color:#be0000;
+	cursor:pointer;
+	margin-top:24px;
+	margin-bottom:10px;
+}
+#file{
+	position:absolute;
+	top:24px;
+	left:30px;
+	width:116px;
+	height:36px;
+	opacity:0
+}
+#selImg p{
+	margin:0
+}
+.photobox{
+	width:470px;
+	height:294px;
+	margin:0 auto;
+	border-bottom:1px solid #eaeaea;
+	text-align:center;
+}
+.photobox img{
+	width:156px;
+	height:236px;
+	margin-top:29px;
+}
+.btnwrap{
+	margin-top:14px;
+}
+.btnwrap a,.btnwrap a:hover{
+	text-decoration:none;
+	display:inline-block;
+	width:80px;
+	height:30px;
+	text-align:center;
+	line-height:30px;
+	color:#fff;
+	border-radius:2px;
+}
+#abolish{background:#999;margin-left:120px;	margin-right:70px;}
+#ensure{background:#c00000}

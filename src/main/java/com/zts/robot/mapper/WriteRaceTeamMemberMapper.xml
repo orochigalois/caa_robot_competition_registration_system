@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteRaceTeamMemberMapper" >
+	<select id="checkMemberOfRace" resultType="Integer">
+		select count(tmid) from re_raceteammember where rid=#{0} and tmid=#{1}
+	</select>
+	
+	<select id="findRidListOfTid" resultType="Map">
+		select DISTINCT rid,createdate from re_raceteammember where tid=#{0} 
+	</select>
+	<update id="changeInfoStatusByTid">
+		update re_raceteammember set infostatus=#{1} where tid=#{0}
+	</update>
+	<update id="deleteMemeberByTidAndTmid">
+		delete from re_raceteammember where tid=#{0} and tmid=#{1}
+	</update>
+	<update id="deleteMemeberByTid">
+		delete from re_raceteammember where tid=#{0} 
+	</update>
+	<update id="delRaceTeamByTid">
+		delete from re_raceteammember where tid=#{0} and rid=#{1}
+	</update>
+	<select id="findAllMembersByTid" resultType="Map">
+		SELECT 
+a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,a.tcode
+,c.tmname,c.birthday,c.sex,c.phone,c.picurl
+,c.tmid,c.email,c.ckstatus,c.did,c.didtype
+,c.school,c.departname,c.folk,c.diningtype,c.roleflg,c.disclaimerurl
+,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress,d.paymenturl
+FROM tm_team a 
+LEFT JOIN (
+SELECT DISTINCT a.tmid,a.tid,a.serialnum FROM re_raceteammember a WHERE a.tid= #{0}
+) b ON b.tid = a.tid
+LEFT JOIN tm_member c ON c.tmid = b.tmid
+LEFT JOIN os_user d ON d.uid=a.signuid
+WHERE a.tid=#{0} AND c.delflg='00' and a.tstatus='00' and c.tmstatus='00' and c.delflg='00' 
+ORDER BY c.roleflg,b.serialnum
+	</select>
+	<select id="findSignuidByTid" resultType="String">
+		select signuid from re_raceteammember rtm where tid=#{0} limit 0, 1
+	</select>
+	<select id="getTotalAllMemberBySignuid" resultType="Integer">
+	select count(DISTINCT tm.tmid)
+		from tm_member tm
+		left join re_raceteammember rtm on tm.tmid=rtm.tmid
+		left join tm_team t on t.tid=rtm.tid
+		left join ma_race r on r.rid=rtm.rid
+		where t.signuid=#{0} and tm.delflg!='01' AND tm.tmstatus='00' AND t.tstatus='00' and rtm.mid=#{1}
+	</select>
+	<select id="findAllMembersBySignuid" resultType="Map" parameterType="Map">
+	select tm.tmname, tm.birthday, tm.sex, tm.phone, tm.picurl,tm.tmid, tm.email,tm.ckstatus,tm.school,tm.disclaimerurl,
+	tm.diningtype,tm.roleflg,tm.tmcode,tm.didtype,tm.did,tm.mid,tm.departname,tm.folk,
+			GROUP_CONCAT(t.tid)as 'strteamid',GROUP_CONCAT(t.tname)as 'strteamname', rtm.rid, r.rname, rtm.infostatus, rtm.feestatus
+		from tm_member tm
+		left join re_raceteammember rtm on tm.tmid=rtm.tmid
+		left join tm_team t on t.tid=rtm.tid
+		left join ma_race r on r.rid=rtm.rid
+		where t.signuid=#{signuid} and tm.delflg!='01' AND tm.tmstatus='00' AND t.tstatus='00' and  rtm.mid=#{mid}
+		group by tm.tmid ORDER BY tm.roleflg
+		<if test="beginNo != null and endNo != null">
+			limit #{beginNo}, #{endNo}
+		</if>
+	</select>
+	
+	<delete id="delflgByTmid">
+		DELETE a FROM re_raceteammember a WHERE a.tmid=#{0}
+	</delete>
+	<select id="findTeamsBySignuid" resultType="Map">
+	SELECT * FROM tm_team a WHERE a.signuid=#{0} and a.tstatus='00' and a.delflg='00' and a.mid=#{1}
+	</select>
+	<select id="findTeamsBySignuidTotalSize" resultType="Integer">
+	SELECT COUNT(DISTINCT a.rid,a.tid)FROM re_raceteammember a
+	LEFT JOIN tm_team b ON b.tid = a.tid
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
+
+	</select>
+	<select id="findTeamsBySignuidPages" resultType="Map">
+	SELECT b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate FROM re_raceteammember a 
+	LEFT JOIN tm_team b ON b.tid = a.tid 
+	LEFT JOIN ma_race c ON c.rid = a.rid 
+	LEFT JOIN ma_match d ON d.mid=a.mid
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
+	GROUP BY a.rid,a.tid
+	ORDER BY b.createdate,c.createdate
+	<if test="beginNo != null and endNo != null">
+			limit #{beginNo}, #{endNo}
+	</if>
+	</select>
+	<select id="findoneteamper" resultType="Map">
+	SELECT DISTINCT a.tmid,a.createdate,a.serialnum FROM re_raceteammember a
+	WHERE a.tid=#{0}
+	</select>
+	<select id="findperson" resultType="Integer">
+	SELECT COUNT(a.rid) FROM re_raceteammember a
+	WHERE a.tid=#{1} AND a.tmid=#{2} AND a.rid=#{0}
+	</select>
+	<select id="findAllTeamsBySignuidPagesTotalSize" resultType="Integer">
+	SELECT COUNT(DISTINCT a.rid,a.tid) FROM re_raceteammember a 
+	LEFT JOIN tm_team b ON b.tid = a.tid
+	LEFT JOIN os_user c ON c.uid = b.signuid
+	WHERE b.tstatus='00' and a.mid=#{mid}
+	<if test="rid != null and rid !=''.toString()">
+			 AND a.rid=#{rid}
+	</if> 
+	<if test="tname != null and tname !=''.toString()">
+			 AND b.tname LIKE '%${tname}%'
+	</if> 
+	<if test="orgtype != null and orgtype !=''.toString()">
+			 AND b.orgtype =#{orgtype}
+	</if> 
+	<if test="region != null and region !=''.toString()">
+			 AND b.region= #{region}
+	</if> 
+	<if test="school != null and school !=''.toString()">
+			 AND b.school LIKE '%${school}%'
+	</if> 
+	<if test="feestatus != null and feestatus !=''.toString()">
+			 AND a.feestatus= #{feestatus}
+	</if> 
+	<if test="infostatus != null and infostatus !=''.toString()">
+			 AND a.infostatus =#{infostatus}
+	</if> 
+	</select>
+	<select id="findAllTeamsBySignuidPages" resultType="Map">
+	SELECT b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname,d.mname,e.paymenturl FROM re_raceteammember a 
+	LEFT JOIN tm_team b ON b.tid = a.tid
+	LEFT JOIN ma_race c ON c.rid = a.rid
+	left join ma_match d on d.mid=a.mid
+	LEFT JOIN os_user e ON e.uid=a.signuid
+	WHERE b.tstatus='00' and a.mid=#{mid}
+	<if test="rid != null and rid !=''.toString()">
+			 AND a.rid=#{rid}
+	</if> 
+	<if test="tname != null and tname !=''.toString()">
+			 AND b.tname LIKE '%${tname}%'
+	</if> 
+	<if test="orgtype != null and orgtype !=''.toString()">
+			 AND b.orgtype= #{orgtype}
+	</if> 
+	<if test="region != null and region !=''.toString()">
+			 AND b.region= #{region}
+	</if> 
+	<if test="school != null and school !=''.toString()">
+			 AND b.school LIKE '%${school}%'
+	</if> 
+	<if test="feestatus != null and feestatus !=''.toString()">
+			 AND a.feestatus= #{feestatus}
+	</if> 
+	<if test="infostatus != null and infostatus !=''.toString()">
+			 AND a.infostatus =#{infostatus}
+	</if> 
+	GROUP BY a.rid,a.tid
+	ORDER BY b.createdate,c.createdate
+	
+	<if test="beginNo != null and endNo != null">
+			limit #{beginNo}, #{endNo}
+	</if>
+	</select>
+	<update id="updateInfostatus">
+	 update re_raceteammember set infostatus = #{infostatus},
+        feedback = #{feedback},  upduid = #{upduid},     
+        upddate = #{upddate},  reviewuid = #{reviewuid},
+        reviewdate = #{reviewdate}
+		 where tid = #{tid} AND rid=#{rid}
+     
+	</update>
+	<select id="findAllTeamsRace" resultType="Map">
+	SELECT DISTINCT a.rid,a.rname,b.infostatus FROM ma_race a
+	LEFT JOIN re_raceteammember b ON a.rid=b.rid
+	WHERE b.tid=#{0}
+	</select>
+	<select id="isSignUpRaceByRidTmid" resultType="Integer">
+		SELECT COUNT(*) FROM re_raceteammember a WHERE a.rid=#{0} AND a.tmid=#{1}
+	</select>
+	<select id="isJoinRaceByTmid" resultType="Integer">
+		SELECT COUNT(*) FROM re_raceteammember a WHERE a.tmid=#{0}
+	</select>
+	<select id="findJoinRaceByTmid" resultType="HashMap">
+		SELECT b.rname,REPLACE(GROUP_CONCAT(c.tname),',','&lt;br/&gt;') AS tnames FROM re_raceteammember a 
+		LEFT JOIN ma_race b ON b.rid = a.rid
+		LEFT JOIN tm_team c ON c.tid = a.tid
+		WHERE a.tmid=#{0}
+		GROUP BY b.rname
+		ORDER BY b.createdate
+	</select>
+	<select id="findJoinRaceByTmidSignuid" resultType="HashMap">
+		SELECT b.rname,REPLACE(GROUP_CONCAT(c.tname),',','&lt;br/&gt;') AS tnames FROM re_raceteammember a 
+		LEFT JOIN ma_race b ON b.rid = a.rid
+		LEFT JOIN tm_team c ON c.tid = a.tid
+		WHERE a.tmid=#{0} AND c.signuid=#{1}
+		GROUP BY b.rname
+		ORDER BY b.createdate
+	</select>
+	<delete id="deleteMemberBySignuid">
+	DELETE FROM re_raceteammember WHERE signuid IN  
+	<foreach item="item" index="index" collection="uid" open="("
+					separator="," close=")">
+					#{item}
+	</foreach>
+	</delete>
+	<select id="getTeamDerivedByMid" resultType="HashMap">
+		SELECT * FROM (
+		SELECT 
+					a.tcode,a.tname,a.school,a.orgtype,a.region
+					,a.uname,a.phone,a.email,a.invoicename,a.taxpayernumber,a.banknumber,a.addressphone,a.receiveaddress
+					,a.tchname,a.tchsex,a.tchdidtype,a.tchdid,a.tchemail,a.tchphone,a.tchfolk,a.tchdiningtype
+					,a.stuname,a.stusex,a.studidtype,a.studid,a.stuemail,a.stuphone,a.stufolk,a.studiningtype
+					,LENGTH(a.tchname)-LENGTH(REPLACE(a.tchname,',',''))+1 AS tchnum
+					,LENGTH(a.stuname)-LENGTH(REPLACE(a.stuname,',',''))+1 AS stunum
+					,GROUP_CONCAT(b.infostatus) AS infostatus,GROUP_CONCAT(b.feestatus) AS feestatus
+					,GROUP_CONCAT(c.frname) AS frname,GROUP_CONCAT(c.rcode) AS rcode,GROUP_CONCAT(c.rname) AS rname
+				 FROM(
+					SELECT 
+					b.tcode,b.tname,b.school,b.orgtype,b.region
+					,c.uname,c.phone,c.email,c.invoicename,c.taxpayernumber,c.banknumber,c.addressphone,c.receiveaddress
+					,GROUP_CONCAT( d.tmname) AS tchname,GROUP_CONCAT( d.sex) AS tchsex,GROUP_CONCAT( d.didtype) AS tchdidtype
+					,GROUP_CONCAT( d.did) AS tchdid,GROUP_CONCAT( d.email) AS tchemail,GROUP_CONCAT( d.phone) AS tchphone
+					,GROUP_CONCAT( f.folk) AS tchfolk,GROUP_CONCAT( d.diningtype) AS tchdiningtype
+				
+					,GROUP_CONCAT( e.tmname) AS stuname,GROUP_CONCAT( e.sex) AS stusex,GROUP_CONCAT( e.didtype) AS studidtype
+					,GROUP_CONCAT( e.did) AS studid,GROUP_CONCAT( e.email) AS stuemail,GROUP_CONCAT( e.phone) AS stuphone
+					,GROUP_CONCAT( g.folk) AS stufolk,GROUP_CONCAT( e.diningtype) AS studiningtype
+					,a.tid,GROUP_CONCAT(a.tmid) AS tmid
+					FROM (
+						SELECT DISTINCT a.tid,a.tmid FROM re_raceteammember a
+						WHERE a.mid=#{mid}
+					) a 
+					LEFT JOIN tm_team b ON b.tid = a.tid
+					LEFT JOIN os_user c ON c.uid = b.signuid
+					LEFT JOIN tm_member d ON d.tmid = a.tmid AND d.roleflg = '01'
+					LEFT JOIN tm_member e ON e.tmid = a.tmid AND e.roleflg = '02'
+					LEFT JOIN sys_folk f ON f.folkid = d.folk
+					LEFT JOIN sys_folk g ON g.folkid = e.folk
+					GROUP BY a.tid
+				) a
+				LEFT JOIN (
+					SELECT DISTINCT a.tid,a.rid,a.infostatus,a.feestatus FROM re_raceteammember a
+					WHERE a.mid=#{mid}
+				) b ON b.tid = a.tid
+				LEFT JOIN ma_race c ON c.rid = b.rid
+				GROUP BY a.tid
+		) a 
+		WHERE 1=1
+		<if test="tcode != null and tcode !=''.toString()">
+		AND a.tcode=#{tcode}
+		</if>
+		<if test="tname != null and tname !=''.toString()">
+		AND a.tname=#{tname}
+		</if>
+		<if test="school != null and school !=''.toString()">
+		AND a.school=#{school}
+		</if>
+		<if test="orgtype != null and orgtype !=''.toString()">
+		AND a.orgtype=#{orgtype}
+		</if>
+		<if test="region != null and region !=''.toString()">
+		AND a.region=#{region}
+		</if>
+		<if test="uname != null and uname !=''.toString()">
+		AND a.uname=#{uname}
+		</if>
+		<if test="email != null and email !=''.toString()">
+		AND a.email=#{email}
+		</if>
+	</select>
+	
+	<select id="getMemberDerivedByMid" resultType="HashMap">
+	SELECT * FROM (
+		SELECT 
+		b.tmid,b.tmname,b.roleflg,b.sex,b.didtype,b.did,b.email,b.phone,g.folk,b.diningtype
+		
+		,GROUP_CONCAT(c.tid) AS tid,GROUP_CONCAT(c.tcode) AS tcode,GROUP_CONCAT(c.tname) AS tname
+		,GROUP_CONCAT(DISTINCT c.school) AS school,GROUP_CONCAT(DISTINCT c.orgtype) AS orgtype,GROUP_CONCAT( DISTINCT c.region) AS region
+		,GROUP_CONCAT( DISTINCT CONCAT( '(', f.tchname,')')) AS tchname		
+		
+		,GROUP_CONCAT( DISTINCT e.uname order by convert(e.uname using gbk) asc) AS uname,GROUP_CONCAT(DISTINCT e.phone) AS uphone,GROUP_CONCAT(DISTINCT e.email) AS uemail
+		,GROUP_CONCAT(DISTINCT e.invoicename) AS invoicename,GROUP_CONCAT(DISTINCT e.taxpayernumber) AS taxpayernumber,GROUP_CONCAT(DISTINCT e.banknumber) AS banknumber
+		,GROUP_CONCAT(DISTINCT e.addressphone) AS addressphone,GROUP_CONCAT(DISTINCT e.receiveaddress) AS receiveaddress		
+		
+		,GROUP_CONCAT(d.rid) AS rid,GROUP_CONCAT(DISTINCT d.frname) AS frname,GROUP_CONCAT(d.rcode) AS rcode
+		,GROUP_CONCAT(d.rname) AS rname		
+		
+		,GROUP_CONCAT(a.infostatus) AS infostatus,GROUP_CONCAT(DISTINCT a.feestatus) AS feestatus
+		FROM re_raceteammember a
+		LEFT JOIN tm_member b ON b.tmid = a.tmid
+		LEFT JOIN tm_team c ON c.tid = a.tid
+		LEFT JOIN ma_race d ON d.rid = a.rid
+		LEFT JOIN os_user e ON e.uid = a.signuid
+		LEFT JOIN sys_folk g ON g.folkid = b.folk
+		LEFT JOIN (
+			SELECT a.tid,GROUP_CONCAT(b.tmname) AS tchname  FROM (
+				SELECT DISTINCT a.tid,a.tmid FROM re_raceteammember a
+				WHERE a.mid=#{mid}	
+			) a 
+			LEFT JOIN tm_member b ON b.tmid = a.tmid 
+			WHERE b.roleflg='01'
+			GROUP BY a.tid
+		) f ON f.tid = c.tid
+		WHERE a.mid=#{mid}	
+		GROUP BY a.tmid
+		) a
+		WHERE 1=1
+		<if test="tmname != null and tmname !=''.toString()">
+		AND a.tmname=#{tmname}
+		</if>
+		<if test="roleflg != null and roleflg !=''.toString()">
+		AND a.roleflg=#{roleflg}
+		</if>
+		<if test="sex != null and sex !=''.toString()">
+		AND a.sex=#{sex}
+		</if>
+		<if test="didtype != null and didtype !=''.toString()">
+		AND a.didtype=#{didtype}
+		</if>
+		<if test="did != null and did !=''.toString()">
+		AND a.did=#{did}
+		</if>
+		<if test="diningtype != null and diningtype !=''.toString()">
+		AND a.diningtype=#{diningtype}
+		</if>
+		 ORDER BY a.region,a.school,convert(a.uname using gbk) asc,a.tid,a.tmid,a.rid
+	</select>
+	<select id="getTeamRaceDerivedByMid" resultType="HashMap">
+		SELECT 
+		b.frname,b.rcode,b.rname
+		,c.tcode,c.tname,c.school,c.orgtype,c.region
+		,d.uname,d.phone,d.email,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress
+		,e.tchname,e.tchsex,e.tchdidtype,e.tchdid,e.tchphone,e.tchemail,e.diningtype
+		,a.infostatus,a.feestatus,a.createdate
+		FROM (
+			SELECT DISTINCT a.tid,a.rid,a.signuid,a.infostatus,a.feestatus,a.createdate FROM re_raceteammember a
+			WHERE a.mid=#{mid}
+		) a
+		LEFT JOIN ma_race b ON b.rid = a.rid
+		LEFT JOIN tm_team c ON c.tid = a.tid
+		LEFT JOIN os_user d ON d.uid = a.signuid
+		LEFT JOIN (
+					SELECT
+					a.tid,GROUP_CONCAT(b.tmname) AS tchname,GROUP_CONCAT(b.sex) AS tchsex,GROUP_CONCAT(b.didtype) AS tchdidtype
+					,GROUP_CONCAT(b.did) AS tchdid,GROUP_CONCAT(b.phone) AS tchphone,GROUP_CONCAT(b.email) AS tchemail,
+					GROUP_CONCAT(b.diningtype) AS diningtype
+					FROM (
+						SELECT DISTINCT a.tid,a.tmid FROM re_raceteammember a
+						WHERE a.mid=#{mid}
+					) a 
+					LEFT JOIN tm_member b ON b.tmid = a.tmid 
+					WHERE b.roleflg='01'
+					GROUP BY a.tid
+		) e ON e.tid = a.tid
+		WHERE 1=1 
+		<if test="frname != null and frname !=''.toString()">
+		AND b.frname=#{frname} 
+		</if>
+		<if test="rname != null and rname !=''.toString()">
+		AND b.rname=#{rname}
+		</if>
+		<if test="tname != null and tname !=''.toString()">
+		AND c.tname=#{tname}
+		</if>
+		<if test="tcode != null and tcode !=''.toString()">
+		AND c.tcode=#{tcode}
+		</if>
+		<if test="school != null and school !=''.toString()">
+		AND c.school=#{school}
+		</if>
+		<if test="orgtype != null and orgtype !=''.toString()">
+		AND c.orgtype=#{orgtype}
+		</if>
+		<if test="region != null and region !=''.toString()">
+		AND c.region=#{region}
+		</if>
+		<if test="uname != null and uname !=''.toString()">
+		AND d.uname=#{uname}
+		</if>
+		<if test="email != null and email !=''.toString()">
+		AND d.email=#{email}
+		</if>
+		<if test="infostatus != null and infostatus !=''.toString()">
+		AND a.infostatus=#{infostatus}
+		</if>
+		ORDER BY a.rid,a.tid
+	</select>
+
+	<update id="updateFeestatusByTeamRace">
+	UPDATE re_raceteammember a SET a.feestatus=#{2} WHERE a.tid=#{0} AND a.rid=#{1}
+	</update>
+	<select id="findFeestatusByTeamRace" resultType="String">
+	SELECT DISTINCT a.feestatus FROM re_raceteammember a WHERE a.tid=#{0} AND a.rid=#{1}
+	</select>
+	<select id="findCountByTmid" resultType="Integer">
+	SELECT COUNT(*) FROM re_raceteammember a WHERE a.tmid=#{0}
+	</select>
+	<select id="findMemberBySignuid" resultType="HashMap">
+	SELECT DISTINCT a.tmid FROM re_raceteammember a
+	WHERE a.signuid=#{0}
+	</select>
+	<select id="findCountSignuidByTmid" resultType="Integer">
+	SELECT COUNT(*) FROM re_raceteammember a
+	WHERE a.signuid !=#{1} AND a.tmid=#{0}
+	</select>
+	<select id="findCountByRid" resultType="Integer">
+	SELECT COUNT(*) FROM re_raceteammember a where a.rid=#{0}
+	</select>
+	<select id="findSerialnumByTid" resultType="Integer">
+	SELECT COUNT(*) FROM re_raceteammember a 
+	left join tm_member b on a.tmid=b.tmid
+	where a.tid=#{1} and a.serialnum=#{0} and b.roleflg=#{2}
+	</select>
+	<update id="updateSerialnumByTid">
+	UPDATE re_raceteammember a SET a.serialnum=#{1} WHERE a.tid=#{2} AND a.tmid=#{0}
+	</update>
+	<select id="findTeamCountByRid" resultType="Integer">
+	SELECT COUNT(DISTINCT a.tid) FROM re_raceteammember a 
+	LEFT JOIN re_raceteamscore b on a.tid=b.tid
+	WHERE a.rid=#{0} AND b.flg='00'
+	</select>
+	<select id="findRaceTeamMemberByRidTid" resultType="HashMap">
+	SELECT a.tmid,a.serialnum from re_raceteammember a 
+	WHERE a.rid=#{0} AND a.tid=#{1}	
+	</select>
+	<select id="repeatedCount" resultType="Integer">
+	SELECT COUNT(*) from re_raceteammember a 
+	WHERE a.rid=#{0} AND a.tid=#{1} AND a.entryno=#{2}
+	</select>
+	<update id="updateEntryno">
+	UPDATE re_raceteammember SET entryno=#{3} WHERE rid=#{0} AND tid=#{1} AND tmid=#{2}
+	</update>
+	<update id="updateEntryurl">
+	UPDATE re_raceteammember SET entryurl=#{3} WHERE rid=#{0} AND tid=#{1} AND tmid=#{2}
+	</update>
+	
+	<select id="findEntryUrlList" resultType="String">
+		SELECT a.entryurl FROM re_raceteammember a WHERE a.rid=#{0} AND a.tid=#{1}
+	</select>
+
+	<select id="findMemberRaceListByMidSiginuid" resultType="HashMap">
+		SELECT a.tmid,b.tmname,b.roleflg,a.unitprice,COUNT(a.tmid) AS frequency FROM re_raceteammember a
+		LEFT JOIN tm_member b ON b.tmid = a.tmid
+		WHERE a.mid=#{0} AND a.signuid=#{1} AND a.infostatus='00'
+		GROUP BY a.tmid
+		ORDER BY b.roleflg
+	</select>
+	<select id="findyingjjeByMidSiginuid" resultType="Integer">
+	SELECT IF(ISNULL(SUM(a.unitprice)),0,SUM(a.unitprice)) AS yingjje FROM re_raceteammember a
+	WHERE a.mid=#{0} AND a.signuid=#{1} AND a.infostatus='00'
+	</select>
+
+	<select id="findUnitpriceByTid" resultType="HashMap">
+	SELECT b.tmid,b.tmname,b.alreadyflg,a.unitprice FROM re_raceteammember a
+	LEFT JOIN tm_member b ON a.tmid=b.tmid
+	WHERE a.tid=#{0} AND a.rid=#{1}
+	ORDER BY b.roleflg,a.serialnum
+	</select>
+	<update id="updateUnitprice">
+	UPDATE re_raceteammember a SET a.unitprice=#{0} WHERE a.tmid=#{1} AND a.signuid=#{2}
+	</update>
+	<update id="updateUnitpriceByMid">
+	UPDATE re_raceteammember a SET a.unitprice=#{0} WHERE a.mid=#{1}
+	</update>
+	<update id="updateFeestatusBySignuidMid">
+	UPDATE re_raceteammember a SET a.feestatus=#{2} WHERE a.mid=#{1} AND a.signuid=#{0}
+	</update>
+	<select id="findMatchByUid" resultType="HashMap">
+	SELECT DISTINCT a.* FROM  ma_match a
+	LEFT JOIN re_raceteammember b ON a.mid=b.mid
+	where b.signuid=#{0}
+	</select>
+	<select id="findAllTidByTmid" resultType="HashMap">
+	SELECT DISTINCT a.tid from re_raceteammember a
+	WHERE  a.tmid=#{0} AND a.mid=#{1}
+	</select>
+</mapper>

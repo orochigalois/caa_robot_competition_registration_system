@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteAwardsMapper" >
+  <delete id="delAwardsByRid">
+  	DELETE a FROM ma_awards a WHERE a.rid=#{0}
+  </delete>
+  <select id="findAwardsListByRid" resultType="HashMap">
+  	SELECT a.rid,a.alev,a.aname,a.aproportion FROM ma_awards a WHERE a.rid=#{0}
+	ORDER BY a.alev
+  </select>
+  <select id="findAwardsNumByRid" resultType="Integer">
+  SELECT COUNT(*) FROM ma_awards a WHERE a.rid=#{0}
+  </select>
+</mapper>

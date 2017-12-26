@@ -1,0 +1,101 @@
+.searchbox{
+	background:#fff;
+	margin-bottom:20px;
+}
+.searchtitle{
+	font-size:14px;
+	font-weight:bold;
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+	margin:0;
+	border-bottom:1px solid #f2f2f2;
+}
+.searchul li{
+	float:left;
+	width:33.33%;
+	padding:9px 10px;
+	border-bottom:1px solid #f2f2f2;
+	position:relative;
+}
+.searchul li .emulate{
+	left:84px;
+	top:41px;
+	width:242px;
+	max-height:90px;
+	overflow-y:auto;
+}
+#searchteam .emulate,#raceTeam .emulate{
+	left:98px;
+}
+.searchul li .emulate li{
+	width:242px;
+	padding:0;
+	padding-left:10px;
+}
+.infoname{
+	display:inline-block;
+	width:70px;
+	text-align:right;
+}
+.searchteam .infoname{
+	width:84px
+}
+.searchinput{
+	width:242px;
+	height:32px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding-left:10px;
+}
+.selinput{
+	padding-right:15px;
+	background:url(../images/xiala.png) no-repeat;
+	background-position:224px 13px;
+}
+.emulate{
+	display:none;
+	background:#fff;
+	position:absolute;
+	left:66px;
+	top:30px;
+	z-index:1;
+}
+.emulate li{
+	width:182px;
+	height:30px;
+	border:1px solid #ccc;
+	line-height:30px;
+	border-top:0;
+	padding-left:10px;
+	color:#999;
+	cursor:pointer;
+}
+.emulate li:hover{
+	color:#333;
+}
+.search,.search:hover{
+	display:inline-block;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	border-radius:4px;
+	background:#e21230;
+	color:#fff;
+	text-decoration:none;
+	cursor:pointer;
+	text-align:center;
+}
+.clear,.clear:hover{
+	display:inline-block;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	border-radius:4px;
+	background:#ccc;
+	color:#fff;
+	margin-right:10px;
+	text-decoration:none;
+	cursor:pointer;
+	text-align:center;
+}

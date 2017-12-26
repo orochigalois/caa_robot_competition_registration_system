@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteConstantMapper" >
+ <select id="findOpenedMatch" resultType="HashMap">
+ 	SELECT * FROM ma_match a WHERE a.mstatus='00'
+ </select>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteMatchMapper" >
+ <select id="findMatchlistTotalSize" resultType="Integer">
+ 	SELECT COUNT(DISTINCT a.mid) FROM ma_match a 		
+ 	<if test="roleflg == 04 " > 
+ 	LEFT JOIN re_usermatch b ON a.mid=b.mid 
+		WHERE b.uid=#{uid}
+	</if>
+	<if test="roleflg == 02 " > 
+ 	LEFT JOIN re_usermatchrace c ON a.mid=c.mid
+	where c.uid=#{uid}	
+	</if>
+ </select>
+ 
+ <select id="findMatchListByPage" resultType="HashMap">
+ 	SELECT 
+		DISTINCT a.*
+	FROM ma_match a 	
+	<if test="roleflg == 04 " > 
+	LEFT JOIN re_usermatch b ON a.mid=b.mid
+		WHERE b.uid=#{uid}
+	</if>
+	<if test="roleflg == 02 " > 
+ 	LEFT JOIN re_usermatchrace c ON a.mid=c.mid
+	where c.uid=#{uid}	
+	</if>
+	order by a.delflg ,a.startdate desc
+	LIMIT #{beginNo},#{endNo} 
+ </select>
+ 
+ <select id="findMatchInfoByMid" resultType="HashMap">
+ 	SELECT 
+	a.*
+	FROM ma_match a 
+	WHERE  a.mid=#{0}
+ </select>
+ <update id="updateDelflgMatchByMid">
+ 	UPDATE ma_match SET delflg='01' WHERE mid=#{0}
+ </update>
+ <select id="findAllMatchUser" resultType="HashMap">
+SELECT d.mname,GROUP_CONCAT(DISTINCT e.rname)AS'rnames',
+f.uname,f.phone AS'uphone',f.invoicename,f.taxpayernumber,f.banknumber,f.addressphone,f.receiveaddress,
+b.tmname ,b.roleflg ,b.tmcode,b.sex,b.didtype,b.did,b.birthday,b.email,b.phone,b.school,b.departname,b.tmstatus,b.diningtype,g.folk
+FROM re_raceteammember a
+LEFT JOIN tm_member b ON b.tmid=a.tmid
+LEFT JOIN tm_team c ON c.tid=a.tid
+LEFT JOIN ma_match d ON d.mid=a.mid
+LEFT JOIN ma_race e ON e.rid=a.rid
+LEFT JOIN os_user f ON f.uid=c.signuid
+LEFT JOIN sys_folk g ON g.folkid=b.folk
+WHERE d.mid=#{0}  and d.mstatus='00' 
+and b.delflg='00' and b.tmstatus='00' 
+and c.delflg='00' AND c.tstatus='00'  
+GROUP BY a.tmid,c.signuid
+ORDER BY a.tid,b.roleflg
+ </select>
+ <select id="findmstatus" resultType="Integer">
+ SELECT COUNT(a.mid) FROM ma_match a
+WHERE a.mstatus='00'
+ </select>
+ <select id="findAllMatchList" resultType="HashMap">
+ SELECT 
+	a.mid,a.mcode,a.mname,a.mstatus
+	FROM ma_match a 
+	WHERE a.delflg='00' 
+	order by a.mstatus
+ </select>
+ <select id="findMachname" resultType="Integer">
+ SELECT COUNT(a.mid) FROM ma_match a
+WHERE a.mname=#{0}
+ </select>
+ <select id="findAllMatch" resultType="HashMap">
+  SELECT 
+	a.mid,a.mcode,a.mname,a.mstatus
+	FROM ma_match a 
+	WHERE a.delflg='00' 
+ </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.WriteUserMatchRaceMapper" >
+  <select id="findRaceTcUserByRid" resultType="HashMap">
+	  SELECT a.uid,a.uname FROM re_usermatchrace b 
+	LEFT JOIN os_user a ON a.uid=b.uid
+	WHERE b.rid=#{0}
+  </select>
+  <select id="findRaceByUid" resultType="HashMap">
+	  SELECT b.rid,b.rname,b.rcode,b.startdate,b.enddate FROM re_usermatchrace a
+	LEFT JOIN ma_race b ON a.rid=b.rid
+	WHERE a.mid=#{mid} AND a.uid=#{uid}
+	<if test="rname != null and rname !=''.toString()" > 
+		AND b.rname  LIKE '%${rname}%'
+	</if>
+	ORDER BY b.rname
+	LIMIT #{beginNo},#{endNo}
+  </select>
+  <select id="findRaceByUidTotalSize" resultType="Integer">
+    SELECT count(*) FROM re_usermatchrace a
+	LEFT JOIN ma_race b ON a.rid=b.rid
+	WHERE a.mid=#{mid} AND a.uid=#{uid}
+	<if test="rname != null and rname !=''.toString()" > 
+		AND b.rname  LIKE '%${rname}%'
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>中国自动化学会机器人竞赛报名系统</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/BMS-Left.css" rel="stylesheet">
+    <link href="../css/BMS-Top.css" rel="stylesheet">
+    <link href="../css/layerMsg.css" rel="stylesheet">
+    <link href="../css/BMS-addCoordinate.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AGAbaV2PSZmU2lpjqlpWjonoLuf4Rn9b"></script>
+	
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div id="left">
+    		<div class="sidebar">
+	    		<div class="sidebar-icon">
+	    			<img src="../images/icon_land_caa.png">
+	    		</div>
+	    		<ul class="sidebar-ul">
+	    			<li class="matchInfo-li active"><a href="BMS-matchInfo.html" target="_self">赛事信息</a></li>
+	    			<li class="eventManage-li"><a href="BMS-competitionList.html" target="_self">赛项管理</a></li>
+	    			<li class="teamManage-li"><a href="BMS-teamList.html" target="_self">队伍管理</a></li>
+	    			<li class="players-li"><a href="BMS-playerList.html" target="_self">参赛人员</a></li>
+	    			<li class="userManage-li"><a href="BMS-userManage.html" target="_self">用户管理</a></li>
+	    		</ul>
+    		</div>
+    	</div>
+    	<div class="rightpart">
+    		<div id="top">
+    			<div class="topnav">
+		    		<h1>中国自动化学会机器人竞赛后台管理系统</h1>
+		    		<div class="navright hidenavright">
+		    			<img id="avatar" >
+		    			<div id="username" class="username"></div>
+		    			<b class="logout"></b>
+		    		</div>
+		    	</div>
+    		</div>
+    		<div class="contentwrap">
+    			<div class="crumb">
+    				<p class="location">您的位置：赛事信息<span class="crumbarrow">&gt;</span>赛事详情<span class="crumbarrow">&gt;</span>现场确认</p>
+    			</div>
+    			<div id="allmap"></div>
+				<div id="locationbox">
+					
+					经度：<input id="longitude" type="text"/>
+					纬度：<input id="latitude" type="text"/>
+					描述地址信息：<input id="gpsdescription" type="text" />
+					<a onclick="" id="save">确定</a>
+				</div>
+    		</div>
+    	</div>
+    </div>
+   	
+  
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.form.js"></script>
+    <script src="../js/layerMsg.js"></script>
+    <script type="text/javascript">
+    var gpsdescription=localStorage.getItem("gpsdescription");
+    var latitude=localStorage.getItem("latitude");
+    var longitude=localStorage.getItem("longitude");
+	// 百度地图API功能
+	var map = new BMap.Map("allmap",{minZoom:13,maxZoom:18});
+	var point = new BMap.Point(longitude,latitude);
+	
+	map.centerAndZoom(point,13);
+	map.enableScrollWheelZoom(true);
+	
+    map.clearOverlays();
+    var marker = new BMap.Marker(new BMap.Point(longitude, latitude)); // 创建点	
+	var circle = new BMap.Circle(new BMap.Point(longitude, latitude),20000,{strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5}); //创建圆
+  	map.addOverlay(marker);//增加点
+	map.addOverlay(circle); 
+	document.getElementById("longitude").value=longitude;
+	document.getElementById("latitude").value=latitude;
+	document.getElementById("gpsdescription").value=gpsdescription;
+	
+
+	
+
+	
+
+	</script>
+    
+  </body>
+</html>

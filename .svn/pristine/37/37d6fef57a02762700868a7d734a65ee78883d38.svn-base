@@ -1,0 +1,370 @@
+package com.zts.robot.controller;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.zts.robot.pojo.Race;
+import com.zts.robot.pojo.UserMatchRace;
+import com.zts.robot.pojo.UserMatchRaceKey;
+import com.zts.robot.service.RaceService;
+import com.zts.robot.util.CookieOperation;
+import com.zts.robot.util.RedisUtil;
+import com.zts.robot.util.Tools;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+@Controller
+public class RaceController {
+	@Autowired
+	private RaceService raceService;
+	
+	/**
+	 * 添加赛项
+	 * @return
+	 */
+	@RequestMapping("/addRace")
+	@ResponseBody
+	public Map<String, Object> addRace(HttpServletRequest request,Race race){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			String mid=request.getParameter("mid");
+			int count=raceService.findRaceName(race.getRname(),mid);//判断赛项是否重名
+			if(count>0){
+				resultMap.put("status", 1);
+				resultMap.put("errmsg", "赛项名称重复，不允许重复！");
+			}else{
+				JSONObject userJson= Tools.getUserJsonByCookie(request);
+				race.setRid(Tools.get32UUID());
+				race.setDelflg("00");
+				race.setCreatedate(Tools.getStringByDateAndTime(new Date()));
+				race.setCreateuid(userJson.getString("uid"));
+					
+				raceService.addRace(race);
+				resultMap.put("status", 0);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	
+	/**
+	 * 查询往届赛事赛项
+	 */
+	@RequestMapping("/findPreviousRace")
+	@ResponseBody
+	public Map<String, Object> findPreviousRace(){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Map<String, Object>> previousRaceList = raceService.findPreviousRace();
+			resultMap.put("status", 0);
+			resultMap.put("list", previousRaceList);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	
+	/**
+	 * 导入赛项ByRids,mid
+	 */
+	@RequestMapping("/addImportRaceByRids")
+	@ResponseBody
+	public Map<String, Object> addImportRaceByRids(HttpServletRequest request,String Rids,String mid){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			JSONObject userJson= Tools.getUserJsonByCookie(request);
+			String[] ridArray = Rids.split(",");
+			raceService.addImportRaceByRids(ridArray,mid,userJson.getString("uid"));
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+	}
+	/**
+	 * 修改赛项
+	 * @param match
+	 * @param createuid
+	 * @return
+	 */
+	@RequestMapping("/updateRace")
+	@ResponseBody
+	public Map<String, Object> updateRace(Race race){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			raceService.updateRace(race);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	
+	/**
+	 * 查询赛项列表
+	 * @param match
+	 * @param createuid
+	 * @return
+	 */
+	@RequestMapping("/findRaceListByPage")
+	@ResponseBody
+	public Map<String, Object> findRaceListByPage(HttpServletRequest request,Integer iDisplayLength, Integer iDisplayStart,String mid){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			Cookie cookie = CookieOperation.getCookieByName(request, "authId");
+			JSONObject json = RedisUtil.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
+			String roleflg = json.optString("roleflg");
+			String rname=request.getParameter("rname");
+			//报名人
+			if("03".equals(roleflg)){
+				String status = json.optString("status");
+				if(!"00".equals(status)){
+					resultMap.put("iTotalRecords", 0);
+					resultMap.put("status", 1);
+					resultMap.put("errmsg", "您的用户状态为非正常状态，不能参加报名！");
+					return resultMap;
+				}
+			}
+			
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("mid", mid);
+			paramMap.put("rname", rname);
+			int totalSize = raceService.findRacelistTotalSize(paramMap);
+			if (iDisplayLength==null||iDisplayLength != -1) {
+				paramMap.put("beginNo", iDisplayStart);
+				paramMap.put("endNo", iDisplayLength);
+			}
+				List<Map<String,Object>> raceList= raceService.findRaceListByPage(paramMap);
+				resultMap.put("status", 0);
+				resultMap.put("list",raceList);
+				resultMap.put("iTotalRecords", totalSize);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	
+	/**
+	 * 查询赛项信息
+	 * @param match
+	 * @param createuid
+	 * @return
+	 */
+	@RequestMapping("/findRaceInfoByRid")
+	@ResponseBody
+	public Map<String, Object> findRaceInfoByRid(String rid){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			Map<String, Object> RaceMap = raceService.findRaceInfoByRid(rid);
+			resultMap.put("status", 0);
+			resultMap.put("info",RaceMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	
+	/**
+	 * 逻辑删除赛项ByRid
+	 * @param match
+	 * @param createuid
+	 * @return
+	 */
+	@RequestMapping("/updateDelflgRaceByRid")
+	@ResponseBody
+	public Map<String, Object> updateDelflgRaceByRid(String rid){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			raceService.updateDelflgRaceByRid(rid,resultMap);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	/**
+	 * 查询这个赛事下有哪些大赛项
+	 * @param mid
+	 * @return
+	 */
+	@RequestMapping("/findRaceFrnameBymid")
+	@ResponseBody
+	public Map<String, Object> findRaceFrnameBymid(String mid){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Map<String, Object>> list=raceService.findRaceFrnameBymid(mid);
+			
+			resultMap.put("status", 0);
+			resultMap.put("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	/**
+	 * 查询这个父赛项下有哪些子赛项
+	 * @param mid
+	 * @return
+	 */
+	@RequestMapping("/findRaceRnameBymidFrname")
+	@ResponseBody
+	public Map<String, Object> findRaceRnameBymidFrname(String mid,String frname){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Map<String, Object>> list=raceService.findRaceRnameBymidFrname(mid,frname);
+			
+			resultMap.put("status", 0);
+			resultMap.put("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	/**
+	 * 查询这个赛事下所有的赛项
+	 * @param mid
+	 * @param frname
+	 * @return
+	 */
+	@RequestMapping("/findAllRaceRnameBymid")
+	@ResponseBody
+	public Map<String, Object> findAllRaceRnameBymid(String mid){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Map<String, Object>> list=raceService.findAllRaceRnameBymid(mid);
+			
+			resultMap.put("status", 0);
+			resultMap.put("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	/**
+	 * 给赛项分配TC管理员
+	 * @return
+	 */
+	@RequestMapping("/addRaceTcUserByRid")
+	@ResponseBody
+	public Map<String, Object> addRaceTcUserByRid(HttpServletRequest request){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			String rid=request.getParameter("rid");
+			String mid=request.getParameter("mid");
+			String uidList=request.getParameter("uidList");
+			//uidList="[{'uid':'c7311155c4dc4b4382d6f3279a6b3ba7'}]";
+			JSONArray array = JSONArray.fromObject(uidList);
+			String creatime=Tools.getStamp(request);
+			String uid=request.getParameter("uid");
+			UserMatchRace userMatchRace=new UserMatchRace();
+			userMatchRace.setMid(mid);
+			userMatchRace.setRid(rid);
+			userMatchRace.setUpduid(uid);
+			userMatchRace.setUpddate(creatime);
+			raceService.addRaceTcUserByRid(userMatchRace,array);
+			resultMap.put("status", 0);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	/**
+	 * 当前赛项下的TC
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/findRaceTcUserByRid")
+	@ResponseBody
+	public Map<String, Object> findRaceTcUserByRid(HttpServletRequest request){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			String rid=request.getParameter("rid");			
+			List<Map<String, Object>> list=raceService.findRaceTcUserByRid(rid);
+			resultMap.put("status", 0);
+			resultMap.put("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+	/**
+	 * 删除当前赛项下的tc
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/deleteRaceTcUserByRid")
+	@ResponseBody
+	public Map<String, Object> deleteRaceTcUserByRid(HttpServletRequest request){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			String rid=request.getParameter("rid");		
+			String uid=request.getParameter("uid");
+			String mid=request.getParameter("mid");
+			UserMatchRaceKey userMatchRaceKey=new UserMatchRaceKey();
+			userMatchRaceKey.setMid(mid);
+			userMatchRaceKey.setRid(rid);
+			userMatchRaceKey.setUid(uid);
+			raceService.deleteRaceTcUserByRid(userMatchRaceKey);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
+		
+	}
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<title>中国自动化学会机器人竞赛报名系统</title></title>
+
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/index.css" rel="stylesheet">
+<link href="../css/top.css" rel="stylesheet">
+<link href="../css/mricode.pagination.css" rel="stylesheet">
+<link href="../css/layerMsg.css" rel="stylesheet">
+<link href="../css/payRelevant.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div id="top">
+			<div class="topnav">
+	    		<img src="../images/icon_land_caa.png"/>
+	    		<h1>中国自动化学会机器人竞赛报名系统</h1>
+	    		<div class="navright">
+	    			<img id="avatar" >
+	    			<div id="username" class="username"></div>
+	    			<b class="logout"></b>
+	    		</div>
+	    		<div class="navcenter">
+	    			<span>当前赛事：</span>
+	    			<span class="currentmatch"></span>
+	    			<span class="changebtn" onclick="selManageMatch()">更改</span>
+	    		</div>
+    		</div>
+		</div>
+		<div class="tabbox">
+    		<ul class="tabul">
+    			<li><a href="main.html" target="_self">用户信息</a></li>
+    			<li><a href="eventList.html" target="_self">赛事报名</a></li>
+    			<li><a href="teamList.html" target="_self">队伍管理</a></li>
+    			<li><a href="memberinfo.html" target="_self">成员信息</a></li>
+    			<!-- <li><a href="relativeFile.html" target="_self">相关下载</a></li> -->
+    			<!-- <li><a href="paymentvoucher.html" target="_self">缴费凭证</a></li> -->
+    			<li class="active"><a href="payRelevant.html" target="_self">费用缴纳</a></li>
+    		</ul>
+    	</div>
+    	<div class="contentbox">
+    		<p class="location"><img src="../images/weizhi.png">您的位置：<span>费用缴纳</span></p>
+    		<div style="padding:10px 18px;background:#fff">
+    			<div class="tablewrap">
+    			<table>
+	    			<thead>
+	    				<tr>
+	    					<td style="width:250px">应缴金额</td>
+	    					<td style="width:250px">已支付确认金额</td>
+	    					<td style="width:250px">待支付确认金额</td>
+	    					<td style="width:250px">未缴金额</td>
+	    					<td></td>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    				<tr>
+	    					<td id="yingjje"></td>
+	    					<td id="yizhifuconfirmje"></td>
+	    					<td id="yizhifunotconfirmje"></td>
+	    					<td id="daijje"></td>
+	    					<td><span class="pay" onclick="skipPage()">去缴费</span></td>
+	    				</tr>
+	    			</tbody>
+	    		</table>
+    		</div>
+    		<div class="tablewrap memfeestatus">
+    			<table>
+	    			<thead>
+	    				<tr>
+	    					<td style="width:340px">成员</td>
+	    					<td style="width:340px">角色</td>
+	    					<td style="width:340px">单价(人/赛项)</td>
+	    					<td>参赛项数(个)</td>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    				
+	    			</tbody>
+	    		</table>
+    		</div>
+    		<p style="margin-bottom:5px;color:#999">缴费记录</p>
+    		<div class="tablewrap orderlist">
+    			<table>
+	    			<thead>
+	    				<tr>
+	    					<td style="width:250px">订单号</td>
+	    					<td style="width:250px">交易时间</td>
+	    					<td style="width:250px">交易方式</td>
+	    					<td style="width:250px">交易金额</td>
+	    					<td>交易状态</td>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    				
+	    			</tbody>
+	    		</table>
+    		</div>
+    		</div>
+    	</div>
+    	<p class="support">系统维护：智动天地（北京）科技有限公司</p>
+	</div>
+	<div id="popup">
+    	<div class="bg" ><img src="" alt=""/></div>
+	</div>
+	<script src="../static/js/jquery-3.2.1.min.js"></script>
+	<script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.form.js"></script>
+    <script src="../js/layerMsg.js"></script>
+    <script src="../js/payRelevant.js"></script>
+</body>
+</html>

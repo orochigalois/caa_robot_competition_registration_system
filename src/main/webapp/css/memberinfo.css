@@ -1,0 +1,408 @@
+body{
+	background:#f2f2f2;
+}
+input{padding:0px;}
+.tabbox{
+	background:#fff;
+}
+.tabul{
+	width:1200px;
+	margin:0 auto;
+	overflow:hidden
+}
+.tabul li{
+	float:left;
+	width:140px;
+	height:58px;
+	text-align:center;
+	font-size:18px;
+	line-height:58px;
+}
+.tabul li.active{
+	border-bottom:4px solid #e21230;
+}
+.contentbox{
+	width:1200px;
+	margin:0 auto;
+}
+.location{
+	color:#999;
+	margin-top:10px;
+	margin-bottom:4px;
+}
+.location img{
+	vertical-align: sub;
+	margin-right: 5px;
+}
+.arrows{
+	margin: 0 10px;
+}
+
+/*成员列表*/
+.membertable{
+	background-color: #fff;
+	padding: 10px 20px 30px 20px;
+}
+.addmem{text-align:right;cursor: pointer;margin-bottom: 10px;}
+#addBtn{
+	width: 100px;
+	height: 30px;
+	background: red;
+	color:#fff;
+	font-size: 14px;
+	border-radius:4px;
+	text-decoration: none;
+	text-align: center;
+	line-height: 30px;
+    display: inline-block;
+}
+table {
+    width: 100%;
+    table-layout: fixed;
+    word-break: break-all;
+}
+#myRace tr{border-bottom: 1px solid #f2f2f2;}
+.membertabletable tr{border-bottom: 1px solid #f2f2f2;height: 40px;}
+thead tr td{
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+}
+.membertable tbody tr{border-bottom: 1px solid #f2f2f2;height: 60px;}
+.xiangqing,.change{margin-right:10px;}
+tbody tr td{
+	color: #333;
+	font-size: 12px;
+}
+tbody tr td:LAST-CHILD img{
+	cursor: pointer;
+}
+.memberhead{
+	width: 40px;
+	height: 40px;
+	margin-right: 5px;
+	border-radius: 50px;
+}
+.hidemem{display:none}
+/*成员列表结束*/
+
+
+/*成员详情*/
+.memdetails{
+	background-color: #fff;
+	padding: 30px 0;
+}
+.memdetails ul li{
+	height:158px;
+	float: left;
+	list-style: none;
+	border-right: 1px solid #ccc;
+	font-size:0px;
+}
+.memdetails ul li p{margin-bottom: 25px;}
+.memdetails ul li p:LAST-CHILD{margin-bottom: 0;}
+.memdetails ul li p span{font-size:14px;color: #000;}
+.memspan-1,.memspan-2,.memspan-3,.memspan-4{
+	margin-right: 10px;
+	display: inline-block;
+    text-align: right;
+}
+.memspan-1{
+	width: 124px;
+}
+.memspan-2{
+	width: 88px;
+}
+.memspan-3{
+	width: 60px;
+}
+.memspan-4{
+	width: 66px;
+}
+#memhead{
+	width: 105px;
+	height: 158px;
+}
+/*成员详情结束*/
+
+/*修改指导教师信息*/
+#shade{
+    position:fixed;
+    z-index:2;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.44);
+}
+#cover{
+	display:none;
+    position:fixed;
+    z-index:2;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.44);
+}
+#changeteainfo{
+    position:fixed;
+    z-index:3;
+    top:50%;
+    left:50%;
+	width: 839px;
+	height: 338px;
+	margin-left:-420px;
+	margin-top:-170px;
+	background: #fff;
+	border-radius: 4px;
+	padding: 30px 20px;
+	font-size: 0px;
+}
+.guanbi{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	cursor: pointer;
+}
+#form h1{
+	font-size:18px;
+	color: #333;
+	text-align: center;
+	font-weight: bold;
+	margin: 0;
+}
+.changeinfo{margin-top: 20px;}
+.changeinfo div{
+	float: left;
+}
+.changeinfo .perinfodiv{
+	margin-bottom: 10px;
+	font-size: 14px;
+	line-height: 30px;
+	position:relative;
+}
+.changeinfo span{
+	font-size: 14px;
+	color: #333;
+	vertical-align: middle;
+	margin-right: 10px;
+	display: inline-block;
+	text-align: right;
+}
+.div-l{position: relative;width:248px;}
+.div-l span{width: 56px;}
+.div-c{margin-left: 30px;width:234px;}
+.div-c span{width: 42px;}
+.changeinfo input[type=text]{
+	width: 182px;
+	height: 30px;
+	border: 1px solid #ccc;
+	padding-left:10px;
+}
+.changeinfo input[type=radio]{
+	margin-right: 5px;
+}
+#female{margin-left: 20px}
+
+
+.memsave{
+	margin-top: 10px;
+	text-align: center;
+}
+#savebtn,#savebtn:hover{
+	display: inline-block;
+	width: 116px;
+	height: 30px;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 14px;
+	background: red;
+	text-decoration: none;
+	line-height: 30px;
+	cursor: pointer;
+}
+#didtype, #diningtype,#folk{
+	background: url("../images/xiala.png") no-repeat 162px 10px;
+	cursor: pointer;
+}
+#birthday{
+	background: url("../images/rili.png") no-repeat 160px 7px;
+}
+.div-r{margin-left: 20px;}
+.div-r span{
+	font-size:14px;
+	margin-right: 10px;
+	vertical-align: top;
+}
+.div-r img{
+	width: 86px;
+	height: 130px;
+}
+#imgformat{
+	display: block;
+	font-size: 12px;
+	color: #999;
+	margin: 5px 0 12px 63px;
+	text-align:left;
+}
+#folk+.emulate{
+	height:100px;
+	overflow-x:hidden;
+	border:1px solid #ccc;
+	border-top:0;
+}
+#folk+.emulate li{
+	border:0;
+	border-bottom:1px solid #ccc;
+	width:163px;
+}
+#folk+.emulate li:last-child{
+	border-bottom:0;
+}
+.emulate{
+	display:none;
+	background:#fff;
+	position:absolute;
+	left:66px;
+	top:30px;
+	z-index:1;
+}
+.emulate li{
+	width:182px;
+	height:30px;
+	border:1px solid #ccc;
+	line-height:30px;
+	border-top:0;
+	padding-left:10px;
+	color:#999;
+	cursor:pointer;
+}
+.emulate li:hover{
+	color:#333;
+}
+#zhaopian{
+	float:left;
+	margin-left:27px;
+}
+
+.imgfile{
+	position: absolute;
+    left: 0;
+    top: 0;
+    width: 86px;
+    height: 130px;
+    outline: 0;
+    opacity: 0;
+}
+#myform{
+	margin-left:65px;
+	position:relative;
+}
+/*修改指导教师信息结束*/
+
+.enrollWin{
+	display:none;
+    position:fixed;
+    z-index:3;
+    width:380px;
+    height:180px;
+	background: #fff;
+	border-radius: 4px;
+	padding: 30px 20px;
+	top:50%;
+	left:50%;
+	margin-left:-190px;
+	margin-top:-90px;
+}
+.closeWin{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	cursor: pointer;
+}
+.wTitle{
+	font-size:18px;
+	color: #333;
+	text-align: center;
+	font-weight: bold;
+	margin: 0;
+	margin-bottom:20px;
+}
+.choose,.choose:hover,.create,.create:hover{
+	display:block;
+	width:196px;
+	height:36px;
+	margin:0 auto;
+	border:1px solid #606060;
+	border-radius:4px;
+	text-decoration:none;
+	color:#333;
+	line-height:36px;
+	margin-bottom:10px;
+	text-align:center;
+	cursor:pointer;
+}
+
+.upload,.upload:hover{
+	color:#009bdb;
+	cursor:pointer;
+	position:relative;
+}
+.upload1{
+	color:#999;
+}
+.view,.view:hover{
+	color:#333;
+	cursor:pointer;
+}
+.pdffile{
+	position: absolute;
+    width: 48px;
+    height: 16px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+.shade{
+/* 	display:none; */
+    position:fixed;
+    z-index:2;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0, 0, 0, 0.44);
+}
+.mymatchlist{
+	/* display:none; */
+    position:fixed;
+    z-index:3;
+    width:380px;
+    max-height:400px;
+	background: #fff;
+	border-radius: 4px;
+	padding: 30px 20px;
+	top:50%;
+	left:50%;
+	margin-left:-190px;
+	transform: translateY(-50%);
+}
+.mymatchlistul li{
+	word-break:break-all;
+}
+.btnwrap{
+	text-align:center;
+	margin-top:10px;
+}
+.btnwrap span{
+	display:inline-block;
+	color:#fff;
+	font-size:14px;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	text-decoration:none;
+	border-radius:4px;
+	cursor:pointer;
+}

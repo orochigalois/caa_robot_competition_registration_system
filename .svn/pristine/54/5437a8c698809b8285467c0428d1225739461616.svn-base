@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zts.robot.mapper.RaceTeamScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.zts.robot.pojo.RaceTeamScore" >
+    <id column="rid" property="rid" jdbcType="VARCHAR" />
+    <id column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="flg" property="flg" jdbcType="VARCHAR" />
+    <result column="grantjzstatus" property="grantjzstatus" jdbcType="VARCHAR" />
+    <result column="grantcsstatus" property="grantcsstatus" jdbcType="VARCHAR" />
+    <result column="awards" property="awards" jdbcType="VARCHAR" />
+    <result column="cup" property="cup" jdbcType="VARCHAR" />
+    <result column="awardsno" property="awardsno" jdbcType="VARCHAR" />
+    <result column="cupno" property="cupno" jdbcType="VARCHAR" />
+    <result column="awardsurl" property="awardsurl" jdbcType="VARCHAR" />
+    <result column="cupurl" property="cupurl" jdbcType="VARCHAR" />
+    <result column="creatstatus" property="creatstatus" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, tid, score, flg, grantjzstatus, grantcsstatus, awards, cup, awardsno, cupno, 
+    awardsurl, cupurl, creatstatus, mid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zts.robot.pojo.RaceTeamScoreKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from re_raceteamscore
+    where rid = #{rid,jdbcType=VARCHAR}
+      and tid = #{tid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zts.robot.pojo.RaceTeamScoreKey" >
+    delete from re_raceteamscore
+    where rid = #{rid,jdbcType=VARCHAR}
+      and tid = #{tid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zts.robot.pojo.RaceTeamScore" >
+    insert into re_raceteamscore (rid, tid, score, 
+      flg, grantjzstatus, grantcsstatus, 
+      awards, cup, awardsno, 
+      cupno, awardsurl, cupurl, 
+      creatstatus, mid)
+    values (#{rid,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+      #{flg,jdbcType=VARCHAR}, #{grantjzstatus,jdbcType=VARCHAR}, #{grantcsstatus,jdbcType=VARCHAR}, 
+      #{awards,jdbcType=VARCHAR}, #{cup,jdbcType=VARCHAR}, #{awardsno,jdbcType=VARCHAR}, 
+      #{cupno,jdbcType=VARCHAR}, #{awardsurl,jdbcType=VARCHAR}, #{cupurl,jdbcType=VARCHAR}, 
+      #{creatstatus,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zts.robot.pojo.RaceTeamScore" >
+    insert into re_raceteamscore
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="flg != null" >
+        flg,
+      </if>
+      <if test="grantjzstatus != null" >
+        grantjzstatus,
+      </if>
+      <if test="grantcsstatus != null" >
+        grantcsstatus,
+      </if>
+      <if test="awards != null" >
+        awards,
+      </if>
+      <if test="cup != null" >
+        cup,
+      </if>
+      <if test="awardsno != null" >
+        awardsno,
+      </if>
+      <if test="cupno != null" >
+        cupno,
+      </if>
+      <if test="awardsurl != null" >
+        awardsurl,
+      </if>
+      <if test="cupurl != null" >
+        cupurl,
+      </if>
+      <if test="creatstatus != null" >
+        creatstatus,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="flg != null" >
+        #{flg,jdbcType=VARCHAR},
+      </if>
+      <if test="grantjzstatus != null" >
+        #{grantjzstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="grantcsstatus != null" >
+        #{grantcsstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="awards != null" >
+        #{awards,jdbcType=VARCHAR},
+      </if>
+      <if test="cup != null" >
+        #{cup,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsno != null" >
+        #{awardsno,jdbcType=VARCHAR},
+      </if>
+      <if test="cupno != null" >
+        #{cupno,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsurl != null" >
+        #{awardsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="cupurl != null" >
+        #{cupurl,jdbcType=VARCHAR},
+      </if>
+      <if test="creatstatus != null" >
+        #{creatstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.RaceTeamScore" >
+    update re_raceteamscore
+    <set >
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="flg != null" >
+        flg = #{flg,jdbcType=VARCHAR},
+      </if>
+      <if test="grantjzstatus != null" >
+        grantjzstatus = #{grantjzstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="grantcsstatus != null" >
+        grantcsstatus = #{grantcsstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="awards != null" >
+        awards = #{awards,jdbcType=VARCHAR},
+      </if>
+      <if test="cup != null" >
+        cup = #{cup,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsno != null" >
+        awardsno = #{awardsno,jdbcType=VARCHAR},
+      </if>
+      <if test="cupno != null" >
+        cupno = #{cupno,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsurl != null" >
+        awardsurl = #{awardsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="cupurl != null" >
+        cupurl = #{cupurl,jdbcType=VARCHAR},
+      </if>
+      <if test="creatstatus != null" >
+        creatstatus = #{creatstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=VARCHAR}
+      and tid = #{tid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zts.robot.pojo.RaceTeamScore" >
+    update re_raceteamscore
+    set score = #{score,jdbcType=INTEGER},
+      flg = #{flg,jdbcType=VARCHAR},
+      grantjzstatus = #{grantjzstatus,jdbcType=VARCHAR},
+      grantcsstatus = #{grantcsstatus,jdbcType=VARCHAR},
+      awards = #{awards,jdbcType=VARCHAR},
+      cup = #{cup,jdbcType=VARCHAR},
+      awardsno = #{awardsno,jdbcType=VARCHAR},
+      cupno = #{cupno,jdbcType=VARCHAR},
+      awardsurl = #{awardsurl,jdbcType=VARCHAR},
+      cupurl = #{cupurl,jdbcType=VARCHAR},
+      creatstatus = #{creatstatus,jdbcType=VARCHAR},
+      mid = #{mid,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=VARCHAR}
+      and tid = #{tid,jdbcType=VARCHAR}
+  </update>
+</mapper>

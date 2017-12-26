@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<title>中国自动化学会机器人竞赛报名系统</title></title>
+
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/index.css" rel="stylesheet">
+<link href="../css/top.css" rel="stylesheet">
+<link href="../css/mricode.pagination.css" rel="stylesheet">
+<link href="../css/layerMsg.css" rel="stylesheet">
+<link href="../css/paymentvoucher.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div id="top">
+			<div class="topnav">
+	    		<img src="../images/icon_land_caa.png"/>
+	    		<h1>中国自动化学会机器人竞赛报名系统</h1>
+	    		<div class="navright">
+	    			<img id="avatar" >
+	    			<div id="username" class="username"></div>
+	    			<b class="logout"></b>
+	    		</div>
+    		</div>
+		</div>
+		<div class="tabbox">
+    		<ul class="tabul">
+    			<li><a href="main.html" target="_self">用户信息</a></li>
+    			<li><a href="eventList.html" target="_self">赛事报名</a></li>
+    			<li><a href="teamList.html" target="_self">队伍管理</a></li>
+    			<li><a href="memberinfo.html" target="_self">成员信息</a></li>
+    			<li><a href="relativeFile.html" target="_self">相关下载</a></li>
+    			<li class="active"><a href="paymentvoucher.html" target="_self">缴费凭证</a></li>
+    			<li><a href="payRelevant.html" target="_self">费用缴纳</a></li>
+    		</ul>
+    	</div>
+    	<div class="contentbox">
+    		<p class="location"><img src="../images/weizhi.png">您的位置：<span>缴费凭证</span></p>
+    		<div class="photowall">
+    			<ul class="photoul clearfix">
+    				
+    			</ul>
+    			<form id="myform" enctype="multipart/form-data" method="post">
+					<a class="addbtn">添加凭证<input type="file" id="file" onchange="uploadImg()" name="files"></a>
+					<input hidden name="savetype" value="01">
+				</form>
+				<a class="uploadbtn" onclick="uploadFile()">保存</a>
+    		</div>
+    	</div>
+    	<div id="popup">
+    		<div class="bg" ><img src="" alt=""/></div>
+		</div>
+    	<p class="support">系统维护：智动天地（北京）科技有限公司</p>
+	</div>
+	<script src="../static/js/jquery-3.2.1.min.js"></script>
+	<script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.form.js"></script>
+    <script src="../js/layerMsg.js"></script>
+    <script src="../js/paymentvoucher.js"></script>
+</body>
+</html>

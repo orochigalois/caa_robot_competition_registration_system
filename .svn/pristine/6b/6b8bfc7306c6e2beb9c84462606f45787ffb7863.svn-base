@@ -1,0 +1,379 @@
+$(function(){
+	//getEvent();
+	bmsgetcurmatchname();
+	getCompetition();
+})
+var raceobj="";
+function getEvent(){
+	$.ajax({
+		type: "GET",
+        url: "../findAllMatchList",
+        dataType: "JSON",
+        async:false,
+        data: {},
+        success: function(data){
+        	if(data.status == 0){
+        		$(".emulate").empty();
+        		var htmls="";
+        		$.each(data.list,function(i,match){
+        			htmls+='<li mid="'+match.mid+'">'+match.mname+'</li>'
+    			
+    				if(match.mstatus=="00"){
+    					$(".selinput").val(match.mname)
+    					$(".selinput").attr("mid",match.mid)
+    				}
+        			
+        		})
+        		$(".emulate").append(htmls);
+        		$(document).click(function(){
+        			$(".emulate").hide();
+        		})
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function choseMatch(){
+	window.event.stopPropagation();
+	$(".emulate").show();
+	$(".emulate li").click(function(){
+		$(".selinput").val($(this).text());
+		$(".selinput").attr("mid",$(this).attr("mid"));
+		$(".emulate").hide();
+		 getCompetition();
+	})
+}
+
+function createCompet(){
+	window.open("BMS-createCompetition.html","_self")
+}
+
+function getCompetition(){
+	var mid=sessionStorage.getItem("currentmid");
+	var pageSize=10;
+	$("#page").unbind().data("pagination", null).empty();	
+	$("#page").pagination({
+		pageSize : pageSize,
+		showFirstLastBtn : true,
+		showPrevious: true,
+	    showNext: true,
+	    autoHidePrevious: true,
+	    autoHideNext: true,
+		remote : {
+			"url" : "../findRaceListByPage",
+			pageParams : function(data) {
+				return {
+					iDisplayStart : data.pageIndex * data.pageSize,
+					iDisplayLength : data.pageSize,
+					mid:mid
+				};
+			}, // [Function]:自定义请求参数
+			"success" : function(data, status) {
+				console.log(data)
+				if (data.status == 0) {
+					$("tbody").empty();
+					var htmls="";
+					$.each(data.list,function(i,com){
+						htmls+='<tr><td>'+com.rcode+'</td><td rid="'+com.rid+'">'
+								+'<a class="comptname" onclick="viewCompt(this)">'+com.rname+'</a></td>'
+							  	+'<td>'+com.startdate+'</td>'
+							  	+'<td>'+com.enddate+'</td>'
+							  	+'<td>'+com.createdate.slice(0,16)+'</td>'
+							  	+'<td>'+com.uname+'</td>'
+							  	+'<td rid="'+com.rid+'"><a class="modify" onclick="editCompt(this)">修改</a>'
+							  	+'<span class="split">|</span><a class="delete"'
+							  	+' onclick="alertConfirm(\'2\',\'确定删除该赛项吗？\',\'delCompt()\',this)">删除</a>'
+							  	+'<span class="split">|</span><a class="delete"'
+							  	+' onclick="showTCList(this)">TC管理</a></td></tr>'
+					})
+					$("tbody").append(htmls)
+				} else if(data.status==1){
+					alertMsg("2",data.errmsg,"fail")
+				}
+			},
+			"error" : function(data) {
+				alertMsg("2","后台获取数据出错","fail")
+			},
+			beforeSend : null, // [Function]:请求之前回调函数（同jQuery）
+			complete : null, // [Function]:请求完成回调函数（同jQuery）
+			pageIndexName : 'pageIndex', // (已过时）[String]:自定义请求参数的当前页名称
+			pageSizeName : 'iDisplayLength', // (已过时）[String]:自定义请求参数的每页数量名称
+			totalName : 'iTotalRecords', // [String]:自定义返回的总页数名称，对象属性可写成'data.total'
+			traditional : false
+			// [Boolean]:参数序列化方式（同jQuery）
+		},
+	});
+}
+
+function editCompt(obj){
+	var rid=$(obj).parent().attr("rid");
+	sessionStorage.setItem("rid",rid);
+	window.open('BMS-editCompetition.html',"_self");
+}
+
+function viewCompt(obj){
+	var rid=$(obj).parent().attr("rid");
+	sessionStorage.setItem("rid",rid);
+	window.open('BMS-competitionDetail.html',"_self");
+}
+
+function delCompt(){
+	closeWin();
+	var rid=$(tempobj).parent().attr("rid");
+	$.ajax({
+		type: "GET",
+        url: "../updateDelflgRaceByRid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"rid":rid
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		alertMsg("2","删除成功！","success")
+        		$(tempobj).parent().parent().remove();
+        		setTimeout('location.reload()',2000);
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function showcreateWin(){
+	$("#cover,.createWin").show();
+} 
+
+function closecreateWin(){
+	$("#cover,.createWin").hide();
+}
+
+function closecomptWin(){
+	$("#cover,.comptWin").hide();
+}
+
+function getpastCompt(){
+	$(".createWin").hide();
+	$(".comptWin").show();
+	$.ajax({
+		type: "GET",
+        url: "../findPreviousRace",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		var midarr=[];
+        		$.each(data.list,function(i,com){
+        			var htmls="";
+        			htmls+='<li mid="'+com.mid+'" onclick="showcomptul(this)">'+com.mname+'<ul class="comptul"></ul></li>'
+        			if($('.eventul li[mid='+com.mid+']').length==0){
+        				$(".eventul").append(htmls)
+        			}
+        		})
+        		$.each(data.list,function(i,com){
+        			var htmls="";
+        			htmls+='<li rid="'+com.rid+'"><input class="comptcheckbox" type="checkbox">'
+        					+com.rname+'</li>';
+        			$('.eventul>li[mid='+com.mid+']').children().append(htmls)
+        			$("input[type='checkbox'],.comptul>li").click(function(e){  
+        			    e.stopPropagation();   
+        			}); 
+        		})
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function showcomptul(obj){
+	$(obj).children().slideToggle();
+}
+
+function importCompt(){
+	var mid=sessionStorage.getItem("currentmid");
+	var ridarr=[];
+	$("input:checked").each(function(){
+		ridarr.push($(this).parent().attr("rid"));
+	})
+	if(ridarr.join(",")==""){
+		alertMsg("2","请选择赛项！","fail")
+		return;
+	}
+	$.ajax({
+		type: "GET",
+        url: "../addImportRaceByRids",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"mid":mid,
+        		"Rids":ridarr.join(",")
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		closecomptWin();
+        		alertMsg("2","导入成功！","success")
+        		setTimeout('location.reload()',2000)
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function showTCList(obj){
+	raceobj=obj;
+	var rid=$(obj).parent().attr("rid");
+	var htmls="";
+	htmls+='<div class="shade"></div><div class="TCwrap"><h1 class="wTitle">TC管理</h1>'
+    	 +'<img class="closeWin" src="../images/guanbi.png" onclick="closeTCwrap()">'
+    	 +'<div class="infoneck"><div class="neckleft"><span style="float:left;">赛事名称：</span>'
+    	 +'<span class="racename">'+$(obj).parent().parent().find("td:eq(1)").text()+'</span>'
+    	 +'</div><span class="neckright" onclick="getRestTc(\''+rid+'\')">添加TC</span>'
+    	 +'</div>';
+	$.ajax({
+		type: "GET",
+        url: "../findRaceTcUserByRid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"rid":rid,
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		console.log(data);
+        		if(data.list.length==0){
+        			htmls+='<h1 class="wTitle" style="margin-top:20px;font-weight:normal">该赛项未分配TC,请添加！</h1>'
+        		}else{
+        			htmls+='<div class="tablewrap"><table><thead><tr>'
+        				 +'<td style="width:70%">TC姓名</td><td>操作</td>'
+        				 +'</tr></thead><tbody>'
+        			$.each(data.list,function(i,item){
+        				htmls+='<tr><td>'+item.uname+'</td>'
+    					     +'<td uid="'+item.uid+'" rid="'+rid+'">'
+    					     +'<a class="delete" onclick="alertConfirm(\'2\',\'确定删除该TC吗？\',\'delRaceTC()\',this)">删除</a></td>'
+    				         +'</tr>'
+        			})
+        			htmls+='</tbody></table></div>'
+        		}
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+	htmls+='</div>'
+	$("body").append(htmls)
+}
+
+function getRestTc(rid){
+	var htmls="";
+	htmls+='<div class="cover2"></div><div class="TCList">'
+    	 +'<h1 class="wTitle">添加TC</h1>'
+    	 +'<img class="closeWin" src="../images/guanbi.png" onclick="closeTCList()">'
+    	 +'<div class="tablewrap">'
+    	 +'<table><thead><tr><td style="width:20%"></td>'
+    	 +'<td style="text-align:center;padding-right:0">TC姓名</td>'
+    	 +'</tr></thead><tbody>';
+	$.ajax({
+		type: "GET",
+        url: "../findTCUser",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"rid":rid,
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		console.log(data);
+        		$.each(data.list,function(i,item){
+        			htmls+='<tr><td><input type="checkbox" uid="'+item.uid+'" class="selTc"></td>'
+    					 +'<td style="text-align:center">'+item.uname+'</td></tr>';
+        		})
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+	htmls+='</tbody></table></div><div class="btnwrap">'
+		 +'<span style="background:#e21230;margin-right:20px" onclick="addTCForRace(\''+rid+'\')">确定</span>'
+		 +'<span style="color:#333;border:1px solid #ccc;" onclick="closeTCList()">取消</span></div></div>';
+	$("body").append(htmls)
+}
+
+function addTCForRace(rid){
+	if($(".selTc:checked").length==0){
+		alertMsg("2","请选择TC！","fail");
+		return;
+	}
+	var uid=sessionStorage.getItem("uid");
+	var mid=sessionStorage.getItem("currentmid");
+	var uidList=[];
+	$(".selTc:checked").each(function(){
+		var info={};
+		info.uid=$(this).attr("uid");
+		uidList.push(info);
+	})
+	$.ajax({
+		type: "GET",
+        url: "../addRaceTcUserByRid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"rid":rid,
+        		"uidList":JSON.stringify(uidList),
+        		"uid":uid,
+        		"mid":mid
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		closeTCList();
+        		closeTCwrap();
+        		alertMsg("2","操作成功","success");
+        		showTCList(raceobj)
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function closeTCList(){
+	$(".cover2").remove();
+	$(".TCList").remove();
+}
+function closeTCwrap(){
+	$(".shade").remove();
+	$(".TCwrap").remove();
+}
+
+function delRaceTC(){
+	closeWin();
+	var uid=$(tempobj).parent().attr("uid");
+	var rid=$(tempobj).parent().attr("rid");
+	var mid=sessionStorage.getItem("currentmid");
+	$.ajax({
+		type: "GET",
+        url: "../deleteRaceTcUserByRid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"rid":rid,
+        		"uid":uid,
+        		"mid":mid
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		closeTCwrap();
+        		alertMsg("2","删除成功！","success")
+        		showTCList(raceobj);
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}

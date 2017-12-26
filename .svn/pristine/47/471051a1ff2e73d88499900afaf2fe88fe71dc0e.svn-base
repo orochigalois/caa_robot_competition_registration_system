@@ -1,0 +1,241 @@
+//超时登陆
+$(function(){ 
+    //.ajaxError事件定位到document对象，文档内所有元素发生ajax请求异常，都将冒泡到document对象的ajaxError事件执行处理
+    $(document).ajaxError(
+        //所有ajax请求异常的统一处理函数，处理
+        function(event,xhr,options,exc ){
+            if(xhr.status == 'undefined'){
+                return;
+            }
+            switch(xhr.status){
+
+                case 451:
+                	alertMsg("1","登录超时！请重新登录","fail"); 
+                	setTimeout('window.open("../login.html","_self")',2000)
+                    break;
+                default:
+                    
+                	console.log(xhr.responseText);
+                	break;
+            }
+        }
+    );
+});
+
+var tempobj="";
+
+function alertMsg(cover,text,icon){
+	var htmls="";
+	if(cover=="1"){
+		htmls+='<div class="cover1"></div><div class="msgWin1">'
+	}else if(cover=="99"){
+		htmls+='<div class="cover1"></div><div class="msgWin1">'
+		htmls+='<img class="closeWin" src="../images/guanbi.png" onclick="closeWin()">'
+	    		+'<img src="images/'+icon+'.png" class="face">'
+	    		+'<h1 class="wTitle">'+text+'</h1>'
+	    		+'<a class="known" onclick="closeWin()">知道了</a></div>';
+	    $("body").append(htmls);
+	    return;
+	}else{
+		htmls+='<div class="cover2"></div><div class="msgWin2">'
+	}
+	htmls+='<img class="closeWin" src="../images/guanbi.png" onclick="closeWin()">'
+    		+'<img src="../images/'+icon+'.png" class="face">'
+    		+'<h1 class="wTitle">'+text+'</h1>'
+    		+'<a class="known" onclick="closeWin()">知道了</a></div>';
+    $("body").append(htmls);
+}
+
+function closeWin(){
+	$(".msgWin1").remove();
+	$(".msgWin2").remove();
+	$(".cover1").remove();
+	$(".cover2").remove();
+}
+
+function alertConfirm(cover,text,fun,obj){
+	tempobj=obj;
+	var htmls="";
+	if(cover=="1"){
+		htmls+='<div class="cover1"></div><div class="msgWin1">'
+	}else{
+		htmls+='<div class="cover2"></div><div class="msgWin2">'
+	}
+	htmls+='<img class="closeWin" src="../images/guanbi.png" onclick="closeWin()">'
+    		+'<h1 class="wTitle">提示</h1>'
+    		+'<div class="question">'+text+'</div>'
+    		+'<div class="confirmBtn"><a class="conBtn1" onclick="'+fun+'">确定</a>'
+    		+'<a class="conBtn2" onclick="closeWin()">取消</a></div></div>';
+    $("body").append(htmls);
+}
+
+function alertConfirm2(cover,text,fun){
+	tempobj=obj;
+	var htmls="";
+	if(cover=="1"){
+		htmls+='<div class="cover1"></div><div class="msgWin1">'
+	}else{
+		htmls+='<div class="cover2"></div><div class="msgWin2">'
+	}
+	htmls+='<img class="closeWin" src="../images/guanbi.png" onclick="closeWin()">'
+    		+'<h1 class="wTitle">提示</h1>'
+    		+'<div class="question">'+text+'</div>'
+    		+'<div class="confirmBtn"><a class="conBtn1" onclick="'+fun+'">确定</a>'
+    		+'<a class="conBtn2" onclick="closeWin()">取消</a></div></div>';
+    $("body").append(htmls);
+}
+
+$(function(){
+	//回显顶部信息
+	findUserHead();
+	
+	//退出登录
+	logout();
+	
+})
+
+var uid = sessionStorage.getItem("uid");
+//回显顶部信息
+function findUserHead(){
+	
+	$.ajax({
+		type: "GET",
+        url: "../findLoginUser",
+        dataType: "JSON",
+        async:false,
+        data: {"uid":uid},
+        success:function(data){
+        	$("#avatar").attr("src",data.user.picurl);
+        	$("#username").text(data.user.uname);
+        }
+	})
+}
+
+//退出登录
+function logout(){
+	$(".logout").click(function(){
+		$.ajax({
+			type: "GET",
+			url: "../logout",
+			dataType: "JSON",
+			async:false,
+			data:{},
+			success:function(data){
+	        	window.location.href = "../login.html";
+	        	$(".navright").addClass("hidenavright");
+	        	if(($("#autologin").prop("checked"))){
+	        		$("#uname").val("");
+	        		$("#pwd").val("");
+	        	}
+	        },
+	        error:function(data){
+	        	      	
+	        }
+		})
+	})
+}
+
+function getcurmatchname(){
+	var uid=sessionStorage.getItem("uid");
+	$.ajax({
+		type: "GET",
+        url: "../findMatchByUid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        	"uid":uid,
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		if(sessionStorage.getItem("currentmid")==undefined){
+        			$(".currentmatch").text(data.list[0].mname);
+        			sessionStorage.setItem("currentmid",data.list[0].mid)
+        			sessionStorage.setItem("enddate",data.list[0].signenddate)
+        		}else{
+        			$.each(data.list,function(i,match){
+        				if(match.mid==sessionStorage.getItem("currentmid")){
+        					$(".currentmatch").text(match.mname);
+        					sessionStorage.setItem("enddate",match.signenddate)
+        				}
+        			})
+        		}
+        	}else if(data.status == 1){
+        		alertMsg("1",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function selManageMatch(){
+	var htmls="";
+	htmls+='<div class="shade"></div><div class="mymatchlist">'
+		+'<h1 class="wTitle">选择赛事</h1><ul class="mymatchlistul">';
+	var uid=sessionStorage.getItem("uid");
+		$.ajax({
+			type: "GET",
+	        url: "../findMatchByUid",
+	        dataType: "JSON",
+	        async:false,
+	        data: {
+	        	"uid":uid,
+	        	},
+	        success: function(data){
+	        	if(data.status == 0){
+	        		$.each(data.list,function(i,match){
+	        			htmls+='<li><input type="radio" name="match" value="'
+	        			+match.mid+'" ';
+	        			if(i==0){
+	        				htmls+="checked";
+	        			}
+	        			htmls+='>'+match.mname+'</li>'
+	        		})
+	        	}else if(data.status == 1){
+	        		alertMsg("1",data.errmsg,"fail")
+	        	}
+	        },
+		})
+		
+	htmls+='</ul><div class="btnwrap">'
+		 +'<span style="background:#e21230;margin-right:20px" onclick="setcurmatch()">确定</span>'
+		 +'<span style="color:#333;border:1px solid #ccc;" onclick="closeselmanage()">取消</span>'
+	     +'</div></div>'
+	$("body").append(htmls)
+}
+
+function closeselmanage(){
+	$(".shade,.mymatchlist").remove();
+}
+
+function bmsgetcurmatchname(){
+	$.ajax({
+		type: "GET",
+        url: "../findAllMatchList",
+        dataType: "JSON",
+        async:false,
+        data: {
+        	
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		if(sessionStorage.getItem("currentmid")==undefined){
+        			$(".currentmatch").text(data.list[0].mname);
+        			sessionStorage.setItem("currentmid",data.list[0].mid)
+        		}else{
+        			$.each(data.list,function(i,match){
+        				if(match.mid==sessionStorage.getItem("currentmid")){
+        					$(".currentmatch").text(match.mname);
+        					sessionStorage.setItem("enddate",match.signenddate)
+        				}
+        			})
+        		}
+        	}else if(data.status == 1){
+        		alertMsg("1",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+function setDefaultMatch(mid){
+	sessionStorage.setItem("currentmid",mid);
+	alertMsg("2","操作成功","success")
+}

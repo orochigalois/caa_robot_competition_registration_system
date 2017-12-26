@@ -1,0 +1,78 @@
+package com.zts.robot.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.zts.robot.pojo.RaceTeamScore;
+import com.zts.robot.service.ModelService;
+
+import net.sf.json.JSONArray;
+
+@Controller
+public class ModelController {
+	@Autowired
+	private ModelService modelService;
+	/**
+	 * 创建模板	
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/createModels")
+	@ResponseBody
+	public Map<String, Object> createModels(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			System.out.println("开始请求");
+			String rid=request.getParameter("rid");
+			
+			String tidList=request.getParameter("tidList");
+			JSONArray array = JSONArray.fromObject(tidList);			
+			String mid = request.getParameter("mid");
+
+			//modelService.createModel(rid,mid,array,resultMap);			
+			//modelService.createNewModel(rid,mid,array,resultMap);
+			modelService.createNewPDFModel(rid,mid,array,resultMap);
+		} catch (Exception e) {			
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统数据错误！请联系研发人员！");
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/sendEmailPdf")
+	@ResponseBody
+	public Map<String, Object> sendEmailPdf(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String tid=request.getParameter("tid");
+		//JSONArray array = JSONArray.fromObject(tidList);
+		String rid=request.getParameter("rid");
+		String flg=request.getParameter("flg");
+		String mid =request.getParameter("mid");
+		try {
+			
+			modelService.sendEmailPdf(rid,mid,tid,resultMap,flg);			
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			RaceTeamScore raceTeamScore = (RaceTeamScore) resultMap.get("raceTeamScore");
+			if("00".equals(flg)){
+				raceTeamScore.setGrantjzstatus("02");
+			}else if("01".equals("flg")){
+				raceTeamScore.setGrantcsstatus("02");
+			}
+			modelService.failGrantstatus(raceTeamScore);			
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+}

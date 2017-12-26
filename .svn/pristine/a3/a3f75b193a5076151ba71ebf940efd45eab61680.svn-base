@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>中国自动化学会机器人竞赛报名系统</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<link href="css/layerMsg.css" rel="stylesheet">
+  	<link href="css/top.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	.msgWin1,.cover1{
+			display:none;
+		}
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div id="top">
+    		<div class="topnav">
+	    		<img src="images/icon_land_caa.png"/>
+	    		<h1>中国自动化学会机器人竞赛报名系统</h1>
+	    		<div class="navright hidenavright">
+	    			<img id="avatar" >
+	    			<div id="username" class="username"></div>
+	    			<b class="logout"></b>
+	    		</div>
+    		</div>
+    	</div>
+    	<div class="loginbox">
+    		<div class="loginbox-l">
+    			<img src="images/rcccaa.png">
+    			<h2>中国自动化学会机器人竞赛报名系统</h2>
+    		</div>
+    		<div class="loginbox-r">
+    			<div class="unamebox">
+    				<i class="inputicon"></i>
+    				<input type="text" id="uname" placeholder="请输入账号" autocomplete="off">
+    				<b class="inputbg"></b>
+    			</div>
+    			<div class="pwdbox">
+    				<i class="inputicon"></i>
+    				<input type="password" id="pwd" placeholder="请输入密码" autocomplete="off">
+    				<b class="inputbg"></b>
+    			</div>
+    			<div class="coderel">
+    				<label><input type="checkbox" id="autologin">下次自动登录</label>
+    				<a href="jsp/forgetPwd-first.html" target="_self">忘记密码</a>
+    			</div>
+    			<a id="login" onclick="loginAcount()">登录</a>
+    			<a href="jsp/register-first.html" id="noacount">没有账号？立即注册</a>
+    		</div>
+    	</div>
+    	<div id="tech">
+   			<span>智动天地(北京)科技有限公司提供技术支持</span>	
+   			<img src="images/logo2.png">
+   		</div>
+    </div>
+	<div class="cover1"></div>
+	<div class="msgWin1">
+   		<img class="closeWin" src="images/guanbi.png" onclick="closeIndexWin()">
+    	<img src="images/fail.png" class="face">
+    	<h1 class="wTitle"></h1>
+    	<a class="known" onclick="closeIndexWin()">知道了</a>
+    </div>
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+     <script src="static/js/jquery.cookie.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="js/layerMsg.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+    	
+    </script>
+  </body>
+</html>
