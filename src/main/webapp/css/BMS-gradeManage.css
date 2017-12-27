@@ -244,6 +244,17 @@ table tbody td{
 	cursor:pointer;
 	padding:0 10px;
 }
+.preview2_disabled{
+	display:inline-block;
+	height:30px;
+	line-height:30px;
+	background:grey;
+	color:#fff;
+	text-align:center;
+	border-radius:4px;
+	cursor:not-allowed;
+	padding:0 10px;
+}
 .setTrophy table{
 	border:0;
 }
