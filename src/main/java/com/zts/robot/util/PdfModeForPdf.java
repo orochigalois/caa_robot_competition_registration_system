@@ -91,9 +91,25 @@ public class PdfModeForPdf {
 	            
 	            table.writeSelectedRows(0, -1, rect.getLeft(), rect.getTop(), pcb);
 			
-	            for (String key : dataParamMap.keySet()) {	            	
-                    form.setField(key,dataParamMap.get(key).toString());
+//	            for (String key : dataParamMap.keySet()) {	            	
+//                    form.setField(key,dataParamMap.get(key).toString());
+//	            }
+	            
+	            for (String key : dataParamMap.keySet()) {	
+	            	int ilen = dataParamMap.get(key).toString().length();
+	            	if(key == "学校" || key == "队伍"){
+	            		if(ilen >= 20 && ilen < 40){
+	            			form.setFieldProperty(key, "textsize", new Float(10), null);
+	            		}else if(ilen >= 40 && ilen <= 55){
+	            			form.setFieldProperty(key, "textsize", new Float(7), null);
+	            		}else if(ilen > 55){
+	            			form.setFieldProperty(key, "textsize", new Float(6), null);
+	            		}
+	            	}
+	            	
+	            	form.setField(key,dataParamMap.get(key).toString());
 	            }
+	            
 	            form.setField("成员", "");
 	            stamper.setFormFlattening(true);// 如果为false那么生成的PDF文件还能编辑，一定要设为true  
 	            stamper.close();

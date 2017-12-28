@@ -77,8 +77,10 @@ public class ModelService {
 			Map<String, String> dataParamMap = new HashMap<String, String>();
 			dataParamMap.put("编号", (String) map.get("cupno"));
 			
-			String name = (String) map.get("school")+"  "+(String) map.get("tname");
-			dataParamMap.put("学校队伍", name);
+//			String name = (String) map.get("school")+" \n\r "+(String) map.get("tname");
+			dataParamMap.put("学校", (String) map.get("school"));
+			dataParamMap.put("队伍", (String) map.get("tname"));
+//			dataParamMap.put("学校队伍", name);
 			
 			dataParamMap.put("小项", (String) map.get("rname"));
 			dataParamMap.put("奖杯", (String) map.get("cup"));
@@ -115,8 +117,11 @@ public class ModelService {
 					Map<String, String> dataParamMap = new HashMap<String, String>();
 					dataParamMap.put("编号", (String) map.get("awardsno"));
 					
-					String name = (String) map.get("school")+"  "+(String) map.get("tname");
-					dataParamMap.put("学校队伍", name);
+//					String name = (String) map.get("school")+"  "+(String) map.get("tname");
+					//String name = (String) map.get("school")+"\n"+(String) map.get("tname");
+//					dataParamMap.put("学校队伍", name);
+					dataParamMap.put("学校", (String) map.get("school"));
+					dataParamMap.put("队伍", (String) map.get("tname"));
 					
 					dataParamMap.put("小项", (String) map.get("rname"));
 					dataParamMap.put("奖项", (String) map.get("awards"));
