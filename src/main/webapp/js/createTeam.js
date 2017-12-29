@@ -22,6 +22,56 @@ $(function(){
     	})
     })
 })
+
+function moveUp(obj){
+	var tr=$(obj).parent().parent().clone();
+	$(obj).parent().parent().prev().before(tr);
+	$(obj).parent().parent().remove();
+	canMove();
+} 
+
+function moveDown(obj){
+	var tr=$(obj).parent().parent().clone();
+	$(obj).parent().parent().next().after(tr);
+	$(obj).parent().parent().remove();
+	canMove();
+} 
+
+function canMove(){
+	$(".upBtn,.downBtn").show();
+	$(".teaList tbody tr").each(function(){
+		if($(".teaList tbody tr").length==1){
+			$(this).find(".upBtn").hide();
+			$(this).find(".downBtn").hide();
+		}else{
+			if($(this).index()==0){
+				$(this).find(".upBtn").hide()
+			}else if($(this).index()==$(".teaList tbody tr").length-1){
+				$(this).find(".downBtn").hide()
+			}else{
+				$(this).find(".upBtn").show();
+				$(this).find(".downBtn").show();
+			}
+		}
+	})
+	$(".stuList tbody tr").each(function(){
+		if($(".stuList tbody tr").length==1){
+			$(this).find(".upBtn").hide();
+			$(this).find(".downBtn").hide();
+		}else{
+			if($(this).index()==0){
+				$(this).find(".upBtn").hide()
+			}else if($(this).index()==$(".stuList tbody tr").length-1){
+				$(this).find(".downBtn").hide()
+			}else{
+				$(this).find(".upBtn").show();
+				$(this).find(".downBtn").show();
+			}
+		}
+	})
+	
+} 
+
 var mid=sessionStorage.getItem("mid");
 var picurl="";
 function addNewMember(roleflg,didtype,did){
@@ -207,10 +257,12 @@ function readAsDataURL(){
 }
 
 function saveInfo(flg){
+
 	if(!distinctMem()){
 		alertMsg("1","该成员已存在！","fail");
 		return;
 	}
+
 	var htmls="";
 	var roleflg=flg;
 	var tmname=$("#tmname").val();
@@ -318,12 +370,17 @@ function saveInfo(flg){
 	else if(diningtype=="02"){htmls+='<td>清真</td>'}
 	else{htmls+='<td>素食</td>'}
 	htmls+='<td><a class="editbtn" onclick="editMember(this)" detail=\''+JSON.stringify(info)+'\'></a>'
-		+'<a class="delbtn" onclick="delMem(this)"></a></td></tr>'
+		+'<a class="delbtn" onclick="delMem(this)"></a>'
+		+'<a onclick="moveUp(this)" class="upBtn"></a><a class="downBtn" onclick="moveDown(this)"></a></td></tr>'
+		
 	if(flg=="01"){
 		$(".teaList tbody").append(htmls)
 	}
 	else{$(".stuList tbody").append(htmls)}
+	
 	closeInfoWin();
+	
+	canMove();
 }
 
 function closeInfoWin(){
@@ -530,7 +587,7 @@ function editSaveInfo(){
 	closeInfoWin();
 }
 
-function saveTeam(){
+function saveTeam(){	
 	var tname=$("#tname").val();
 	var school=$("#tschool").val();
 	var departname=$("#tdepartname").val();
@@ -642,6 +699,8 @@ function searchBydid(roleflg){
     	})
     })
 }
+
+
 
 function searchMem(roleflg){
 	var didtype=$("#IDtype").attr("altvalue");
