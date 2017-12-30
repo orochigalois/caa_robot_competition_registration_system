@@ -325,7 +325,7 @@ ORDER BY c.roleflg,b.serialnum
 		b.frname,b.rcode,b.rname
 		,c.tcode,c.tname,c.school,c.orgtype,c.region
 		,d.uname,d.phone,d.email,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress
-		,e.tchname,e.tchsex,e.tchdidtype,e.tchdid,e.tchphone,e.tchemail,e.diningtype
+		,e.tchname,e.tchsex,e.tchdidtype,e.tchdid,e.tchphone,e.tchemail,e.diningtype,e.stuname,e.stunum
 		,a.infostatus,a.feestatus,a.createdate
 		FROM (
 			SELECT DISTINCT a.tid,a.rid,a.signuid,a.infostatus,a.feestatus,a.createdate FROM re_raceteammember a
@@ -338,13 +338,14 @@ ORDER BY c.roleflg,b.serialnum
 					SELECT
 					a.tid,GROUP_CONCAT(b.tmname) AS tchname,GROUP_CONCAT(b.sex) AS tchsex,GROUP_CONCAT(b.didtype) AS tchdidtype
 					,GROUP_CONCAT(b.did) AS tchdid,GROUP_CONCAT(b.phone) AS tchphone,GROUP_CONCAT(b.email) AS tchemail,
-					GROUP_CONCAT(b.diningtype) AS diningtype
+					GROUP_CONCAT(b.diningtype) AS diningtype,
+					GROUP_CONCAT( c.tmname) AS stuname, COUNT(c.tmname) AS stunum
 					FROM (
 						SELECT DISTINCT a.tid,a.tmid FROM re_raceteammember a
 						WHERE a.mid=#{mid}
 					) a 
-					LEFT JOIN tm_member b ON b.tmid = a.tmid 
-					WHERE b.roleflg='01'
+					LEFT JOIN tm_member b ON b.tmid = a.tmid AND b.roleflg='01'
+					LEFT JOIN tm_member c ON c.tmid = a.tmid AND c.roleflg='02'
 					GROUP BY a.tid
 		) e ON e.tid = a.tid
 		WHERE 1=1 

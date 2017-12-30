@@ -155,7 +155,7 @@ public class StatisticsService {
 			throw new RuntimeException();
 		}
 		List<Map<String,Object>> excelList= OperaterExcel.formatTeamRaceData(teamRaceDerivedList);
-		String[] names = { "参赛大项","参赛小项编号","参赛小项","参赛队编号","参赛队名","参赛队学校","机构类型","地区","报名者","报名者电话","报名者邮箱","开票抬头","纳税人识别号","开户行及账号","地址及电话","收发票地址","指导老师姓名","指导老师性别","指导老师证件类型","指导老师证件号","指导老师邮箱","指导老师手机","指导教师餐食","参赛队审核状态","参赛队缴费状态"};
+		String[] names = { "参赛大项","参赛小项编号","参赛小项","参赛队编号","参赛队名","参赛队学校","机构类型","地区","报名者","报名者电话","报名者邮箱","开票抬头","纳税人识别号","开户行及账号","地址及电话","收发票地址","指导老师姓名","指导老师性别","指导老师证件类型","指导老师证件号","指导老师邮箱","指导老师手机","指导教师餐食","队员姓名","队员数量","参赛队审核状态","参赛队缴费状态"};
 		String sheetName = paramMap.get("mname")+"赛项报名信息表";
 		String PootPathkey = MyProperties.getKey("RootPathkey");
 		String RootFileUrlkey = MyProperties.getKey("RootFileUrlkey");
