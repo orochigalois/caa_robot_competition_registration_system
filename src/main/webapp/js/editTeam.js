@@ -25,20 +25,23 @@ $(function(){
 })
 
 var tid=sessionStorage.getItem("tid");
+var rid=sessionStorage.getItem("rid");
 
 function getTeamDetail(){
 	var mid=sessionStorage.getItem("currentmid");
 	$.ajax({
 		type: "GET",
-        url: "../findAllMembersByTid",
+        url: "../findRaceAllMembersByRidTid",
         dataType: "JSON",
         async:false,
         data: {
         	"tid":tid,
+        	"rid":rid,
         	"mid":mid
         	},
         success: function(data){
         	if(data.status == 0){
+        		$("#rname").html(data.list[0].rname);
         		$("#tname").val(data.list[0].tname);
         		$("#tschool").val(data.list[0].tmschool);
         		$("#tdepartname").val(data.list[0].tmdepartname);
@@ -866,6 +869,7 @@ function adjustOrder(){
         data: {
         	"memList":JSON.stringify(memList),
         	"tid":tid,
+        	"rid":rid
         	},
         success: function(data){
         	if(data.status == 0){

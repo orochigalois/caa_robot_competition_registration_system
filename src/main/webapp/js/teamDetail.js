@@ -12,7 +12,7 @@ function getTeamDetail(){
 	var mid=sessionStorage.getItem("mid");
 	$.ajax({
 		type: "GET",
-        url: "../findAllMembersByTid",
+        url: "../findRaceAllMembersByRidTid",
         dataType: "JSON",
         async:false,
         data: {

@@ -12,6 +12,8 @@ public interface WriteRaceTeamMemberMapper {
 	void changeInfoStatusByTid(String tid, String infoStatus);
 	//从队伍中移除队员
 	void deleteMemeberByTidAndTmid(String tid, String tmid);
+	//查询赛项成员列表
+	List<Map<String, Object>> findRaceAllMembersByRidTid(String tid,String rid);
 	//查询所在队伍的所有成员
 	List<Map<String, Object>> findAllMembersByTid(String tid);
 	//根据队伍id获取报名人ID
@@ -78,7 +80,7 @@ public interface WriteRaceTeamMemberMapper {
 	
 	int findSerialnumByTid(int serialnum, String tid, String roleflg);
 	
-	void updateSerialnumByTid(String tmid, int serialnum, String tid);
+	void updateSerialnumByTid(String tmid, int serialnum, String tid, String rid);
 	
 	int findTeamCountByRid(String rid);
 	

@@ -20,6 +20,23 @@
 	<update id="delRaceTeamByTid">
 		delete from re_raceteammember where tid=#{0} and rid=#{1}
 	</update>
+	<select id="findRaceAllMembersByRidTid" resultType="Map">
+		SELECT 
+a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,a.tcode
+,c.tmname,c.birthday,c.sex,c.phone,c.picurl
+,c.tmid,c.email,c.ckstatus,c.did,c.didtype
+,c.school,c.departname,c.folk,c.diningtype,c.roleflg,c.disclaimerurl
+,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress,d.paymenturl,b.serialnum,e.rname
+FROM tm_team a 
+LEFT JOIN (
+SELECT DISTINCT a.tmid,a.tid,a.serialnum FROM re_raceteammember a WHERE a.tid= #{0} and a.rid= #{1}
+) b ON b.tid = a.tid
+LEFT JOIN tm_member c ON c.tmid = b.tmid
+LEFT JOIN os_user d ON d.uid=a.signuid
+LEFT JOIN ma_race e ON e.rid= #{1}
+WHERE a.tid=#{0} AND c.delflg='00' and a.tstatus='00' and c.tmstatus='00' and c.delflg='00' 
+ORDER BY c.roleflg,b.serialnum
+	</select>
 	<select id="findAllMembersByTid" resultType="Map">
 		SELECT 
 a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,a.tcode
@@ -408,7 +425,7 @@ ORDER BY c.roleflg,b.serialnum
 	where a.tid=#{1} and a.serialnum=#{0} and b.roleflg=#{2}
 	</select>
 	<update id="updateSerialnumByTid">
-	UPDATE re_raceteammember a SET a.serialnum=#{1} WHERE a.tid=#{2} AND a.tmid=#{0}
+	UPDATE re_raceteammember a SET a.serialnum=#{1} WHERE a.tid=#{2} AND a.tmid=#{0} and a.rid=#{3}
 	</update>
 	<select id="findTeamCountByRid" resultType="Integer">
 	SELECT COUNT(DISTINCT a.tid) FROM re_raceteammember a 

@@ -104,7 +104,10 @@ function viewTeam(obj){
 
 function editTeam(obj){
 	var tid=$(obj).parent().attr("tid");
+	var rid=$(obj).parent().attr("rid");
 	sessionStorage.setItem("tid",tid);
+	sessionStorage.setItem("rid",rid);
+	
 	window.open("editTeam.html","_self");
 }
 

@@ -218,7 +218,10 @@ function closeAppro(){
 
 function editTeam(obj){
 	var tid=$(obj).parent().attr("tid");
+	var rid=$(obj).parent().attr("rid");
 	sessionStorage.setItem("tid",tid);
+	sessionStorage.setItem("rid",rid);
+	
 	window.open("BMS-editTeam.html","_self");
 }
 

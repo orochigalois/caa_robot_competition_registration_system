@@ -154,6 +154,10 @@ public class RaceTeamMemberService {
 		//修改队伍审批状态
 		mapper.changeInfoStatusByTid(tid, "01");
 	}
+	
+	public List<Map<String, Object>> findRaceAllMembersByRidTid(String tid,String rid) {
+		return mapper.findRaceAllMembersByRidTid(tid,rid);
+	}
 
 	public List<Map<String, Object>> findAllMembersByTid(String tid) {
 		return mapper.findAllMembersByTid(tid);
@@ -263,13 +267,13 @@ public class RaceTeamMemberService {
 		
 	}
 
-	public void updateSerialnumByTid(String tid, JSONArray array, Map<String, Object> resultMap) {
+	public void updateSerialnumByTid(String tid, String rid, JSONArray array, Map<String, Object> resultMap) {
 		// TODO Auto-generated method stub
 		for(int i=0;i<array.size();i++) {
 			JSONObject json = array.getJSONObject(i);
 			String tmid=json.getString("tmid");
 			int serialnum=Integer.parseInt(json.getString("serialnum"));
-			mapper.updateSerialnumByTid(tmid,serialnum,tid);
+			mapper.updateSerialnumByTid(tmid,serialnum,tid,rid);
 		}
 		resultMap.put("status", 0);
 	}

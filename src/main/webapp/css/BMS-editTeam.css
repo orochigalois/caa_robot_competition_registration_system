@@ -1,4 +1,19 @@
+.raceInfo{
+	padding:12px 10px;
+	background:#fff;
+}
+
+.raceInfo .headtitle{
+	padding-left:30px;
+	background:url(../images/duiwu.png) no-repeat;
+	background-position-y: 2px
+}
+
+.raceName{
+	padding:3px 30px;
+}
 .teamInfo{
+	margin-top:18px;
 	padding:12px 10px;
 	background:#fff;
 }
@@ -128,7 +143,7 @@
 .contentwrap table tr{
 	border-bottom:1px solid #f2f2f2;
 }
-/*修改指导教师信息*/
+/*锟睫革拷指锟斤拷锟斤拷师锟斤拷息*/
 #shade{
     position:fixed;
     z-index:2;
@@ -239,7 +254,7 @@
 	margin: 5px 0 12px 63px;
 	text-align:left;
 }
-/*修改指导教师信息结束*/
+/*锟睫革拷指锟斤拷锟斤拷师锟斤拷息锟斤拷锟斤拷*/
 #folk+.emulate{
 	height:100px;
 	overflow-x:hidden;

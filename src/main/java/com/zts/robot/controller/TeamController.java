@@ -173,6 +173,33 @@ public class TeamController {
 	}
 	
 	/**
+	 * 查询赛项成员列表
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/findRaceAllMembersByRidTid")
+	@ResponseBody
+	public Map<String, Object> findRaceAllMembersByRidTid(HttpServletRequest request, HttpServletResponse response, String tid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {	
+			Cookie cookie = CookieOperation.getCookieByName(request, "authId");
+			JSONObject json = redisService.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
+			String uid = json.optString("uid");
+			String mid = request.getParameter("mid");
+			String rid = request.getParameter("rid");
+			List<Map<String, Object>> list = rtmService.findRaceAllMembersByRidTid(tid,rid);
+			resultMap.put("list", list);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	
+	/**
 	 * 查询队伍成员列表
 	 * @param request
 	 * @param response
@@ -562,7 +589,8 @@ public class TeamController {
 			String menJSON = request.getParameter("memList");
 			JSONArray array = JSONArray.fromObject(menJSON);
 			String tid=request.getParameter("tid");
-			 rtmService.updateSerialnumByTid(tid,array,resultMap);
+			String rid=request.getParameter("rid");
+			 rtmService.updateSerialnumByTid(tid,rid,array,resultMap);
 			
 		} catch (Exception e) {
 			resultMap.put("status", 1);
