@@ -65,18 +65,18 @@ public class TeamController {
 				team.setSignuid(uid);
 				team.setMid(mid);
 				String random;
-				//队伍编码
-				String tcode = "Y"+Tools.getStringByDateAndTime(new Date()).substring(2, 7).replace("-", "")+"T";
-				for(;;){
-					random= Tools.getRandom(5);
-					String tempTcode = tcode+random;
-					Integer countTempTcode = service.findCountByTempTcode(tempTcode);
-					if(countTempTcode==0){
-						tcode=tcode+random;
-						break;
-					}
-				}				
-				team.setTcode(tcode);
+//				//队伍编码
+//				String tcode = "Y"+Tools.getStringByDateAndTime(new Date()).substring(2, 7).replace("-", "")+"T";
+//				for(;;){
+//					random= Tools.getRandom(5);
+//					String tempTcode = tcode+random;
+//					Integer countTempTcode = service.findCountByTempTcode(tempTcode);
+//					if(countTempTcode==0){
+//						tcode=tcode+random;
+//						break;
+//					}
+//				}				
+//				team.setTcode(tcode);
 				service.regTeam(team, array, rid,resultMap);
 			}
 			

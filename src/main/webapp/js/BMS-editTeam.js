@@ -793,7 +793,7 @@ function canMove(){
 	$(".upBtn,.downBtn").show();
 	$(".stuList tbody tr").each(function(){
 		if($(".stuList tbody tr").length==1){
-			(this).find(".upBtn").hide();
+			$(this).find(".upBtn").hide();
 			$(this).find(".downBtn").hide();
 		}else{
 			if($(this).index()==0){
@@ -828,15 +828,17 @@ function adjustOrder(){
 	var memList=[];
 	$(".stuList .editbtn").each(function(i){
 		var obj={};
-		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
-		obj.serialnum=(i+1)
-		memList.push(obj)
+//		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
+		obj.tmid=$(this).attr("tmid");
+		obj.serialnum=(i+1);
+		memList.push(obj);
 	})
 	$(".teaList .editbtn").each(function(i){
 		var obj={};
-		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
+//		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
+		obj.tmid=$(this).attr("tmid");
 		obj.serialnum=(i+1);
-		memList.push(obj)
+		memList.push(obj);
 	})
 	$.ajax({
 		type: "GET",

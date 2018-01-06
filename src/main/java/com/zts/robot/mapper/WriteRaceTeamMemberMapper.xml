@@ -4,7 +4,9 @@
 	<select id="checkMemberOfRace" resultType="Integer">
 		select count(tmid) from re_raceteammember where rid=#{0} and tmid=#{1}
 	</select>
-	
+	<select id="selectbyRTMTcode" resultType="String">
+		select distinct tcode from re_raceteammember where rid=#{0} and tid=#{1} limit  0, 1; 
+	</select>
 	<select id="findRidListOfTid" resultType="Map">
 		select DISTINCT rid,createdate from re_raceteammember where tid=#{0} 
 	</select>
@@ -22,14 +24,14 @@
 	</update>
 	<select id="findRaceAllMembersByRidTid" resultType="Map">
 		SELECT 
-a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,a.tcode
+a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,b.tcode
 ,c.tmname,c.birthday,c.sex,c.phone,c.picurl
 ,c.tmid,c.email,c.ckstatus,c.did,c.didtype
 ,c.school,c.departname,c.folk,c.diningtype,c.roleflg,c.disclaimerurl
 ,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress,d.paymenturl,b.serialnum,e.rname
 FROM tm_team a 
 LEFT JOIN (
-SELECT DISTINCT a.tmid,a.tid,a.serialnum FROM re_raceteammember a WHERE a.tid= #{0} and a.rid= #{1}
+SELECT DISTINCT a.tmid,a.tid,a.serialnum,a.tcode FROM re_raceteammember a WHERE a.tid= #{0} and a.rid= #{1}
 ) b ON b.tid = a.tid
 LEFT JOIN tm_member c ON c.tmid = b.tmid
 LEFT JOIN os_user d ON d.uid=a.signuid
@@ -39,7 +41,7 @@ ORDER BY c.roleflg,b.serialnum
 	</select>
 	<select id="findAllMembersByTid" resultType="Map">
 		SELECT 
-a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,a.tcode
+a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region
 ,c.tmname,c.birthday,c.sex,c.phone,c.picurl
 ,c.tmid,c.email,c.ckstatus,c.did,c.didtype
 ,c.school,c.departname,c.folk,c.diningtype,c.roleflg,c.disclaimerurl
@@ -92,7 +94,7 @@ ORDER BY c.roleflg,b.serialnum
 
 	</select>
 	<select id="findTeamsBySignuidPages" resultType="Map">
-	SELECT b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate FROM re_raceteammember a 
+	SELECT a.tcode AS rtcode, b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate FROM re_raceteammember a 
 	LEFT JOIN tm_team b ON b.tid = a.tid 
 	LEFT JOIN ma_race c ON c.rid = a.rid 
 	LEFT JOIN ma_match d ON d.mid=a.mid
@@ -139,7 +141,7 @@ ORDER BY c.roleflg,b.serialnum
 	</if> 
 	</select>
 	<select id="findAllTeamsBySignuidPages" resultType="Map">
-	SELECT b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname,d.mname,e.paymenturl FROM re_raceteammember a 
+	SELECT b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname,d.mname,e.paymenturl,a.tcode as rtcode FROM re_raceteammember a 
 	LEFT JOIN tm_team b ON b.tid = a.tid
 	LEFT JOIN ma_race c ON c.rid = a.rid
 	left join ma_match d on d.mid=a.mid
@@ -218,7 +220,7 @@ ORDER BY c.roleflg,b.serialnum
 	<select id="getTeamDerivedByMid" resultType="HashMap">
 		SELECT * FROM (
 		SELECT 
-					a.tcode,a.tname,a.school,a.orgtype,a.region
+					GROUP_CONCAT(b.tcode) as tcode,a.tname,a.school,a.orgtype,a.region
 					,a.uname,a.phone,a.email,a.invoicename,a.taxpayernumber,a.banknumber,a.addressphone,a.receiveaddress
 					,a.tchname,a.tchsex,a.tchdidtype,a.tchdid,a.tchemail,a.tchphone,a.tchfolk,a.tchdiningtype
 					,a.stuname,a.stusex,a.studidtype,a.studid,a.stuemail,a.stuphone,a.stufolk,a.studiningtype
@@ -228,7 +230,7 @@ ORDER BY c.roleflg,b.serialnum
 					,GROUP_CONCAT(c.frname) AS frname,GROUP_CONCAT(c.rcode) AS rcode,GROUP_CONCAT(c.rname) AS rname
 				 FROM(
 					SELECT 
-					b.tcode,b.tname,b.school,b.orgtype,b.region
+					b.tname,b.school,b.orgtype,b.region
 					,c.uname,c.phone,c.email,c.invoicename,c.taxpayernumber,c.banknumber,c.addressphone,c.receiveaddress
 					,GROUP_CONCAT( d.tmname) AS tchname,GROUP_CONCAT( d.sex) AS tchsex,GROUP_CONCAT( d.didtype) AS tchdidtype
 					,GROUP_CONCAT( d.did) AS tchdid,GROUP_CONCAT( d.email) AS tchemail,GROUP_CONCAT( d.phone) AS tchphone
@@ -251,7 +253,7 @@ ORDER BY c.roleflg,b.serialnum
 					GROUP BY a.tid
 				) a
 				LEFT JOIN (
-					SELECT DISTINCT a.tid,a.rid,a.infostatus,a.feestatus FROM re_raceteammember a
+					SELECT DISTINCT a.tid,a.rid,a.infostatus,a.feestatus,a.tcode  FROM re_raceteammember a
 					WHERE a.mid=#{mid}
 				) b ON b.tid = a.tid
 				LEFT JOIN ma_race c ON c.rid = b.rid
@@ -259,7 +261,7 @@ ORDER BY c.roleflg,b.serialnum
 		) a 
 		WHERE 1=1
 		<if test="tcode != null and tcode !=''.toString()">
-		AND a.tcode=#{tcode}
+		AND a.tcode like '%${tcode}%'
 		</if>
 		<if test="tname != null and tname !=''.toString()">
 		AND a.tname=#{tname}
@@ -286,7 +288,7 @@ ORDER BY c.roleflg,b.serialnum
 		SELECT 
 		b.tmid,b.tmname,b.roleflg,b.sex,b.didtype,b.did,b.email,b.phone,g.folk,b.diningtype
 		
-		,GROUP_CONCAT(c.tid) AS tid,GROUP_CONCAT(c.tcode) AS tcode,GROUP_CONCAT(c.tname) AS tname
+		,GROUP_CONCAT(c.tid) AS tid,GROUP_CONCAT(a.tcode) AS tcode,GROUP_CONCAT(c.tname) AS tname
 		,GROUP_CONCAT(DISTINCT c.school) AS school,GROUP_CONCAT(DISTINCT c.orgtype) AS orgtype,GROUP_CONCAT( DISTINCT c.region) AS region
 		,GROUP_CONCAT( DISTINCT CONCAT( '(', f.tchname,')')) AS tchname		
 		
@@ -340,12 +342,12 @@ ORDER BY c.roleflg,b.serialnum
 	<select id="getTeamRaceDerivedByMid" resultType="HashMap">
 		SELECT 
 		b.frname,b.rcode,b.rname
-		,c.tcode,c.tname,c.school,c.orgtype,c.region
+		,a.tcode,c.tname,c.school,c.orgtype,c.region
 		,d.uname,d.phone,d.email,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress
 		,e.tchname,e.tchsex,e.tchdidtype,e.tchdid,e.tchphone,e.tchemail,e.diningtype,e.stuname,e.stunum
 		,a.infostatus,a.feestatus,a.createdate
 		FROM (
-			SELECT DISTINCT a.tid,a.rid,a.signuid,a.infostatus,a.feestatus,a.createdate FROM re_raceteammember a
+			SELECT DISTINCT a.tid,a.rid,a.signuid,a.infostatus,a.feestatus,a.createdate,a.tcode FROM re_raceteammember a
 			WHERE a.mid=#{mid}
 		) a
 		LEFT JOIN ma_race b ON b.rid = a.rid
@@ -376,7 +378,7 @@ ORDER BY c.roleflg,b.serialnum
 		AND c.tname=#{tname}
 		</if>
 		<if test="tcode != null and tcode !=''.toString()">
-		AND c.tcode=#{tcode}
+		AND a.tcode=#{tcode}
 		</if>
 		<if test="school != null and school !=''.toString()">
 		AND c.school=#{school}

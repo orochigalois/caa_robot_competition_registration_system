@@ -102,7 +102,7 @@ function getAllTeam(num){
 					var htmls="";
 					$(".current").html(data.list[0].mname);
 					$.each(data.list,function(i,team){
-						htmls+='<tr><td>'+(team.tcode==null?"":team.tcode)+'</td>'
+						htmls+='<tr><td>'+(team.rtcode==null?"":team.rtcode)+'</td>'
 								+'<td tid="'+team.tid+'"><a class="teamname" onclick="viewTeam(this)">'+team.tname+'</td>'
 								+'<td>'+team.rname+'</td>'
 								+'<td>'+team.school+'</td>';

@@ -47,6 +47,20 @@ public class TeamService {
 		mapper.insertSelective(team);
 		//赛事信息 
 		Match match=matchMapper.selectByPrimaryKey(mid);
+		
+		//队伍编码
+		String tcode = "Y"+Tools.getStringByDateAndTime(new Date()).substring(2, 7).replace("-", "")+"T";
+		String random;
+		for(;;){
+			random= Tools.getRandom(5);
+			String tempTcode = tcode+random;
+			Integer countTempTcode = rtmMapper.findCountByRaceTeamMemberTcode(tempTcode);
+			if(countTempTcode==0){
+				tcode=tcode+random;
+				break;
+			}
+		}
+		
 		//批量插入队员
 		for(int i=0;i<array.size();i++) {
 			JSONObject json = array.getJSONObject(i);
@@ -70,14 +84,14 @@ public class TeamService {
 				member.setCreatedate(date);
 				member.setDelflg("00");
 				member.setAlreadyflg(alreadyflg);
-				String random;
-				String tcode = "Y"+Tools.getStringByDateAndTime(new Date()).substring(2, 7).replace("-", "")+"TM";
+				String random1;
+				String tcode1 = "Y"+Tools.getStringByDateAndTime(new Date()).substring(2, 7).replace("-", "")+"TM";
 				for(;;){
-					random= Tools.getRandom(6);
-					String tempTcode = tcode+random;
+					random1= Tools.getRandom(6);
+					String tempTcode = tcode1+random1;
 					Integer countTempTcode = memberMapper.findCountByMemberTcode(tempTcode);
 					if(countTempTcode==0){
-						tcode=tcode+random;
+						tcode1=tcode1+random1;
 						break;
 					}
 				}	
@@ -132,9 +146,9 @@ public class TeamService {
 			rtm.setCreatedate(date.substring(0, 16));
 			rtm.setSerialnum(Integer.parseInt(json.getString("serialnum")));
 			rtm.setUnitprice(match.getUnitprice());
+			rtm.setTcode(tcode);
 			rtmMapper.insertSelective(rtm);
 			resultMap.put("status", 0);
-			
 		}
 		
 	}

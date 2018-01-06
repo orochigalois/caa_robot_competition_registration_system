@@ -53,9 +53,9 @@
       <if test="tid != null" >
         tid,
       </if>
-      <if test="tcode != null" >
+      <!-- <if test="tcode != null" >
         tcode,
-      </if>
+      </if> -->
       <if test="tname != null" >
         tname,
       </if>
@@ -103,9 +103,10 @@
       <if test="tid != null" >
         #{tid,jdbcType=VARCHAR},
       </if>
+      <!-- 
       <if test="tcode != null" >
         #{tcode,jdbcType=VARCHAR},
-      </if>
+      </if> -->
       <if test="tname != null" >
         #{tname,jdbcType=VARCHAR},
       </if>

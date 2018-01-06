@@ -47,7 +47,7 @@ function getAllTeam(num){
 						htmls+='<tr><td tid="'+team.tid+'" style="padding-left:20px">'
 								+'<a class="teamname" onclick="viewTeam(this)">'+team.tname+'</td>'
 								+'<td rid="'+team.rid+'"><a class="matchname" onclick="viewMatch(this)">'+team.rname+'</a></td>'
-    							+'<td>'+(team.tcode==null?"":team.tcode)+'</td>'
+    							+'<td>'+(team.rtcode==null?"":team.rtcode)+'</td>'
     							+'<td>'+team.school+'</td>'
     							+'<td>'+team.departname+'</td>'
     							+'<td>';

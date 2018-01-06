@@ -69,6 +69,7 @@ public class RaceTeamMemberService {
 			}else{
 				
 			}	*/		
+
 			RaceTeamMember rtm = new RaceTeamMember();
 			rtm.setRid(map.get("rid").toString());
 			rtm.setInfostatus("01");
@@ -80,6 +81,10 @@ public class RaceTeamMemberService {
 			rtm.setCreatedate(map.get("createdate").toString());
 			rtm.setSerialnum(serialnum);
 			rtm.setUnitprice(match.getUnitprice());
+			//获取tcode 新增成员时
+			String tcode = mapper.selectbyRTMTcode(map.get("rid").toString(), tid);
+			rtm.setTcode(tcode);
+			
 			mapper.insertSelective(rtm);
 		}
 		//修改队伍审批状态
@@ -130,6 +135,10 @@ public class RaceTeamMemberService {
 			rtm.setCreatedate(map.get("createdate").toString());
 			rtm.setSerialnum(serialnum);
 			rtm.setUnitprice(match.getUnitprice());
+			//获取tcode
+			String tcode1 = mapper.selectbyRTMTcode(map.get("rid").toString(), tid);
+			rtm.setTcode(tcode1);
+			
 			mapper.insertSelective(rtm);
 		}
 		//修改队伍审批状态
@@ -213,6 +222,19 @@ public class RaceTeamMemberService {
 
 	public void addAvailableTeam(String uid, String mid, String rid, String tid, Map<String, Object> resultMap)throws Exception {
 		// TODO Auto-generated method stub
+		//队伍编码
+		String tcode = "Y"+Tools.getStringByDateAndTime(new Date()).substring(2, 7).replace("-", "")+"T";
+		String random;
+		for(;;){
+			random= Tools.getRandom(5);
+			String tempTcode = tcode+random;
+			//查询Tcode是否存在
+			Integer countTempTcode = mapper.findCountByRaceTeamMemberTcode(tempTcode);
+			if(countTempTcode==0){
+				tcode=tcode+random;
+				break;
+			}
+		}
 		List<Map<String, Object>> list =mapper.findoneteamper(tid);
 		for (Map<String, Object> map:list) {			
 			int count=mapper.findperson(rid,tid,map.get("tmid").toString());
@@ -228,6 +250,8 @@ public class RaceTeamMemberService {
 				rtm.setCreatedate(map.get("createdate").toString());
 				Integer serialnum=Integer.valueOf(map.get("serialnum").toString());
 				rtm.setSerialnum(serialnum);
+				rtm.setTcode(tcode);
+				
 				mapper.insertSelective(rtm);
 				resultMap.put("status", 0);
 			}else{

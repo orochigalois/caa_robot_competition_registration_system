@@ -28,6 +28,8 @@ public class RaceTeamMember extends RaceTeamMemberKey {
     private String entryurl;
 
     private Integer unitprice;
+    
+    private String tcode;
 
     public String getMid() {
         return mid;
@@ -139,5 +141,9 @@ public class RaceTeamMember extends RaceTeamMemberKey {
 
     public void setUnitprice(Integer unitprice) {
         this.unitprice = unitprice;
+    }
+    
+    public void setTcode(String tcode) {
+        this.tcode = tcode == null ? null : tcode.trim();
     }
 }

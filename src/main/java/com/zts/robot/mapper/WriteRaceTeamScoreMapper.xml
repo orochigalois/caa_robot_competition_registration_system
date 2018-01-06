@@ -3,8 +3,8 @@
 <mapper namespace="com.zts.robot.mapper.WriteRaceTeamScoreMapper" >
   <select id="findTeamScoreByRid" resultType="HashMap">
 	SELECT a.rid,a.tid,a.tname,a.tcode,IF(a.flg='01','违规',IF(a.flg='02','缺赛',a.score)) AS score,a.flg FROM (
-		SELECT a.rid,a.tid,c.tname,c.tcode,b.score,IFNULL(b.flg,'00')AS'flg' FROM(
-			SELECT DISTINCT a.rid,a.tid FROM re_raceteammember a
+		SELECT a.rid,a.tid,c.tname,a.tcode,b.score,IFNULL(b.flg,'00')AS'flg' FROM(
+			SELECT DISTINCT a.rid,a.tid,a.tcode FROM re_raceteammember a
 			WHERE a.rid=#{rid}
 		) a
 		LEFT JOIN re_raceteamscore b ON a.rid=b.rid AND a.tid=b.tid
@@ -39,8 +39,8 @@
 	SELECT a.rid,a.tid,a.tcode,a.tname,a.cup,a.awards,a.creatstatus,a.grantjzstatus,a.grantcsstatus,a.flg
 	,a.awardsurl,a.cupurl, GROUP_CONCAT(b.entryurl) AS entryurls
 	FROM(
-	SELECT b.rid,a.tid,c.tcode,c.tname,b.cup,b.awards,b.creatstatus,b.grantjzstatus,b.grantcsstatus,b.flg,b.awardsurl,b.cupurl,b.score FROM(
-		SELECT DISTINCT a.tid FROM re_raceteammember a
+	SELECT b.rid,a.tid,a.tcode,c.tname,b.cup,b.awards,b.creatstatus,b.grantjzstatus,b.grantcsstatus,b.flg,b.awardsurl,b.cupurl,b.score FROM(
+		SELECT DISTINCT a.tid,a.tcode FROM re_raceteammember a
 		WHERE a.rid=#{0}
 		) a
 		LEFT JOIN re_raceteamscore b ON a.tid=b.tid
@@ -54,8 +54,8 @@
   </select>
   <select id="findTeamScoreByRidBySetScore" resultType="HashMap">
   	SELECT a.rid,a.tid,a.rid,a.tid,a.tname,a.tcode,IF(a.flg='01','违规',IF(a.flg='02','缺赛',a.score)) AS score,a.flg FROM (
-		SELECT a.rid,a.tid,c.tname,c.tcode,b.score,IFNULL(b.flg,'00')AS'flg' FROM(
-			SELECT DISTINCT a.rid,a.tid FROM re_raceteammember a
+		SELECT a.rid,a.tid,c.tname,a.tcode,b.score,IFNULL(b.flg,'00')AS'flg' FROM(
+			SELECT DISTINCT a.rid,a.tid,a.tcode FROM re_raceteammember a
 			WHERE a.rid=#{rid}
 		) a
 		LEFT JOIN re_raceteamscore b ON a.rid=b.rid AND a.tid=b.tid
@@ -63,7 +63,7 @@
 		<if test="tname != null and tname !=''.toString()">
 			 where c.tname LIKE '%${tname}%'
 	</if> 
-		ORDER BY c.tcode
+		ORDER BY a.tcode
 	) a
   </select>
   <select id="teamMemberScoreByMid" resultType="HashMap">

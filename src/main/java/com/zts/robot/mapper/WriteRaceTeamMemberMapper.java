@@ -6,6 +6,8 @@ import java.util.Map;
 public interface WriteRaceTeamMemberMapper {
 	// 校验赛项是否有该队员存在
 	int checkMemberOfRace(String rid, String tmid);
+	// 查询竞赛项下队伍编号
+	String selectbyRTMTcode(String rid, String tid);
 	//根据tid查询以报赛项列表
 	List<Map<String, Object>> findRidListOfTid(String tid);
 	//修改队伍审批状态
