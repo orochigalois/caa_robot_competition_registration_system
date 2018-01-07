@@ -56,7 +56,8 @@ public class TeamController {
 			JSONObject json = redisService.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
 			String uid = json.optString("uid");
 			String mid = request.getParameter("mid");
-			int count=service.findTeamName(team.getTname(),mid);
+			
+			int count=service.findTeamName(team.getTname(),mid,rid);
 			if(count>0){
 				resultMap.put("status", 1);
 				resultMap.put("errmsg", "参赛队名已被占用，请更改队名，或添加后缀！");

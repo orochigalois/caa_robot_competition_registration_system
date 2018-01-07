@@ -201,9 +201,9 @@ public class TeamService {
 		
 	}
 
-	public int findTeamName(String tname, String mid) {
+	public int findTeamName(String tname, String mid, String rid) {
 		// TODO Auto-generated method stub
-		return mapper.findTeamName(tname,mid);
+		return mapper.findTeamName(tname,mid,rid);
 	}
 
 	public Integer findCountByTempTcode(String tempTcode) {

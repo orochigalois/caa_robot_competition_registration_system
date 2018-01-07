@@ -8,8 +8,13 @@
   UPDATE tm_team a SET a.delflg='01',a.tstatus='01' WHERE a.tid=#{0}
   </update>
   <select id="findTeamName" resultType="Integer">
+   SELECT COUNT(a.tid) FROM tm_team a, re_raceteammember b
+  WHERE a.tid=b.tid AND a.tname=#{0} AND a.mid=#{1} AND b.rid=#{2}
+   
+   <!--
   SELECT COUNT(a.tid) FROM tm_team a
 	WHERE a.tname=#{0} and a.mid=#{1}
+   -->
   </select>
   <update id="updateshutdownteam">
   UPDATE tm_team a SET a.tstatus=#{flg},a.delflg=#{flg} WHERE a.signuid IN 

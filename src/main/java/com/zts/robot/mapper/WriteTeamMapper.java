@@ -8,7 +8,7 @@ public interface WriteTeamMapper {
 	
 	void updatedelflg(String tid);
 	
-	int findTeamName(String tname, String mid);
+	int findTeamName(String tname, String mid, String rid);
 	
 	void updateshutdownteam(Map<String, Object> paramMap);
 	
