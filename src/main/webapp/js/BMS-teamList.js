@@ -103,7 +103,7 @@ function getAllTeam(num){
 					$(".current").html(data.list[0].mname);
 					$.each(data.list,function(i,team){
 						htmls+='<tr><td>'+(team.rtcode==null?"":team.rtcode)+'</td>'
-								+'<td tid="'+team.tid+'"><a class="teamname" onclick="viewTeam(this)">'+team.tname+'</td>'
+								+'<td tid="'+team.tid+'" rid="'+team.rid+'"><a class="teamname" onclick="viewTeam(this)">'+team.tname+'</td>'
 								+'<td>'+team.rname+'</td>'
 								+'<td>'+team.school+'</td>';
 						/*if(team.paymenturl==""){
@@ -227,7 +227,10 @@ function editTeam(obj){
 
 function viewTeam(obj){
 	var tid=$(obj).parent().attr("tid");
+	var rid=$(obj).parent().attr("rid");
 	sessionStorage.setItem("tid",tid);
+	sessionStorage.setItem("rid",rid); //add by grace at 20180108
+	
 	window.open("BMS-teamDetail.html","_self");
 }
 

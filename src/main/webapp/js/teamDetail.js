@@ -7,6 +7,7 @@ $(function(){
 	}
 })
 var tid=sessionStorage.getItem("tid");
+var rid=sessionStorage.getItem("rid");
 var enddate=sessionStorage.getItem("enddate");
 function getTeamDetail(){
 	var mid=sessionStorage.getItem("mid");
@@ -17,7 +18,8 @@ function getTeamDetail(){
         async:false,
         data: {
         		"tid":tid,
-        		"mid":mid
+        		"mid":mid,
+        		"rid":rid,
         	},
         success: function(data){
         	if(data.status == 0){
@@ -86,7 +88,7 @@ function getAllRace(){
         		var memList=data.list;
         		var htmls="";
         		$.each(memList,function(i,mem){
-        			htmls+='<li>'+mem.rname+'</li>'
+        			htmls+='<li class="racename">'+mem.rname+'</li>'
         		})
         		$(".raceul").append(htmls)
         	}else if(data.status == 1){

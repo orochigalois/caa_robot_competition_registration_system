@@ -184,7 +184,7 @@ ORDER BY c.roleflg,b.serialnum
      
 	</update>
 	<select id="findAllTeamsRace" resultType="Map">
-	SELECT DISTINCT a.rid,a.rname,b.infostatus FROM ma_race a
+	SELECT DISTINCT a.rid,a.rname,b.infostatus,b.tcode FROM ma_race a
 	LEFT JOIN re_raceteammember b ON a.rid=b.rid
 	WHERE b.tid=#{0}
 	</select>

@@ -44,7 +44,7 @@ function getAllTeam(num){
 					$.each(data.list,function(i,team){
 						enddate=team.signenddate;
 						sessionStorage.setItem("enddate",team.signenddate);
-						htmls+='<tr><td tid="'+team.tid+'" style="padding-left:20px">'
+						htmls+='<tr><td tid="'+team.tid+'" rid="'+team.rid+'" style="padding-left:20px">'
 								+'<a class="teamname" onclick="viewTeam(this)">'+team.tname+'</td>'
 								+'<td rid="'+team.rid+'"><a class="matchname" onclick="viewMatch(this)">'+team.rname+'</a></td>'
     							+'<td>'+(team.rtcode==null?"":team.rtcode)+'</td>'
@@ -98,7 +98,9 @@ function getAllTeam(num){
 
 function viewTeam(obj){
 	var tid=$(obj).parent().attr("tid");
+	var rid=$(obj).parent().attr("rid");
 	sessionStorage.setItem("tid",tid);
+	sessionStorage.setItem("rid",rid); //add by grace at 20180108
 	window.open("teamDetail.html","_self");
 }
 
@@ -106,7 +108,7 @@ function editTeam(obj){
 	var tid=$(obj).parent().attr("tid");
 	var rid=$(obj).parent().attr("rid");
 	sessionStorage.setItem("tid",tid);
-	sessionStorage.setItem("rid",rid);
+	sessionStorage.setItem("rid",rid); //add by grace at 20180108
 	
 	window.open("editTeam.html","_self");
 }

@@ -37,19 +37,11 @@ body{
 	margin:0 5px;
 }
 
-.raceInfo{
-	padding:12px 10px;
-	background:#fff;
-}
-
-.raceInfo .headtitle{
+.racename{
 	padding-left:30px;
-	background:url(../images/bisai.png) no-repeat;
-	background-position-y: 2px
-}
-
-.raceName{
-	padding:3px 30px;
+	display:inline-block;
+	width:50%;
+	font-weight:bold;
 }
 
 .teamInfo{
@@ -67,6 +59,13 @@ body{
 	background:url(../images/duiwu.png) no-repeat;
 	background-position-y: 2px
 }
+
+.raceList .headtitle{
+	background:url(../images/baoming.png) no-repeat;
+	padding-left:30px;
+	background-position-y: 2px
+}
+
 .inputwrap{padding-left:30px}
 .inputwrap>li{
 	float:left;
@@ -439,6 +438,9 @@ body{
 	width:33.33%;
 	word-break:break-all;
 	margin-bottom:5px;
+}
+.raceul .racename{
+	padding-left: 0;
 }
 .upBtn,.downBtn{
 	display:inline-block;

@@ -17,7 +17,7 @@ function getTeamDetail(){
         	if(data.status == 0){
         		$(".personul").empty();
         		$("#tname").html(data.list[0].tname);
-        		$("#tcode").html(data.list[0].tcode);
+        		//$("#tcode").html(data.list[0].tcode); remove by grace at 20180109
         		$("#tschool").html(data.list[0].tmschool);
         		$("#tdepartname").html(data.list[0].tmdepartname);
         		$("#orgtype").html(data.list[0].orgtype);
@@ -88,6 +88,12 @@ function getAllRace(){
         		var memList=data.list;
         		var htmls="";
         		$.each(memList,function(i,mem){
+        			var tcode = $("#tcode").html(); //add by grace 20180109
+        			if(tcode.length){
+        				$("#tcode").html(tcode+","+mem.tcode);
+        			}else{
+        				$("#tcode").html(mem.tcode);
+        			}
         			htmls+='<li rid="'+mem.rid+'"><span class="racename">'+mem.rname+'</span>';
         			if(mem.infostatus=="01"){
         				/*htmls+='<a class="apprbtn" flg="00" onclick="alertConfirm(\'2\',\'确定审批通过该队伍？\','

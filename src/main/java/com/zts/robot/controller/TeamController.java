@@ -188,7 +188,7 @@ public class TeamController {
 			JSONObject json = redisService.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
 			String uid = json.optString("uid");
 			String mid = request.getParameter("mid");
-			String rid = request.getParameter("rid");
+			String rid = request.getParameter("rid"); //add by grace at 20180107
 			List<Map<String, Object>> list = rtmService.findRaceAllMembersByRidTid(tid,rid);
 			resultMap.put("list", list);
 			resultMap.put("status", 0);
