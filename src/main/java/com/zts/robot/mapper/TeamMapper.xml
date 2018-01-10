@@ -20,7 +20,7 @@
     <result column="ckstatus" property="ckstatus" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    tid, tcode, tname, mid, signuid, tstatus, school, departname, createuid, createdate, 
+    tid, tname, mid, signuid, tstatus, school, departname, createuid, createdate, 
     upduid, upddate, delflg, orgtype, region, ckstatus
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
