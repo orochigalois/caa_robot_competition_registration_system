@@ -185,7 +185,7 @@ public class MemberController {
 			}else if(Verify.CheckDigitalBegin(str)){
 				phone=str;
 				paramMap.put("phone", phone);
-			} else if(str!=null && !"".equals(str)){
+			}else if(str!=null && !"".equals(str)){
 				name=str;
 				paramMap.put("name", name);
 			}

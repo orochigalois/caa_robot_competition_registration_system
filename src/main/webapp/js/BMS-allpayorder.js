@@ -70,6 +70,7 @@ function getallorder(signuid,num){
 				};
 			}, // [Function]:自定义请求参数
 			"success" : function(data, status) {
+				console.log(data);
 				if (data.status == 0) {
 					$("tbody").empty();
 					var htmls="";
@@ -99,6 +100,10 @@ function getallorder(signuid,num){
 			       				htmls+='<td>待支付确认</td>'
 			       			 }else if(item.txnstatus=="02"){
 			       				htmls+='<td>废除</td>'
+			       			 }else if(item.txnstatus=="03"){
+			       				htmls+='<td>已开发票</td>'
+			       			 }else{
+			       				htmls+='<td></td>'
 			       			 }
 			       			 if(item.txnstatus=="01"){
 			       				htmls+='<td signuid="'+item.signuid+'" orderid="'+item.orderid+'">'
@@ -107,7 +112,7 @@ function getallorder(signuid,num){
 								+'<a class="delete" '
 								+'onclick="';
 				       			if(item.txntype=="00"){
-				       				htmls+='confirmdownline(this)'
+				       				htmls+='confirmdownline('+'\'00\''+',this)'
 				       			}else if(item.txntype=="02"){
 				       				htmls+='vouchermoney(this)'
 				       			}
@@ -116,18 +121,38 @@ function getallorder(signuid,num){
 								+'<a class="delete" '
 								+'onclick="alertConfirm(\'2\',\'确认废除该订单？\',\'';
 				       			if(item.txntype=="00"){
-				       				htmls+='confirmdownline()'
+				       				htmls+='confirmdownline(\''+'\+\'\\\'02\\\'\'\+'+'\')'
 				       			}else if(item.txntype=="02"){
 				       				htmls+='abolishvoucher()'
 				       			}
-				       			htmls+='\',this)">订单废除</a>'+'</td></tr>'
-			       			 }else{
+				       			htmls+='\',this)">订单废除</a>'
+			       				+'<span class="split">|</span>'
+								+'<span class="delete2">已开发票</span>'
+								+'</td></tr>'
+			       			 }else if(item.txnstatus=="00"){
+				       			htmls+='<td signuid="'+item.signuid+'" orderid="'+item.orderid+'">'
+								+'<a class="modify" onclick="getallorder(\''+item.signuid+'\',0)">查看此人所有订单</a>'
+								+'<span class="split">|</span>'
+								+'<span class="delete2">确认收款</span>'
+								+'<span class="split">|</span>'
+								+'<span class="delete2">订单废除</span>'
+								+'<span class="split">|</span>'
+								+'<a class="delete" '
+								+'onclick="alertConfirm(\'2\',\'确认该订单已开发票？\',\'';
+								htmls+='confirmdownline(\''+'\+\'\\\'03\\\'\'\+'+'\')'
+								htmls+='\',this)">已开发票</a>'
+								+'</td></tr>'
+			       			 }
+			       			 else{
 			       				htmls+='<td signuid="'+item.signuid+'" orderid="'+item.orderid+'">'
 								+'<a class="modify" onclick="getallorder(\''+item.signuid+'\',0)">查看此人所有订单</a>'
 								+'<span class="split">|</span>'
 								+'<span class="delete2">确认收款</span>'
 								+'<span class="split">|</span>'
-								+'<span class="delete2">订单废除</span>'+'</td></tr>'
+								+'<span class="delete2">订单废除</span>'
+								+'<span class="split">|</span>'
+								+'<span class="delete2">已开发票</span>'
+								+'</td></tr>'
 			       			 }
 			       			
 							
@@ -205,13 +230,12 @@ function closeInfoWin(){
 	$(".vouchermoney").remove();
 }
 
-function confirmdownline(obj){
+//现金 只修改状态
+function confirmdownline(flg,obj){
 	if(obj==undefined){
 		obj=tempobj;
-		var flg="02";
-	}else{
-		var flg="00"
 	}
+	
 	var mid=sessionStorage.getItem("currentmid");
 	var orderid=$(obj).parent().attr("orderid");
 	var signuid=$(obj).parent().attr("signuid");
@@ -253,7 +277,7 @@ function vouchermoney(obj){
 }
 function confirmvoucher(orderid,signuid){
 	var txnamt=$("#txnamt").val();
-	if(txnAmt.trim()==""){
+	if(txnamt.trim()==""){
 		alertMsg("2","请填写交易金额！","fail");
 		return;
 	}

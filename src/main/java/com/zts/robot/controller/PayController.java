@@ -137,7 +137,7 @@ public class PayController {
 		payorder.setMid(mid);
 		payorder.setSignuid(signuid);
 		payorder.setOrderid(orderId);		
-		//交易状态00已支付确认01待支付确认02废除
+		//交易状态00已支付确认01待支付确认02废除03已开发票
 		payorder.setTxnstatus(txnstatus);
 		
 		try {

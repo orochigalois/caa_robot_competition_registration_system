@@ -109,6 +109,10 @@ function getAllorder(){
         				htmls+='<td>待支付确认</td>'
         			}else if(item.txnstatus=="02"){
         				htmls+='<td>废除</td>'
+        			}else if(item.txnstatus=="03"){
+        				htmls+='<td>已开发票</td>'
+        			}else{
+        				htmls+='<td></td>'
         			}
         			htmls+='</tr>'
         		})
