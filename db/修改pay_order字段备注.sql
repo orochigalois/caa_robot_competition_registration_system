@@ -1,0 +1,1 @@
+alter table pay_order modify column txnstatus varchar(2) comment '交易状态00已支付确认01已支付待确认02废除03已开发票'; 
