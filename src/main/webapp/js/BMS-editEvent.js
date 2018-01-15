@@ -1,5 +1,30 @@
 $(function(){
+	$(document).click(function(){
+		$(".emulate").hide();
+	})
+	
+	$(".selinput").click(function(e){
+    	e.stopPropagation();
+    	var me=this;
+    	$(me).next().show();
+    	$(me).next().children().click(function(){
+    		$(me).val($(this).text());
+    		$("#islog").attr("altvalue",$(this).attr("altvalue"));
+    		if($(this).attr("altvalue")=='1'){
+    			$("#firstli").removeAttr("style");
+    			$("#sndli").removeAttr("style");
+    			$("#thridli").removeAttr("style");
+    		}else if($(this).attr("altvalue")=='0'){
+    			$("#firstli").attr("style","display:none");
+    			$("#sndli").attr("style","display:none");
+    			$("#thridli").attr("style","display:none");
+    		}
+    		$(me).next().hide();
+    	})
+    })
+    
 	getEventInfo();
+	
 })
 function filldata(){
 	showmap();
@@ -63,6 +88,19 @@ function getEventInfo(){
         		$("#signenddate").val(info.signenddate);
         		$("#mincnt").val(info.mincnt);
         		$("#unitprice").val(info.unitprice/100);
+        		$("#islog").val($("#islog").next().find("[altvalue="+info.islog+"]").text());
+        		if(info.islog=="1"){
+        			$("#firstli").removeAttr("style");
+        			$("#sndli").removeAttr("style");
+        			$("#thridli").removeAttr("style"); 			
+        		}else if(info.islog=="0"){
+        			$("#firstli").attr("style","display:none");
+        			$("#sndli").attr("style","display:none");
+        			$("#thridli").attr("style","display:none");
+        		}
+        		$("#firstsublogend").val(info.firstsublogend);
+        		$("#sndsublogend").val(info.sndsublogend);
+        		$("#thirdsublogend").val(info.thirdsublogend);
         		$("#introduce").val(info.introduce);
         		$("#description").html(info.description);
         		editor.insertHtml(info.description);
@@ -215,6 +253,11 @@ function updateEvent(){
 	var signenddate=$("#signenddate").val();
 	var mincnt=$("#mincnt").val();
 	var unitprice=$("#unitprice").val();
+	var islog=$("#islog").val();
+	var islog_altvalue=$("#islog").attr("altvalue");
+	var firstsublogend=$("#firstsublogend").val();
+	var sndsublogend=$("#sndsublogend").val();
+	var thirdsublogend=$("#thirdsublogend").val();
 	var introduce=$("#introduce").val();
 	var description=$("#description").val();
 	var awardsmodel=$(".awardsmodel .modelname").val();
@@ -272,6 +315,29 @@ function updateEvent(){
 	}else if(!checkMoneyFormat(unitprice)){
 		alertMsg("2","单价格式不正确！","fail")
 		return;
+	}
+	if(islog.trim()==""){
+		alertMsg("2","请选择提交日志！","fail")
+		return;
+	}else{
+		if(islog_altvalue=='1'){
+			if(firstsublogend.trim()==""){
+				alertMsg("2","请选择阶段一结束日！","fail")
+				return;
+			}
+			if(sndsublogend.trim()==""){
+				alertMsg("2","请选择阶段二结束日！","fail")
+				return;
+			}
+			if(thirdsublogend.trim()==""){
+				alertMsg("2","请选择阶段三结束日！","fail")
+				return;
+			}
+		}else{
+			firstsublogend = "";
+			sndsublogend = "";
+			thirdsublogend = "";
+		}
 	}
 	if(introduce.trim()==""){
 		alertMsg("2","请填写赛事简介！","fail")
@@ -332,7 +398,11 @@ function updateEvent(){
         	"awardsmodel":awardsmodel,
         	"cupmodel":cupmodel,
         	"entrymodel":entrymodel,
-        	"badgemodel":""
+        	"badgemodel":"",
+        	"islog":islog_altvalue,
+        	"firstsublogend":firstsublogend,
+        	"sndsublogend":sndsublogend,
+        	"thirdsublogend":thirdsublogend
         	},
         success: function(data){
         	if(data.status == 0){
@@ -423,3 +493,4 @@ function checkMoneyFormat(val){
     var isMoneyFormatRight = reg.test(val);
     return isMoneyFormatRight;
 }
+

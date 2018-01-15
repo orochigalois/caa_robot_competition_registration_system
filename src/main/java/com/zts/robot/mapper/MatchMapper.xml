@@ -156,6 +156,18 @@
       <if test="badgemodel != null" >
         badgemodel,
       </if>
+      <if test="islog != null" >
+        islog,
+      </if>
+      <if test="firstsublogend != null" >
+        firstsublogend,
+      </if>
+      <if test="sndsublogend != null" >
+        sndsublogend,
+      </if>
+      <if test="thirdsublogend != null" >
+        thirdsublogend,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="mid != null" >
@@ -242,6 +254,18 @@
       <if test="badgemodel != null" >
         #{badgemodel,jdbcType=VARCHAR},
       </if>
+      <if test="islog != null" >
+        #{islog,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        #{firstsublogend,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        #{sndsublogend,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        #{thirdsublogend,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.Match" >
@@ -327,6 +351,18 @@
       </if>
       <if test="badgemodel != null" >
         badgemodel = #{badgemodel,jdbcType=VARCHAR},
+      </if>
+       <if test="islog != null" >
+        islog = #{islog,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        firstsublogend = #{firstsublogend,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        sndsublogend = #{sndsublogend,jdbcType=VARCHAR},
+      </if>
+      <if test="badgemodel != null" >
+        thirdsublogend = #{thirdsublogend,jdbcType=VARCHAR},
       </if>
     </set>
     where mid = #{mid,jdbcType=VARCHAR}

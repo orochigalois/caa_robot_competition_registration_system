@@ -56,6 +56,14 @@ public class Match {
     private String badgeurl;
 
     private String badgemodel;
+    
+    private String islog;
+    
+    private String firstsublogend;
+    
+    private String sndsublogend;
+    
+    private String thirdsublogend;
 
     public String getMid() {
         return mid;
@@ -279,5 +287,37 @@ public class Match {
 
     public void setBadgemodel(String badgemodel) {
         this.badgemodel = badgemodel == null ? null : badgemodel.trim();
+    }
+    
+    public String getIslog() {
+        return islog;
+    }
+    
+    public void setIslog(String islog) {
+        this.islog = islog == null ? null : islog.trim();
+    }
+    
+    public String getFirstsublogend() {
+        return firstsublogend;
+    }
+    
+    public void setFirstsublogend(String firstsublogend) {
+        this.firstsublogend = firstsublogend == null ? null : firstsublogend.trim();
+    }
+    
+    public String getSndsublogend() {
+        return sndsublogend;
+    }
+    
+    public void setSndsublogend(String sndsublogend) {
+        this.sndsublogend = sndsublogend == null ? null : sndsublogend.trim();
+    }
+    
+    public String getThirdsublogend() {
+        return thirdsublogend;
+    }
+    
+    public void setThirdsublogend(String thirdsublogend) {
+        this.thirdsublogend = thirdsublogend == null ? null : thirdsublogend.trim();
     }
 }

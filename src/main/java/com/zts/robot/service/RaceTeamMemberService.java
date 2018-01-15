@@ -209,6 +209,16 @@ public class RaceTeamMemberService {
 
 		mapper.updateInfostatus(paramMap);
 	}
+	
+	public int findTeamsToRCJBySignuidTotalSize(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return mapper.findTeamsToRCJBySignuidTotalSize(paramMap);
+	}
+	
+	public List<Map<String, Object>> findTeamsToRCJBySignuidPages(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return mapper.findTeamsToRCJBySignuidPages(paramMap);
+	}
 
 	public int findTeamsBySignuidTotalSize(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub

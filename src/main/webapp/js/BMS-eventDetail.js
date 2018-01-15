@@ -46,6 +46,20 @@ function getEventInfo(){
         		$("#signenddate").html(info.signenddate);
         		$("#mincnt").html(info.mincnt);
         		$("#unitprice").html(info.unitprice/100+"元");
+        		if(info.islog=="1"){
+        			$("#islog").html("是")
+        			$("#firstli").removeAttr("style");
+        			$("#sndli").removeAttr("style");
+        			$("#thridli").removeAttr("style"); 			
+        		}else if(info.islog=="0"){
+        			$("#islog").html("否")
+        			$("#firstli").attr("style","display:none");
+        			$("#sndli").attr("style","display:none");
+        			$("#thridli").attr("style","display:none");
+        		}
+        		$("#firstsublogend").html(info.firstsublogend);
+        		$("#sndsublogend").html(info.sndsublogend);
+        		$("#thirdsublogend").html(info.thirdsublogend);
         		$("#introduce").html(info.introduce);
         		$("#description").html(info.description);
         		$("#gps").html(info.gps);

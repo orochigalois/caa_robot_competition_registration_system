@@ -353,6 +353,41 @@ public class TeamController {
 	}
 	
 	/**
+	 * RCJ报名人所在队伍列表有分页
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/findTeamsToRCJBySignuidPages")
+	@ResponseBody
+	public Map<String, Object> findTeamsToRCJBySignuidPages(HttpServletRequest request, HttpServletResponse response,Integer iDisplayLength, Integer iDisplayStart) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Cookie cookie = CookieOperation.getCookieByName(request, "authId");
+			JSONObject json = redisService.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
+			String uid = json.optString("uid");
+			String mid = request.getParameter("mid");
+			String signuid = uid;
+			paramMap.put("signuid", signuid);
+			paramMap.put("mid", mid);
+			int totalSize = rtmService.findTeamsToRCJBySignuidTotalSize(paramMap);
+			if (iDisplayLength==null||iDisplayLength != -1) {
+				paramMap.put("beginNo", iDisplayStart);
+				paramMap.put("endNo", iDisplayLength);
+			}
+			List<Map<String, Object>> list = rtmService.findTeamsToRCJBySignuidPages(paramMap);
+			resultMap.put("list", list);
+			resultMap.put("iTotalRecords", totalSize);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	/**
 	 * 保存队伍信息（无成员信息）
 	 * @param request
 	 * @param response

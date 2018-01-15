@@ -84,14 +84,33 @@ ORDER BY c.roleflg,b.serialnum
 	<delete id="delflgByTmid">
 		DELETE a FROM re_raceteammember a WHERE a.tmid=#{0}
 	</delete>
-	<select id="findTeamsBySignuid" resultType="Map">
-	SELECT * FROM tm_team a WHERE a.signuid=#{0} and a.tstatus='00' and a.delflg='00' and a.mid=#{1}
+	
+		<select id="findTeamsToRCJBySignuidTotalSize" resultType="Integer">
+	SELECT COUNT(DISTINCT a.rid,a.tid)FROM re_raceteammember a
+	LEFT JOIN tm_team b ON b.tid = a.tid
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
 	</select>
+	
 	<select id="findTeamsBySignuidTotalSize" resultType="Integer">
 	SELECT COUNT(DISTINCT a.rid,a.tid)FROM re_raceteammember a
 	LEFT JOIN tm_team b ON b.tid = a.tid
 	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
-
+	</select>
+	<select id="findTeamsToRCJBySignuidPages" resultType="Map">
+	SELECT a.tcode AS rtcode, b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate FROM re_raceteammember a 
+	LEFT JOIN tm_team b ON b.tid = a.tid 
+	LEFT JOIN ma_race c ON c.rid = a.rid 
+	LEFT JOIN ma_match d ON d.mid=a.mid
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
+	GROUP BY a.rid,a.tid
+	ORDER BY b.createdate,c.createdate
+	<if test="beginNo != null and endNo != null">
+			limit #{beginNo}, #{endNo}
+	</if>
+	</select>
+	
+	<select id="findTeamsBySignuid" resultType="Map">
+	SELECT * FROM tm_team a WHERE a.signuid=#{0} and a.tstatus='00' and a.delflg='00' and a.mid=#{1}
 	</select>
 	<select id="findTeamsBySignuidPages" resultType="Map">
 	SELECT a.tcode AS rtcode, b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate FROM re_raceteammember a 
@@ -105,6 +124,7 @@ ORDER BY c.roleflg,b.serialnum
 			limit #{beginNo}, #{endNo}
 	</if>
 	</select>
+
 	<select id="findoneteamper" resultType="Map">
 	SELECT DISTINCT a.tmid,a.createdate,a.serialnum FROM re_raceteammember a
 	WHERE a.tid=#{0}

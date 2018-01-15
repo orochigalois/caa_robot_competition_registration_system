@@ -1,5 +1,28 @@
 $(function(){
+
+	$(document).click(function(){
+		$(".emulate").hide();
+	})
 	
+	$(".selinput").click(function(e){
+    	e.stopPropagation();
+    	var me=this;
+    	$(me).next().show();
+    	$(me).next().children().click(function(){
+    		$(me).val($(this).text());
+    		$("#islog").attr("altvalue",$(this).attr("altvalue"));
+    		if($(this).attr("altvalue")=='1'){
+    			$("#firstli").removeAttr("style");
+    			$("#sndli").removeAttr("style");
+    			$("#thridli").removeAttr("style");
+    		}else if($(this).attr("altvalue")=='0'){
+    			$("#firstli").attr("style","display:none");
+    			$("#sndli").attr("style","display:none");
+    			$("#thridli").attr("style","display:none");
+    		}
+    		$(me).next().hide();
+    	})
+    })
 })
 
 function setupEvent(){
@@ -15,8 +38,14 @@ function setupEvent(){
 	var signstartdate=$("#signstartdate").val();
 	var signenddate=$("#signenddate").val();
 	var unitprice=$("#unitprice").val();
+	var islog=$("#islog").val();
+	var islog_altvalue=$("#islog").attr("altvalue");
+	var firstsublogend=$("#firstsublogend").val();
+	var sndsublogend=$("#sndsublogend").val();
+	var thirdsublogend=$("#thirdsublogend").val();
 	var introduce=$("#introduce").val();
-	var description=$("#description").val();
+//	var description=$("#description").val();
+	var description="测试中";
 	var awardsmodel=$(".awardsmodel .modelname").val();
 	var cupmodel=$(".cupmodel .modelname").val();
 	var entrymodel=$(".entrymodel .modelname").val();
@@ -73,6 +102,29 @@ function setupEvent(){
 		alertMsg("2","单价格式不正确！","fail")
 		return;
 	}
+	if(islog.trim()==""){
+		alertMsg("2","请选择提交日志！","fail")
+		return;
+	}else{
+		if(islog_altvalue=='1'){
+			if(firstsublogend.trim()==""){
+				alertMsg("2","请选择阶段一结束日！","fail")
+				return;
+			}
+			if(sndsublogend.trim()==""){
+				alertMsg("2","请选择阶段二结束日！","fail")
+				return;
+			}
+			if(thirdsublogend.trim()==""){
+				alertMsg("2","请选择阶段三结束日！","fail")
+				return;
+			}
+		}else{
+			firstsublogend = "";
+			sndsublogend = "";
+			thirdsublogend = "";
+		}
+	}
 	if(introduce.trim()==""){
 		alertMsg("2","请填写赛事简介！","fail")
 		return;
@@ -106,7 +158,7 @@ function setupEvent(){
 		return;
 	}*/
 	$.ajax({
-		type: "GET",
+		type: "Post",
         url: "../addMatch",
         dataType: "JSON",
         async:false,
@@ -130,7 +182,11 @@ function setupEvent(){
         	"awardsmodel":awardsmodel,
         	"cupmodel":cupmodel,
         	"entrymodel":entrymodel,
-        	"badgemodel":""
+        	"badgemodel":"",
+        	"islog":islog_altvalue,
+        	"firstsublogend":firstsublogend,
+        	"sndsublogend":sndsublogend,
+        	"thirdsublogend":thirdsublogend
         	},
         success: function(data){
         	if(data.status == 0){

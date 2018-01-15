@@ -34,8 +34,14 @@ public interface WriteRaceTeamMemberMapper {
 	 */
 	void delflgByTmid(String tmid);
 	
-	int findTeamsBySignuidTotalSize(Map<String, Object> paramMap);
+	//报名RCJ青少年项目队伍
+	int findTeamsToRCJBySignuidTotalSize(Map<String, Object> paramMap);
 
+	//报名RCJ青少年项目队伍
+	List<Map<String, Object>> findTeamsToRCJBySignuidPages(Map<String, Object> paramMap);
+	
+	int findTeamsBySignuidTotalSize(Map<String, Object> paramMap);
+	
 	List<Map<String, Object>> findTeamsBySignuidPages(Map<String, Object> paramMap);
 	
 	List<Map<String, Object>> findoneteamper(String tid);

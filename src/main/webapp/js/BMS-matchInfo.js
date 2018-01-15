@@ -52,6 +52,11 @@ function getMatchList(){
 							}else if(match.mstatus=="02"){
 								htmls+='<td mid="'+match.mid+'"><img src="../images/yiguanbi.png" class="changestatus" mstatus="02"></td>'
 							}
+							if(match.islog=="1"){
+								htmls+='<td>是</td>'
+							}else if(match.islog=="0"){
+								htmls+='<td>否</td>'
+							}
 							htmls+='<td><a class="modify" style="color:#999">修改</a>'+
 								 '<span class="split">|</span><a class="delete" style="color:#999">删除</a>'
 								 +'<span class="split">|</span><a class="delete"'
@@ -71,6 +76,11 @@ function getMatchList(){
 									+' mstatus="00" onclick="alertConfirm(\'2\',\'确定关闭该赛事吗？\',\'changestatus()\',this)"></td>'
 							}else if(match.mstatus=="02"){
 								htmls+='<td mid="'+match.mid+'"><img src="../images/yiguanbi.png" class="changestatus" mstatus="02"></td>'
+							}
+							if(match.islog=="1"){
+								htmls+='<td>是</td>'
+							}else if(match.islog=="0"){
+								htmls+='<td>否</td>'
 							}
 							htmls+='<td mid="'+match.mid+'"><a class="modify" onclick="editEvent(this)">修改</a>'+
 									'<span class="split">|</span><a class="delete" '
