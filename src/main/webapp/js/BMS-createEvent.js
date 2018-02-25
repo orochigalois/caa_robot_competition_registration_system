@@ -40,9 +40,9 @@ function setupEvent(){
 	var unitprice=$("#unitprice").val();
 	var islog=$("#islog").val();
 	var islog_altvalue=$("#islog").attr("altvalue");
-	var firstsublogend=$("#firstsublogend").val();
-	var sndsublogend=$("#sndsublogend").val();
-	var thirdsublogend=$("#thirdsublogend").val();
+	var stend=$("#stend").val();
+	var ndend=$("#ndend").val();
+	var rdend=$("#rdend").val();
 	var introduce=$("#introduce").val();
 //	var description=$("#description").val();
 	var description="测试中";
@@ -107,22 +107,22 @@ function setupEvent(){
 		return;
 	}else{
 		if(islog_altvalue=='1'){
-			if(firstsublogend.trim()==""){
+			if(stend.trim()==""){
 				alertMsg("2","请选择阶段一结束日！","fail")
 				return;
 			}
-			if(sndsublogend.trim()==""){
+			if(ndend.trim()==""){
 				alertMsg("2","请选择阶段二结束日！","fail")
 				return;
 			}
-			if(thirdsublogend.trim()==""){
+			if(rdend.trim()==""){
 				alertMsg("2","请选择阶段三结束日！","fail")
 				return;
 			}
 		}else{
-			firstsublogend = "";
-			sndsublogend = "";
-			thirdsublogend = "";
+			stend = "";
+			ndend = "";
+			rdend = "";
 		}
 	}
 	if(introduce.trim()==""){
@@ -158,7 +158,7 @@ function setupEvent(){
 		return;
 	}*/
 	$.ajax({
-		type: "Post",
+		type: "POST",
         url: "../addMatch",
         dataType: "JSON",
         async:false,
@@ -184,9 +184,9 @@ function setupEvent(){
         	"entrymodel":entrymodel,
         	"badgemodel":"",
         	"islog":islog_altvalue,
-        	"firstsublogend":firstsublogend,
-        	"sndsublogend":sndsublogend,
-        	"thirdsublogend":thirdsublogend
+        	"stend":stend,
+        	"ndend":ndend,
+        	"rdend":rdend
         	},
         success: function(data){
         	if(data.status == 0){

@@ -40,6 +40,12 @@ public interface WriteRaceTeamMemberMapper {
 	//报名RCJ青少年项目队伍
 	List<Map<String, Object>> findTeamsToRCJBySignuidPages(Map<String, Object> paramMap);
 	
+	//提交日志
+	void updateByPrimaryKeySpecial(Map<String, Object> paramMap);
+	
+	//提交日志队名info
+	List<Map<String, Object>> findTeamsinfoToRCJ(Map<String, Object> paramMap);
+	
 	int findTeamsBySignuidTotalSize(Map<String, Object> paramMap);
 	
 	List<Map<String, Object>> findTeamsBySignuidPages(Map<String, Object> paramMap);

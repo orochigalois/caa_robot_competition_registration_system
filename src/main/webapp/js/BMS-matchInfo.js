@@ -56,6 +56,8 @@ function getMatchList(){
 								htmls+='<td>是</td>'
 							}else if(match.islog=="0"){
 								htmls+='<td>否</td>'
+							}else{
+								htmls+='<td></td>'
 							}
 							htmls+='<td><a class="modify" style="color:#999">修改</a>'+
 								 '<span class="split">|</span><a class="delete" style="color:#999">删除</a>'
@@ -81,6 +83,8 @@ function getMatchList(){
 								htmls+='<td>是</td>'
 							}else if(match.islog=="0"){
 								htmls+='<td>否</td>'
+							}else{
+								htmls+='<td></td>'
 							}
 							htmls+='<td mid="'+match.mid+'"><a class="modify" onclick="editEvent(this)">修改</a>'+
 									'<span class="split">|</span><a class="delete" '

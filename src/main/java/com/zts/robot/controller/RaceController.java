@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zts.robot.pojo.Race;
 import com.zts.robot.pojo.UserMatchRace;
 import com.zts.robot.pojo.UserMatchRaceKey;
+import com.zts.robot.service.ModelService;
 import com.zts.robot.service.RaceService;
 import com.zts.robot.util.CookieOperation;
 import com.zts.robot.util.RedisUtil;
@@ -28,6 +30,8 @@ import net.sf.json.JSONObject;
 public class RaceController {
 	@Autowired
 	private RaceService raceService;
+	
+	private ModelService modelService;
 	
 	/**
 	 * 添加赛项
@@ -366,5 +370,29 @@ public class RaceController {
 		}
 		return resultMap;
 		
+	}
+	
+	/**
+	 * 打包日志为zip
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/downloadLog")
+	@ResponseBody
+	public Map<String, Object> downloadLog(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			System.out.println("开始请求");
+			String mid = request.getParameter("mid");
+
+			raceService.downloadLog(mid,resultMap);
+//			raceService.nihao();
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "系统异常！：" + e.getMessage());
+		}
+		return resultMap;
 	}
 }

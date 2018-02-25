@@ -1,5 +1,8 @@
 package com.zts.robot.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -7,12 +10,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zts.robot.mapper.MatchMapper;
 import com.zts.robot.mapper.RaceMapper;
 import com.zts.robot.mapper.RaceTeamMemberMapper;
 import com.zts.robot.mapper.UserMatchRaceMapper;
+import com.zts.robot.pojo.Match;
 import com.zts.robot.pojo.Race;
 import com.zts.robot.pojo.UserMatchRace;
 import com.zts.robot.pojo.UserMatchRaceKey;
+import com.zts.robot.util.FileToZip;
+import com.zts.robot.util.MyProperties;
 import com.zts.robot.util.Tools;
 
 import net.sf.json.JSONArray;
@@ -26,6 +33,8 @@ public class RaceService {
 	private RaceTeamMemberMapper raceTeamMemberMapper;
 	@Autowired
 	private UserMatchRaceMapper userMatchRaceMapper;
+	@Autowired
+	private MatchMapper matchMapper;
 	
 	public void addRace(Race race) {
 		// TODO 自动生成的方法存根
@@ -138,8 +147,55 @@ public class RaceService {
 		// TODO Auto-generated method stub
 		userMatchRaceMapper.deleteByPrimaryKey(userMatchRaceKey);
 	}
-
-
 	
+	public String removeUnlawfulFileName(String filename) {
+		
+		return filename.replace("\\", "").replace("/", "").replace(":", "").replace("*", "")
+				.replace("?", "").replace("\"", "").replace("<", "").replace(">", "").replace("|", "");
+	}
+	
+	
+	public void downloadLog(String mid, Map<String, Object> resultMap) {
+		Match match=matchMapper.selectByPrimaryKey(mid);//赛事信息		
+
+		String mname = removeUnlawfulFileName(match.getMname());
+		
+
+		String zipFilePath = MyProperties.getKey("RootPathkey")+"zip/"+mname+"_日志/";
+		File file = new File(zipFilePath);
+
+		if (file.exists())
+		{
+			// if folder exists, delete it
+			try{
+				FileToZip.delete(file);
+	        }
+			catch(IOException e){
+	            e.printStackTrace();
+	        }
+		}
+		
+		//create a new folder
+		file.mkdirs();
+		
+		String sourceFilePath = MyProperties.getKey("RootPathkey")+"rcjlogimage/"+mname;				
+		String fileName = mname+"_日志ZIP";
+		//FileToZip.fileToZip_new(sourceFilePath, zipFilePath, fileName);
+		
+		/*_____Add by Alex 2018.02.25*/
+		File directoryToZip = new File(sourceFilePath);
+		String outputZip=zipFilePath+fileName+".zip";
+		List<File> fileList = new ArrayList<File>();
+		//System.out.println("---Getting references to all files in: " + directoryToZip.getCanonicalPath());
+		FileToZip.getAllFiles(directoryToZip, fileList);
+		//System.out.println("---Creating zip file");
+		FileToZip.writeZipFile(directoryToZip, fileList,outputZip);
+		//System.out.println("---Done");
+		/*_____Add by Alex 2018.02.25 END*/
+		
+		
+		System.out.println("全部生成赛项日志完毕");
+		resultMap.put("status", 0);
+	}
 
 }

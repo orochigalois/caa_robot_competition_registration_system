@@ -84,6 +84,26 @@
     						<span class="basicname">创建时间：</span>
     						<input class="basicinput" type="text" placeholder="请选择创建时间">
     					</li> -->
+    					<li>
+    						<span class="basicname">提交日志：</span>
+    						<input type="text" class="basicinput selinput" readonly placeholder="请选择提交日志" id="islog" altvalue="">
+    						<ul class="emulate">
+	    						<li altvalue="1">是</li>
+	    						<li altvalue="0">否</li>
+    						</ul>
+    					</li>
+    					<li id="firstli" style="display:none">
+    						<span class="basicname">阶段一结束日：</span>
+    						<input id="stend" class="basicinput dateinput" readonly type="text" placeholder="请选择阶段一结束日期" onclick="laydate({ elem:'#stend', format:'YYYY-MM-DD hh:mm',istime: true} )">
+    					</li>
+    					<li id="sndli" style="display:none">
+    						<span class="basicname">阶段二结束日：</span>
+    						<input id="ndend" class="basicinput dateinput" readonly type="text" placeholder="请选择阶段二结束日期" onclick="laydate({ elem:'#ndend', format:'YYYY-MM-DD hh:mm',istime: true} )">
+    					</li>
+    					<li id="thridli" style="display:none">
+    						<span class="basicname">阶段三结束日：</span>
+    						<input id="rdend" class="basicinput dateinput" readonly type="text" placeholder="请选择阶段三结束日期" onclick="laydate({ elem:'#rdend', format:'YYYY-MM-DD hh:mm',istime: true} )">
+    					</li>
     				</ul>
     				<div class="infoitem">
     					<span class="itemspan">赛项简介：</span>

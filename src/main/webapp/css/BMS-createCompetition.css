@@ -9,14 +9,13 @@
 	float:left;
 	width:33.33%;
 	margin-bottom:10px;
-	font-size:0
 }
 /* .basicul li:last-child{
 	width:100%;
 } */
 .basicname{
 	display:inline-block;
-	width:84px;
+	width:100px;
 	text-align:right;
 	font-size:14px;
 }
@@ -27,6 +26,53 @@
 	padding-left:4px;
 	border:1px solid #ccc;
 }
+
+
+.selinput{
+	background: url(../images/xiala.png) no-repeat;
+	padding-right:15px;
+	background-position: 224px 13px;
+}
+
+/*
+.basicul li .emulate{
+	left:147px;
+	top:325px;
+	width:244px;
+	max-height:90px;
+	overflow-y:auto;
+}
+*/
+
+.basicul li .emulate li{
+	width:100%;
+	padding:0;
+	padding-left:10px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	margin-bottom: 0px;
+}
+
+.emulate{
+	position:absolute;
+	width:246px;
+	background:#fff;
+	display:none;
+	left:565px;
+	z-index:1;
+}
+.emulate li{
+	height:30px;
+	width:246px;
+	border:1px solid #ccc;
+	border-top:0;
+	padding-left:4px;
+	color:#666;
+	background:#fff;
+	cursor:pointer;
+	line-height:30px;
+}
+
 .coordinate,.coordinate:hover{
 	color:#14a5d5;
 	cursor:pointer;
@@ -41,7 +87,7 @@ textarea{
 }
 .itemspan{
 	float:left;
-	width:84px;
+	width:100px;
 	text-align:right;
 }
 .itemdiv{

@@ -53,9 +53,13 @@ function getAllRCJTeam(num){
     							+'<td>';
 						if(team.infostatus=="00"){htmls+='<span class="teamstatus1">已通过</span>'}
 						else if(team.infostatus=="01"){htmls+='<span class="teamstatus2">待审核</span>'}
-						else{htmls+='<span class="teamstatus3">已拒绝</span>'}
+						else{htmls+='<span class="teamstatus3">已拒绝</span>'
+							htmls+='</td>'}
+						htmls+='<td>'+team.stend+'</td>' 
+						+'<td>'+team.ndend+'</td>'
+						+'<td>'+team.rdend+'</td>'
 						if(compareTime()){
-							htmls+='</td><td>'
+							htmls+='<td>'
 							+'<a class="delteam1">提交日志</a>'
 							+'</td></tr>'
 						}

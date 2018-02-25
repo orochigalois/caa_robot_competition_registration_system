@@ -85,23 +85,20 @@ ORDER BY c.roleflg,b.serialnum
 		DELETE a FROM re_raceteammember a WHERE a.tmid=#{0}
 	</delete>
 	
-		<select id="findTeamsToRCJBySignuidTotalSize" resultType="Integer">
+	<select id="findTeamsToRCJBySignuidTotalSize" resultType="Integer">
 	SELECT COUNT(DISTINCT a.rid,a.tid)FROM re_raceteammember a
 	LEFT JOIN tm_team b ON b.tid = a.tid
-	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
+	LEFT JOIN ma_race c ON c.rid = a.rid 
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid} and c.islog ='1'
 	</select>
 	
-	<select id="findTeamsBySignuidTotalSize" resultType="Integer">
-	SELECT COUNT(DISTINCT a.rid,a.tid)FROM re_raceteammember a
-	LEFT JOIN tm_team b ON b.tid = a.tid
-	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
-	</select>
 	<select id="findTeamsToRCJBySignuidPages" resultType="Map">
-	SELECT a.tcode AS rtcode, b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate FROM re_raceteammember a 
+	SELECT a.tcode AS rtcode, b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname ,d.signstartdate,d.signenddate,c.islog,c.stend,c.ndend,c.rdend
+	FROM re_raceteammember a 
 	LEFT JOIN tm_team b ON b.tid = a.tid 
 	LEFT JOIN ma_race c ON c.rid = a.rid 
 	LEFT JOIN ma_match d ON d.mid=a.mid
-	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid}
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid} and c.islog ='1'
 	GROUP BY a.rid,a.tid
 	ORDER BY b.createdate,c.createdate
 	<if test="beginNo != null and endNo != null">
@@ -109,6 +106,22 @@ ORDER BY c.roleflg,b.serialnum
 	</if>
 	</select>
 	
+	<select id="findTeamsinfoToRCJ" resultType="Map">
+	SELECT a.tcode AS rtcode, b.*,a.infostatus,a.feestatus,a.feedback,a.stlogurl,a.ndlogurl,a.rdlogurl,c.rid,c.rname,d.mname,d.signstartdate,d.signenddate,c.islog,c.stend,c.ndend,c.rdend
+	FROM re_raceteammember a 
+	LEFT JOIN tm_team b ON b.tid = a.tid 
+	LEFT JOIN ma_race c ON c.rid = a.rid 
+	LEFT JOIN ma_match d ON d.mid=a.mid
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid} and c.islog ='1' and c.rid=#{rid} and b.tid=#{tid} 
+	GROUP BY a.rid,a.tid
+	</select>
+	
+	<select id="findTeamsBySignuidTotalSize" resultType="Integer">
+	SELECT COUNT(DISTINCT a.rid,a.tid)FROM re_raceteammember a
+	LEFT JOIN tm_team b ON b.tid = a.tid
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid} 
+	</select>
+
 	<select id="findTeamsBySignuid" resultType="Map">
 	SELECT * FROM tm_team a WHERE a.signuid=#{0} and a.tstatus='00' and a.delflg='00' and a.mid=#{1}
 	</select>

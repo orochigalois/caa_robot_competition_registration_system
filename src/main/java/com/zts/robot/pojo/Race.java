@@ -28,6 +28,14 @@ public class Race {
     private String createuid;
 
     private String rcode;
+    
+    private String islog;
+    
+    private String stend;
+    
+    private String ndend;
+    
+    private String rdend;
 
     public String getRid() {
         return rid;
@@ -139,5 +147,37 @@ public class Race {
 
     public void setRcode(String rcode) {
         this.rcode = rcode == null ? null : rcode.trim();
+    }
+    
+    public String getIslog() {
+        return islog;
+    }
+    
+    public void setIslog(String islog) {
+        this.islog = islog == null ? "0" : islog.trim();
+    }
+    
+    public String getstend() {
+        return stend;
+    }
+    
+    public void setstend(String stend) {
+        this.stend = stend == null ? null : stend.trim();
+    }
+    
+    public String getndend() {
+        return ndend;
+    }
+    
+    public void setndend(String ndend) {
+        this.ndend = ndend == null ? null : ndend.trim();
+    }
+    
+    public String getrdend() {
+        return rdend;
+    }
+    
+    public void setrdend(String rdend) {
+        this.rdend = rdend == null ? null : rdend.trim();
     }
 }

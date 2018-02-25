@@ -237,6 +237,24 @@
       and tid = #{tid,jdbcType=VARCHAR}
       and tmid = #{tmid,jdbcType=VARCHAR}
   </update>
+  <update id="updateByPrimaryKeySpecial" parameterType="com.zts.robot.pojo.RaceTeamMember" >
+    update re_raceteammember
+    <set >
+      <if test="stlogurl != null" >
+        stlogurl = #{stlogurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ndlogurl != null" >
+        ndlogurl = #{ndlogurl,jdbcType=VARCHAR},
+      </if>
+      <if test="rdlogurl != null" >
+        rdlogurl = #{rdlogurl,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=VARCHAR}
+      and tid = #{tid,jdbcType=VARCHAR}
+      and mid = #{mid,jdbcType=VARCHAR}
+      and signuid = #{signuid,jdbcType=VARCHAR}
+  </update>
   <select id="findCountByRaceTeamMemberTcode" resultType="java.lang.Integer">
   	SELECT COUNT(*) FROM re_raceteammember a WHERE a.tcode=#{0}
   </select>

@@ -159,14 +159,14 @@
       <if test="islog != null" >
         islog,
       </if>
-      <if test="firstsublogend != null" >
-        firstsublogend,
+      <if test="stend != null" >
+        stend,
       </if>
-      <if test="sndsublogend != null" >
-        sndsublogend,
+      <if test="ndend != null" >
+        ndend,
       </if>
-      <if test="thirdsublogend != null" >
-        thirdsublogend,
+      <if test="rdend != null" >
+        rdend,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -257,14 +257,14 @@
       <if test="islog != null" >
         #{islog,jdbcType=VARCHAR},
       </if>
-      <if test="badgemodel != null" >
-        #{firstsublogend,jdbcType=VARCHAR},
+      <if test="stend != null" >
+        #{stend,jdbcType=VARCHAR},
       </if>
-      <if test="badgemodel != null" >
-        #{sndsublogend,jdbcType=VARCHAR},
+      <if test="ndend != null" >
+        #{ndend,jdbcType=VARCHAR},
       </if>
-      <if test="badgemodel != null" >
-        #{thirdsublogend,jdbcType=VARCHAR},
+      <if test="rdend != null" >
+        #{rdend,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -352,17 +352,17 @@
       <if test="badgemodel != null" >
         badgemodel = #{badgemodel,jdbcType=VARCHAR},
       </if>
-       <if test="islog != null" >
+      <if test="islog != null" >
         islog = #{islog,jdbcType=VARCHAR},
       </if>
-      <if test="badgemodel != null" >
-        firstsublogend = #{firstsublogend,jdbcType=VARCHAR},
+      <if test="stend != null" >
+        stend = #{stend,jdbcType=VARCHAR},
       </if>
-      <if test="badgemodel != null" >
-        sndsublogend = #{sndsublogend,jdbcType=VARCHAR},
+      <if test="ndend != null" >
+        ndend = #{ndend,jdbcType=VARCHAR},
       </if>
-      <if test="badgemodel != null" >
-        thirdsublogend = #{thirdsublogend,jdbcType=VARCHAR},
+      <if test="rdend != null" >
+        rdend = #{rdend,jdbcType=VARCHAR},
       </if>
     </set>
     where mid = #{mid,jdbcType=VARCHAR}

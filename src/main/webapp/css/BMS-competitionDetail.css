@@ -5,17 +5,25 @@
 .basicul{
 	overflow:hidden;
 }
+
+.basicul li{
+	width:100%;
+	margin-bottom:15px;
+	padding-left:300px;
+}
+
+/* 
 .basicul li{
 	float:left;
 	width:33.33%;
 	margin-bottom:15px;
 }
-/* .basicul li:last-child{
+.basicul li:last-child{
 	width:100%;
 } */
 .basicname{
 	display:inline-block;
-	width:84px;
+	width:100px;
 	text-align:right;
 }
 .infoitem{
@@ -23,11 +31,11 @@
 }
 .itemspan{
 	float:left;
-	width:84px;
+	width:100px;
 	text-align:right;
 }
 .itemdiv{
-	margin-left:70px;
+	margin-left:100px;
 }
 .filename,.filename:hover{
 	color:#14a5d5;

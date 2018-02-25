@@ -90,17 +90,19 @@ function getEventInfo(){
         		$("#unitprice").val(info.unitprice/100);
         		$("#islog").val($("#islog").next().find("[altvalue="+info.islog+"]").text());
         		if(info.islog=="1"){
+        			$("#islog").attr("altvalue","1");
         			$("#firstli").removeAttr("style");
         			$("#sndli").removeAttr("style");
         			$("#thridli").removeAttr("style"); 			
-        		}else if(info.islog=="0"){
+        		}else{
+        			$("#islog").attr("altvalue","0");
         			$("#firstli").attr("style","display:none");
         			$("#sndli").attr("style","display:none");
         			$("#thridli").attr("style","display:none");
         		}
-        		$("#firstsublogend").val(info.firstsublogend);
-        		$("#sndsublogend").val(info.sndsublogend);
-        		$("#thirdsublogend").val(info.thirdsublogend);
+        		$("#stend").val(info.stend);
+        		$("#ndend").val(info.ndend);
+        		$("#rdend").val(info.rdend);
         		$("#introduce").val(info.introduce);
         		$("#description").html(info.description);
         		editor.insertHtml(info.description);
@@ -255,9 +257,9 @@ function updateEvent(){
 	var unitprice=$("#unitprice").val();
 	var islog=$("#islog").val();
 	var islog_altvalue=$("#islog").attr("altvalue");
-	var firstsublogend=$("#firstsublogend").val();
-	var sndsublogend=$("#sndsublogend").val();
-	var thirdsublogend=$("#thirdsublogend").val();
+	var stend=$("#stend").val();
+	var ndend=$("#ndend").val();
+	var rdend=$("#rdend").val();
 	var introduce=$("#introduce").val();
 	var description=$("#description").val();
 	var awardsmodel=$(".awardsmodel .modelname").val();
@@ -321,22 +323,22 @@ function updateEvent(){
 		return;
 	}else{
 		if(islog_altvalue=='1'){
-			if(firstsublogend.trim()==""){
+			if(stend.trim()==""){
 				alertMsg("2","请选择阶段一结束日！","fail")
 				return;
 			}
-			if(sndsublogend.trim()==""){
+			if(ndend.trim()==""){
 				alertMsg("2","请选择阶段二结束日！","fail")
 				return;
 			}
-			if(thirdsublogend.trim()==""){
+			if(rdend.trim()==""){
 				alertMsg("2","请选择阶段三结束日！","fail")
 				return;
 			}
 		}else{
-			firstsublogend = "";
-			sndsublogend = "";
-			thirdsublogend = "";
+			stend = "";
+			ndend = "";
+			rdend = "";
 		}
 	}
 	if(introduce.trim()==""){
@@ -400,9 +402,9 @@ function updateEvent(){
         	"entrymodel":entrymodel,
         	"badgemodel":"",
         	"islog":islog_altvalue,
-        	"firstsublogend":firstsublogend,
-        	"sndsublogend":sndsublogend,
-        	"thirdsublogend":thirdsublogend
+        	"stend":stend,
+        	"ndend":ndend,
+        	"rdend":rdend
         	},
         success: function(data){
         	if(data.status == 0){

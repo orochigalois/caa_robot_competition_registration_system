@@ -1,7 +1,67 @@
 $(function(){
+	$(document).click(function(){
+		$(".emulate").hide();
+	})
 	
+	$(".selinput").click(function(e){
+    	e.stopPropagation();
+    	var me=this;
+    	$(me).next().show();
+    	$(me).next().children().click(function(){
+    		$(me).val($(this).text());
+    		$("#islog").attr("altvalue",$(this).attr("altvalue"));
+    		if($(this).attr("altvalue")=='1'){
+    			$("#firstli").removeAttr("style");
+    			$("#sndli").removeAttr("style");
+    			$("#thridli").removeAttr("style");
+    		}else if($(this).attr("altvalue")=='0'){
+    			$("#firstli").attr("style","display:none");
+    			$("#sndli").attr("style","display:none");
+    			$("#thridli").attr("style","display:none");
+    		}
+    		$(me).next().hide();
+    	})
+    })
+    
+	//填充提交日志
+	getEventInfo();
 })
 
+var mid=sessionStorage.getItem("mid");
+function getEventInfo(){
+	$.ajax({
+		type: "GET",
+        url: "../findMatchInfoByMid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        		"mid":mid
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		var info=data.info;
+        		$("#islog").val($("#islog").next().find("[altvalue="+info.islog+"]").text());
+        		
+        		if(info.islog=="1"){
+        			$("#islog").attr("altvalue","1");
+        			$("#firstli").removeAttr("style");
+        			$("#sndli").removeAttr("style");
+        			$("#thridli").removeAttr("style"); 			
+        		}else if(info.islog=="0"){
+        			$("#islog").attr("altvalue","0");
+        			$("#firstli").attr("style","display:none");
+        			$("#sndli").attr("style","display:none");
+        			$("#thridli").attr("style","display:none");
+        		}
+        		$("#stend").val(info.stend);
+        		$("#ndend").val(info.ndend);
+        		$("#rdend").val(info.rdend);
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
 function createCompetition(){
 	var mid=sessionStorage.getItem("currentmid");
 	var frname=$("#frname").val();
@@ -9,8 +69,14 @@ function createCompetition(){
 	var startdate=$("#startdate").val();
 	var enddate=$("#enddate").val();
 	var introduce=$("#introduce").val();
-	var description=$("#description").val();
+//	var description=$("#description").val();
+	var description="测试赛项";
 	var rules=$("#rules").val();
+	var islog=$("#islog").val();
+	var islog_altvalue=$("#islog").attr("altvalue");
+	var stend=$("#stend").val();
+	var ndend=$("#ndend").val();
+	var rdend=$("#rdend").val();
 	var attachurl=[];
 	if(frname.trim()==""){
 		alertMsg("2","请填写大项名称！","fail")
@@ -47,11 +113,34 @@ function createCompetition(){
 		alertMsg("2","请填写赛项描述！","fail")
 		return;
 	}
+	if(islog.trim()==""){
+		alertMsg("2","请选择提交日志！","fail")
+		return;
+	}else{
+		if(islog_altvalue=='1'){
+			if(stend.trim()==""){
+				alertMsg("2","请选择阶段一结束日！","fail")
+				return;
+			}
+			if(ndend.trim()==""){
+				alertMsg("2","请选择阶段二结束日！","fail")
+				return;
+			}
+			if(rdend.trim()==""){
+				alertMsg("2","请选择阶段三结束日！","fail")
+				return;
+			}
+		}else{
+			stend = "";
+			ndend = "";
+			rdend = "";
+		}
+	}
 	$("[name=filename]").each(function(){
 		attachurl.push($(this).val())
 	})
 	$.ajax({
-		type: "GET",
+		type: "POST",
         url: "../addRace",
         dataType: "JSON",
         async:false,
@@ -65,6 +154,10 @@ function createCompetition(){
         	"description":description,
         	"rules":rules,
         	"attachurl":attachurl.join(","),
+        	"islog":islog_altvalue,
+        	"stend":stend,
+        	"ndend":ndend,
+        	"rdend":rdend,
         	},
         success: function(data){
         	console.log(data)

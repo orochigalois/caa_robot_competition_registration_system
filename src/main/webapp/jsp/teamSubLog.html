@@ -13,12 +13,13 @@
 	<link href="../css/index.css" rel="stylesheet">
   	<link href="../css/top.css" rel="stylesheet">
   	<link href="../css/layerMsg.css" rel="stylesheet">
-  	<link href="../css/eventRelated.css" rel="stylesheet">
+  	<link href="../css/teamSubLog.css" rel="stylesheet">
     <script src="../static/js/jquery-3.2.1.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/jquery.form.js"></script>
     <script src="../js/layerMsg.js"></script>
-    <script src="../js/matchDetail.js"></script>
+    <!-- <script src="../js/matchDetail.js"></script> -->
+    <script src="../js/teamSubLog.js"></script>
     <!--[if lt IE 9]>
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -77,22 +78,56 @@
     					</div>
     				</li>
     				<li>
-    					<span class="infospan">	开始时间：</span>
-    					<div class="infodiv" id="enddate">
+    					<span class="infospan">	审批状态：</span>
+    					<div class="infodiv" id="infostatus">
     					</div>
     				</li>
     				<li>
-    					<span class="infospan">	截止时间：</span>
-    					<div class="infodiv" id="startdate">
+    					<span class="infospan">	阶段一提交日志截止时间：</span>
+    					<div class="sublogtimediv" id="stend">
+    					</div>
+    					<div class="sublogdiv stsublog" >
+    						<form id="myform1" enctype="multipart/form-data" method="post">
+    							<a class="addEnclosure" id='stsublog'>添加<input type="file" class="model" onchange="uploadModel(this)" name="files"></a>
+    							<input hidden name="filenewname" value=""> <!-- 请不要变更input顺序 -->
+    							<input hidden name="savetype" value="03"> <!-- 请不要变更input顺序 -->
+    							<input type="hidden" id="mname_1" name="mname" value=""> <!-- 请不要变更input顺序 -->
+    							<input type="hidden" id="rname_1" name="rname" value=""> <!-- 请不要变更input顺序 -->
+    						</form>
     					</div>
     				</li>
     				<li>
-    					<span class="infospan">赛项附件：</span>
-    					<div class="infodiv" id="attachfile">
-    						
+    					<span class="infospan">	阶段二提交日志截止时间：</span>
+    					<div class="sublogtimediv" id="ndend">
+    					</div>
+    					<div class="sublogdiv ndsublog" >
+    						<form id="myform1" enctype="multipart/form-data" method="post">
+    							<a class="addEnclosure" id='ndsublog'>添加<input type="file" class="model" onchange="uploadModel(this)" name="files"></a>
+    							<input hidden name="filenewname" value=""> <!-- 请不要变更input顺序 -->
+    							<input hidden name="savetype" value="03"> <!-- 请不要变更input顺序 -->
+								<input type="hidden" id="mname_2" name="mname" value=""> <!-- 请不要变更input顺序 -->
+    							<input type="hidden" id="rname_2" name="rname" value=""> <!-- 请不要变更input顺序 -->
+    						</form>
+    					</div>
+    				</li>
+    				<li>
+    					<span class="infospan">	阶段三提交日志截止时间：</span>
+    					<div class="sublogtimediv" id="rdend">
+    					</div>
+    					<div class="sublogdiv rdsublog" >
+    						<form id="myform1" enctype="multipart/form-data" method="post">
+    							<a class="addEnclosure" id='rdsublog'>添加<input type="file" class="model" onchange="uploadModel(this)" name="files"></a>
+    							<input  hidden name="filenewname" value=""> <!-- 请不要变更input顺序 -->
+    							<input hidden name="savetype" value="03"> <!-- 请不要变更input顺序 -->
+								<input type="hidden" id="mname_3" name="mname" value=""> <!-- 请不要变更input顺序 -->
+    							<input type="hidden" id="rname_3" name="rname" value=""> <!-- 请不要变更input顺序 -->
+    						</form>
     					</div>
     				</li>
     			</ul>
+    			<div class="btnwrap">
+   					<a class="savelog" id="savelog" onclick="savelog()">保存</a>
+   				</div>
     		</div>
     	</div>
     	<p class="support">系统维护：智动天地（北京）科技有限公司</p>

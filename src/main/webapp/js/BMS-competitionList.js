@@ -397,3 +397,33 @@ function delRaceTC(){
         },
 	})
 }
+
+function download_log(){
+	var mname=$(".currentmatch").text().replace("\\", "").replace("/", "").replace(":", "").replace("*", "")
+	.replace("?", "").replace("\"", "").replace("<", "").replace(">", "").replace("|", "");
+	
+	var url='http://reg.robomatch.org/staticrobot/zip/'+mname+'_日志'+'/'+mname+'_日志ZIP.zip';
+//	var url='file:///C:/ROOT/staticrobot/zip/'+mname+'_日志';
+	//window.open(url,'_blank')
+//	//打包zip
+	var mid=sessionStorage.getItem("currentmid");
+	$.ajax({
+		type: "POST",
+        url: "../downloadLog",       
+        dataType: "JSON",
+      
+        data: {
+        	"mid":mid
+        },
+        success: function(data){
+        	if(data.status == 0){
+        		window.open(url);
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail");
+        	}
+        },
+        error:function(e){
+        	console.log(e);
+        }
+	})
+}

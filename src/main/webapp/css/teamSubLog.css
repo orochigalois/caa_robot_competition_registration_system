@@ -156,6 +156,13 @@ table thead td{
 .infodiv{
 	margin-left:180px;
 }
+.sublogtimediv{
+	float:left;
+	width:130px;
+}
+.sublogdiv{
+	margin-left:310px;
+}
 .matchEnclosure,.matchEnclosure:hover{
 	color:#01a4d3;
 	display:block;
@@ -243,3 +250,75 @@ table thead td{
 	text-decoration:none;
 }
 
+.btnwrap {
+    text-align: center;
+}
+
+.savelog, .savelog:hover{
+	display: inline-block;
+	width: 160px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	border-radius: 4px;
+	background: #e21230;
+	border: 1px solid transparent;
+	cursor: pointer;
+	text-decoration: none;
+	margin-top:25px;
+}
+
+.infoitem{
+	margin-bottom:15px;
+}
+.itemspan{
+	float:left;
+	width:112px;
+	text-align:right;
+}
+.itemdiv{
+	margin-left:112px;
+}
+.enclosureitem{
+	margin-bottom:5px;
+}
+.editfile{
+	color:#666;
+	cursor:pointer;
+	position:relative;
+}
+.editfile:hover{
+	color:#e21230;
+}
+.addEnclosure,.addEnclosure:hover{
+	padding-left:20px;
+	background:url(../images/jia.png) no-repeat left center;
+	color:#333;
+	text-decoration:none;
+	position:relative;
+}
+.btnwrap{
+	text-align:center;
+}
+#file1,.model{
+	position: absolute;
+    top: 0;
+    width: 48px;
+    height: 16px;
+    opacity: 0;
+}
+.editform{
+	display:inline-block;
+}
+.hidfile{
+	position: absolute;
+    top: 0;
+    width: 28px;
+    height: 16px;
+    opacity: 0;
+    left:0;
+    z-index:4;
+}
+.filename{
+	margin-right:10px;
+}

@@ -22,6 +22,22 @@ function getCompt(){
         		$("#introduce").html(info.introduce);
         		$("#description").html(info.description);
         		$("#rules").html(info.rules);
+        		if(info.islog=="1"){
+        			$("#islog").html("是")
+        			$("#islog").attr("altvalue","1");
+        			$("#firstli").removeAttr("style");
+        			$("#sndli").removeAttr("style");
+        			$("#thridli").removeAttr("style"); 			
+        		}else{
+        			$("#islog").html("否")
+        			$("#islog").attr("altvalue","0");
+        			$("#firstli").attr("style","display:none");
+        			$("#sndli").attr("style","display:none");
+        			$("#thridli").attr("style","display:none");
+        		}
+        		$("#stend").html(info.stend);
+        		$("#ndend").html(info.ndend);
+        		$("#rdend").html(info.rdend);
         		if(info.attachurl!=""){
         			var urlarr=info.attachurl.split(",");
         			var htmls="";

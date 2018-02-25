@@ -1,4 +1,28 @@
 $(function(){
+	$(document).click(function(){
+		$(".emulate").hide();
+	})
+	
+	$(".selinput").click(function(e){
+    	e.stopPropagation();
+    	var me=this;
+    	$(me).next().show();
+    	$(me).next().children().click(function(){
+    		$(me).val($(this).text());
+    		$("#islog").attr("altvalue",$(this).attr("altvalue"));
+    		if($(this).attr("altvalue")=='1'){
+    			$("#firstli").removeAttr("style");
+    			$("#sndli").removeAttr("style");
+    			$("#thridli").removeAttr("style");
+    		}else if($(this).attr("altvalue")=='0'){
+    			$("#firstli").attr("style","display:none");
+    			$("#sndli").attr("style","display:none");
+    			$("#thridli").attr("style","display:none");
+    		}
+    		$(me).next().hide();
+    	})
+    })
+    
 	getCompt();
 })
 var rid=sessionStorage.getItem("rid");
@@ -23,6 +47,21 @@ function getCompt(){
         		editor.insertHtml(info.description);
         		$("#description").val(info.description);
         		$("#rules").val(info.rules);
+        		$("#islog").val($("#islog").next().find("[altvalue="+info.islog+"]").text());
+        		if(info.islog=="1"){
+        			$("#islog").attr("altvalue","1");
+        			$("#firstli").removeAttr("style");
+        			$("#sndli").removeAttr("style");
+        			$("#thridli").removeAttr("style"); 			
+        		}else{
+        			$("#islog").attr("altvalue","0");
+        			$("#firstli").attr("style","display:none");
+        			$("#sndli").attr("style","display:none");
+        			$("#thridli").attr("style","display:none");
+        		}
+        		$("#stend").val(info.stend);
+        		$("#ndend").val(info.ndend);
+        		$("#rdend").val(info.rdend);
         		if(info.attachurl!=""){
         			var urlarr=info.attachurl.split(",");
         			var htmls="";
@@ -55,6 +94,11 @@ function updateCompetition(){
 	var enddate=$("#enddate").val();
 	var introduce=$("#introduce").val();
 	var description=$("#description").val();
+	var islog=$("#islog").val();
+	var islog_altvalue=$("#islog").attr("altvalue");
+	var stend=$("#stend").val();
+	var ndend=$("#ndend").val();
+	var rdend=$("#rdend").val();
 	
 	var rules=$("#rules").val();
 	var attachurl=[];
@@ -82,7 +126,29 @@ function updateCompetition(){
 		alertMsg("2","请选择结束时间！","fail")
 		return;
 	}
-	
+	if(islog.trim()==""){
+		alertMsg("2","请选择提交日志！","fail")
+		return;
+	}else{
+		if(islog_altvalue=='1'){
+			if(stend.trim()==""){
+				alertMsg("2","请选择阶段一结束日！","fail")
+				return;
+			}
+			if(ndend.trim()==""){
+				alertMsg("2","请选择阶段二结束日！","fail")
+				return;
+			}
+			if(rdend.trim()==""){
+				alertMsg("2","请选择阶段三结束日！","fail")
+				return;
+			}
+		}else{
+			stend = "";
+			ndend = "";
+			rdend = "";
+		}
+	}
 	if(introduce.trim()==""){
 		alertMsg("2","请填写赛项简介！","fail")
 		return;
@@ -113,6 +179,10 @@ function updateCompetition(){
         	"description":description,
         	"rules":rules,
         	"attachurl":attachurl.join(","),
+        	"islog":islog_altvalue,
+        	"stend":stend,
+        	"ndend":ndend,
+        	"rdend":rdend
         	},
         success: function(data){
         	console.log(data)

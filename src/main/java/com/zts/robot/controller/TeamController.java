@@ -387,6 +387,40 @@ public class TeamController {
 		return resultMap;
 	}
 	
+	
+	/**
+	 * RCJ报名人所在队伍列表有分页
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/findTeamsinfoToRCJ")
+	@ResponseBody
+	public Map<String, Object> findTeamsinfoToRCJ(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Cookie cookie = CookieOperation.getCookieByName(request, "authId");
+			JSONObject json = redisService.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
+			String uid = json.optString("uid");
+			String mid = request.getParameter("mid");
+			String tid = request.getParameter("tid");
+			String rid = request.getParameter("rid");
+			String signuid = uid;
+			paramMap.put("signuid", signuid);
+			paramMap.put("mid", mid);
+			paramMap.put("tid", tid);
+			paramMap.put("rid", rid);
+			List<Map<String, Object>> list = rtmService.findTeamsinfoToRCJ(paramMap);
+			resultMap.put("list", list);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
 	/**
 	 * 保存队伍信息（无成员信息）
 	 * @param request
@@ -673,6 +707,45 @@ public class TeamController {
 			JSONArray array = JSONArray.fromObject(memberList);
 			rtmService.updateUnitprice(array,tid);
 			 resultMap.put("status", 0);
+		} catch (Exception e) {
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 保存日志
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/savelog")
+	@ResponseBody
+	public Map<String, Object> savelog(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try {	
+			Cookie cookie = CookieOperation.getCookieByName(request, "authId");
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			JSONObject json = redisService.get("USER"+(String)cookie.getValue(),JSONObject.class);//获取登录人信息
+			String uid = json.optString("uid");
+			String mid = request.getParameter("mid");
+			String tid = request.getParameter("tid");
+			String rid = request.getParameter("rid");
+			String stlogurl = request.getParameter("stlogurl");
+			String ndlogurl = request.getParameter("ndlogurl");
+			String rdlogurl = request.getParameter("rdlogurl");
+			String signuid = uid;
+			paramMap.put("signuid", signuid);
+			paramMap.put("mid", mid);
+			paramMap.put("tid", tid);
+			paramMap.put("rid", rid);
+			paramMap.put("stlogurl", stlogurl);
+			paramMap.put("ndlogurl", ndlogurl);
+			paramMap.put("rdlogurl", rdlogurl);
+			rtmService.savelog(paramMap);
+			resultMap.put("status", 0);
 		} catch (Exception e) {
 			resultMap.put("status", 1);
 			e.printStackTrace();

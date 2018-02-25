@@ -59,11 +59,11 @@ public class Match {
     
     private String islog;
     
-    private String firstsublogend;
+    private String stend;
     
-    private String sndsublogend;
+    private String ndend;
     
-    private String thirdsublogend;
+    private String rdend;
 
     public String getMid() {
         return mid;
@@ -297,27 +297,27 @@ public class Match {
         this.islog = islog == null ? null : islog.trim();
     }
     
-    public String getFirstsublogend() {
-        return firstsublogend;
+    public String getstend() {
+        return stend;
     }
     
-    public void setFirstsublogend(String firstsublogend) {
-        this.firstsublogend = firstsublogend == null ? null : firstsublogend.trim();
+    public void setstend(String stend) {
+        this.stend = stend == null ? null : stend.trim();
     }
     
-    public String getSndsublogend() {
-        return sndsublogend;
+    public String getndend() {
+        return ndend;
     }
     
-    public void setSndsublogend(String sndsublogend) {
-        this.sndsublogend = sndsublogend == null ? null : sndsublogend.trim();
+    public void setndend(String ndend) {
+        this.ndend = ndend == null ? null : ndend.trim();
     }
     
-    public String getThirdsublogend() {
-        return thirdsublogend;
+    public String getrdend() {
+        return rdend;
     }
     
-    public void setThirdsublogend(String thirdsublogend) {
-        this.thirdsublogend = thirdsublogend == null ? null : thirdsublogend.trim();
+    public void setrdend(String rdend) {
+        this.rdend = rdend == null ? null : rdend.trim();
     }
 }

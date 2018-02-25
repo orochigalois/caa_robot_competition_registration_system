@@ -88,6 +88,18 @@
       <if test="rcode != null" >
         rcode,
       </if>
+      <if test="islog != null" >
+        islog,
+      </if>
+      <if test="stend != null" >
+        stend,
+      </if>
+      <if test="ndend != null" >
+        ndend,
+      </if>
+      <if test="rdend != null" >
+        rdend,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="rid != null" >
@@ -132,6 +144,18 @@
       <if test="rcode != null" >
         #{rcode,jdbcType=VARCHAR},
       </if>
+      <if test="islog != null" >
+        #{islog,jdbcType=VARCHAR},
+      </if>
+      <if test="stend != null" >
+        #{stend,jdbcType=VARCHAR},
+      </if>
+      <if test="ndend != null" >
+        #{ndend,jdbcType=VARCHAR},
+      </if>
+      <if test="rdend != null" >
+        #{rdend,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.Race" >
@@ -175,6 +199,18 @@
       </if>
       <if test="rcode != null" >
         rcode = #{rcode,jdbcType=VARCHAR},
+      </if>
+      <if test="islog != null" >
+        islog = #{islog,jdbcType=VARCHAR},
+      </if>
+      <if test="stend != null" >
+        stend = #{stend,jdbcType=VARCHAR},
+      </if>
+      <if test="ndend != null" >
+        ndend = #{ndend,jdbcType=VARCHAR},
+      </if>
+      <if test="rdend != null" >
+        rdend = #{rdend,jdbcType=VARCHAR},
       </if>
     </set>
     where rid = #{rid,jdbcType=VARCHAR}

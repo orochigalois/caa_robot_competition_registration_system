@@ -48,18 +48,20 @@ function getEventInfo(){
         		$("#unitprice").html(info.unitprice/100+"元");
         		if(info.islog=="1"){
         			$("#islog").html("是")
+        			$("#islog").attr("altvalue","1");
         			$("#firstli").removeAttr("style");
         			$("#sndli").removeAttr("style");
         			$("#thridli").removeAttr("style"); 			
-        		}else if(info.islog=="0"){
+        		}else{
         			$("#islog").html("否")
+        			$("#islog").attr("altvalue","0");
         			$("#firstli").attr("style","display:none");
         			$("#sndli").attr("style","display:none");
         			$("#thridli").attr("style","display:none");
         		}
-        		$("#firstsublogend").html(info.firstsublogend);
-        		$("#sndsublogend").html(info.sndsublogend);
-        		$("#thirdsublogend").html(info.thirdsublogend);
+        		$("#stend").html(info.stend);
+        		$("#ndend").html(info.ndend);
+        		$("#rdend").html(info.rdend);
         		$("#introduce").html(info.introduce);
         		$("#description").html(info.description);
         		$("#gps").html(info.gps);
