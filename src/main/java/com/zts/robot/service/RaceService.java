@@ -187,6 +187,14 @@ public class RaceService {
 		String outputZip=zipFilePath+fileName+".zip";
 		List<File> fileList = new ArrayList<File>();
 		//System.out.println("---Getting references to all files in: " + directoryToZip.getCanonicalPath());
+
+		if (!directoryToZip.exists())
+		{
+			resultMap.put("status", 1);
+			resultMap.put("errmsg", "没有需要下载的文件");
+			return;
+		}
+		
 		FileToZip.getAllFiles(directoryToZip, fileList);
 		//System.out.println("---Creating zip file");
 		FileToZip.writeZipFile(directoryToZip, fileList,outputZip);

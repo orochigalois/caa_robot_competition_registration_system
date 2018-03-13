@@ -204,10 +204,12 @@ public class UploadFileController {
 					/*_____Alex add 2018.02.25*/
 					/*delete all files with the suffix such as "阶段二日志_机器人救援赛-机器人超级轨迹赛（小学）_Y1801T52879" under the folder*/
 					final File alexfolder = new File(PootPathkey + folderpath);
-					for (File f : alexfolder.listFiles()) {
-					    if (f.getName().contains(name)) {
-					        f.delete();
-					    }
+					if(alexfolder.exists()){
+						for (File f : alexfolder.listFiles()) {
+						    if (f.getName().contains(name)) {
+						        f.delete();
+						    }
+						}
 					}
 					/*_____Alex add 2018.02.25 END*/
 					 

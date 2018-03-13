@@ -494,8 +494,8 @@ ORDER BY c.roleflg,b.serialnum
 		ORDER BY b.roleflg
 	</select>
 	<select id="findyingjjeByMidSiginuid" resultType="Integer">
-	SELECT IF(ISNULL(SUM(a.unitprice)),0,SUM(a.unitprice)) AS yingjje FROM re_raceteammember a
-	WHERE a.mid=#{0} AND a.signuid=#{1} AND a.infostatus='00'
+	SELECT IF(ISNULL(SUM(b.unitprice)),0,SUM(b.unitprice)) AS yingjje FROM (select * from re_raceteammember a
+	WHERE a.mid=#{0} AND a.signuid=#{1} AND a.infostatus='00' GROUP BY a.tmid) b
 	</select>
 
 	<select id="findUnitpriceByTid" resultType="HashMap">
