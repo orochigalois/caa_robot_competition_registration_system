@@ -10,6 +10,7 @@ $(function(){
 	getAllRCJTeam(num);
 })
 var enddate="";
+var rdenddate="";
 function getAllRCJTeam(num){
 	var mid=sessionStorage.getItem("currentmid");
 	var pageSize=10;
@@ -43,6 +44,7 @@ function getAllRCJTeam(num){
 					var htmls="";
 					$.each(data.list,function(i,team){
 						enddate=team.signenddate;
+						rdenddate=team.rdend;
 						sessionStorage.setItem("enddate",team.signenddate);
 						htmls+='<tr><td tid="'+team.tid+'" style="padding-left:20px">'
 								+'<a class="teamname" onclick="viewTeam(this)">'+team.tname+'</td>'
@@ -156,7 +158,7 @@ function getEnddate(){
 
 function compareTime(){
 	  var oDate1 = new Date();
-      var oDate2 = new Date(enddate);
+      var oDate2 = new Date(rdenddate);
       if(oDate1.getTime() > oDate2.getTime()){
     	  return true;
       }else {

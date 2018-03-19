@@ -109,6 +109,15 @@
       <if test="tcode != null" >
         tcode,
       </if>
+      <if test="stlogurl != null" >
+        stlogurl,
+      </if>
+      <if test="ndlogurl != null" >
+        ndlogurl,
+      </if>
+      <if test="rdlogurl != null" >
+        rdlogurl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="rid != null" >
@@ -164,6 +173,15 @@
       </if>
       <if test="tcode != null" >
         #{tcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stlogurl != null" >
+        #{stlogurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ndlogurl != null" >
+        #{ndlogurl,jdbcType=VARCHAR},
+      </if>
+      <if test="rdlogurl != null" >
+        #{rdlogurl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

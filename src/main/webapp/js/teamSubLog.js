@@ -41,7 +41,11 @@ function getAllRCJTeamInfo(){
         		$("#rname").html(info.rname);
         		$("#tcode").html(info.rtcode);
         		$("#school").html(info.school);
-        		$("#departname").html(info.departname);
+        		if(info.departname != null && info.departname != ""){
+        			$("#departname").html(info.departname);
+        		}else{
+        			$("#departname").html("无");
+        		}
         		
         		mname=info.mname;
         		rname=info.rname;

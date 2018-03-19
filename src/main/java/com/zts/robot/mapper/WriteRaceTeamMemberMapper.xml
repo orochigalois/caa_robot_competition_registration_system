@@ -8,7 +8,7 @@
 		select distinct tcode from re_raceteammember where rid=#{0} and tid=#{1} limit  0, 1; 
 	</select>
 	<select id="findRidListOfTid" resultType="Map">
-		select DISTINCT rid,createdate from re_raceteammember where tid=#{0} 
+		select stlogurl,ndlogurl,rid,createdate,rdlogurl from re_raceteammember where tid=#{0} group by rid
 	</select>
 	<update id="changeInfoStatusByTid">
 		update re_raceteammember set infostatus=#{1} where tid=#{0}
@@ -112,7 +112,7 @@ ORDER BY c.roleflg,b.serialnum
 	LEFT JOIN tm_team b ON b.tid = a.tid 
 	LEFT JOIN ma_race c ON c.rid = a.rid 
 	LEFT JOIN ma_match d ON d.mid=a.mid
-	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid} and c.islog ='1' and c.rid=#{rid} and b.tid=#{tid} 
+	WHERE b.signuid=#{signuid} AND b.tstatus='00' AND a.mid=#{mid} and c.islog ='1' and c.rid=#{rid} and b.tid=#{tid}
 	GROUP BY a.rid,a.tid
 	</select>
 	

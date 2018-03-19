@@ -135,9 +135,19 @@ public class RaceTeamMemberService {
 			rtm.setCreatedate(map.get("createdate").toString());
 			rtm.setSerialnum(serialnum);
 			rtm.setUnitprice(match.getUnitprice());
+			
 			//获取tcode
 			String tcode1 = mapper.selectbyRTMTcode(map.get("rid").toString(), tid);
 			rtm.setTcode(tcode1);
+			if(map.get("stlogurl")!= null){
+				rtm.setStlogurl(map.get("stlogurl").toString());
+			}
+			if(map.get("ndlogurl")!= null){
+				rtm.setNdlogurl(map.get("ndlogurl").toString());
+			}
+			if(map.get("tdlogurl")!= null){
+				rtm.setRdlogurl(map.get("tdlogurl").toString());
+			}
 			
 			mapper.insertSelective(rtm);
 		}

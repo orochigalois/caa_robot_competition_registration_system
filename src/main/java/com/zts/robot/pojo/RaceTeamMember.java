@@ -30,6 +30,12 @@ public class RaceTeamMember extends RaceTeamMemberKey {
     private Integer unitprice;
     
     private String tcode;
+    
+    private String stlogurl;
+    
+    private String ndlogurl;
+    
+    private String rdlogurl;
 
     public String getMid() {
         return mid;
@@ -145,5 +151,29 @@ public class RaceTeamMember extends RaceTeamMemberKey {
     
     public void setTcode(String tcode) {
         this.tcode = tcode == null ? null : tcode.trim();
+    }
+    
+    public String getStlogurl() {
+        return stlogurl;
+    }
+
+    public void setStlogurl(String stlogurl) {
+        this.stlogurl = stlogurl == null ? null : stlogurl.trim();
+    }
+    
+    public String getNdlogurl() {
+        return ndlogurl;
+    }
+
+    public void setNdlogurl(String ndlogurl) {
+        this.ndlogurl = ndlogurl == null ? null : ndlogurl.trim();
+    }
+    
+    public String getRdlogurl() {
+        return rdlogurl;
+    }
+
+    public void setRdlogurl(String rdlogurl) {
+        this.rdlogurl = rdlogurl == null ? null : rdlogurl.trim();
     }
 }
