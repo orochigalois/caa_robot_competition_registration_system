@@ -134,9 +134,9 @@ function getAllTeam(num){
 							htmls+='<td><span class="paystatus3">部分缴费</span></td>'
 						}
 						if(team.ckstatus=="00"){
-							htmls+='<td><span class="paystatus1">已签到</span></td>'
+							htmls+='<td><span class="paystatus1">已签到</span></td><td tid="'+team.tid+'"><a class="modify" onclick="updateCkstatus(this,\'01\')">撤销</a></td>'
 						}else if(team.ckstatus=="01"){
-							htmls+='<td><span class="paystatus2">未签到</span></td>'
+							htmls+='<td><span class="paystatus2">未签到</span><td tid="'+team.tid+'"><a class="modify" onclick="updateCkstatus(this,\'00\')">签到</a></td></td>'
 						}
 						htmls+='<td tid="'+team.tid+'" rid="'+team.rid+'">'
     							+'<a class="modify" onclick="editTeam(this)">修改</a>'
@@ -407,6 +407,29 @@ function getAllRace(){
         			htmls+='<li altvalue="'+race.rid+'">'+race.rname+'</li>'
         		})
         		$("#rname").next().append(htmls)
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+}
+
+//签到及撤销
+function updateCkstatus(obj,status){
+	var tid=$(obj).parent().attr("tid");
+	$.ajax({
+		type: "GET",
+        url: "../saveTeamInfo",
+        dataType: "JSON",
+        async:false,
+        data: {
+        	"tid":tid,
+        	"ckstatus":status
+        	},
+        success: function(data){
+        	if(data.status == 0){
+        		alertMsg("2","操作成功！","success");
+        		setTimeout("location.reload()",2000)
         	}else if(data.status == 1){
         		alertMsg("2",data.errmsg,"fail")
         	}
