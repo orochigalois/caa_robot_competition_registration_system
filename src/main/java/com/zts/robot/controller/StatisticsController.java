@@ -168,6 +168,7 @@ public class StatisticsController {
 			String uname = request.getParameter("uname");
 			String email = request.getParameter("email");
 			String infostatus = request.getParameter("infostatus");
+			String ckstatus = request.getParameter("ckstatus");
 			
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			paramMap.put("mid", mid);
@@ -182,6 +183,7 @@ public class StatisticsController {
 			paramMap.put("uname", uname);
 			paramMap.put("email", email);
 			paramMap.put("infostatus", infostatus);
+			paramMap.put("ckstatus", ckstatus);
 			
 			statisticsService.teamRaceDerivedByMid(paramMap,resultMap);
 			//DownLoadFile.downLoadFileWeb(response, resultMap);

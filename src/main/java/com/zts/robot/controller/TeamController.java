@@ -574,6 +574,7 @@ public class TeamController {
 			String region=request.getParameter("region");
 			String rid=request.getParameter("rid");
 			String mid=request.getParameter("mid");
+			String ckstatus=request.getParameter("ckstatus");
 			paramMap.put("school", school);
 			paramMap.put("orgtype", orgtype);
 			paramMap.put("region", region);
@@ -582,6 +583,7 @@ public class TeamController {
 			paramMap.put("infostatus", infostatus);
 			paramMap.put("rid", rid);
 			paramMap.put("mid", mid);
+			paramMap.put("ckstatus", ckstatus);
 			int totalSize = rtmService.findAllTeamsBySignuidPagesTotalSize(paramMap);
 			if (iDisplayLength==null||iDisplayLength != -1) {
 				paramMap.put("beginNo", iDisplayStart);

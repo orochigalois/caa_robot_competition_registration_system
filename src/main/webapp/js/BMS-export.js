@@ -300,6 +300,7 @@ function exportRaceteam(){
 	var uname=$("#raceTeam .uname").val();
 	var email=$("#raceTeam .email").val();
 	var infostatus=$("#raceTeam .infostatus").attr("altvalue");
+	var ckstatus=$("#raceTeam .ckstatus").attr("altvalue");
 	
 	var param={};
 	param.mname=mname;
@@ -314,6 +315,7 @@ function exportRaceteam(){
 	param.uname=uname;
 	param.email=email;
 	param.infostatus=infostatus;
+	param.ckstatus=ckstatus;
 	
 	
 	var form=$("<form>");//定义一个form表单

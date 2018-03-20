@@ -58,6 +58,7 @@ function getAllTeam(num){
 	var rid=$("#rname").attr("altvalue");
 	var orgtype=$("#orgtype").val();
 	var region=$("#region").val();
+	var ckstatus=$("#ckstatus").attr("altvalue");
 	$("#page").unbind().data("pagination", null).empty();	
 	$("#page").pagination({
 		pageIndex: num,
@@ -81,6 +82,7 @@ function getAllTeam(num){
 				param.orgtype=orgtype;
 				param.region=region;
 				param.rid=rid;
+				param.ckstatus=ckstatus;
 				sessionStorage.setItem("teamlistJson", JSON.stringify(param));
 				return {
 					iDisplayStart : data.pageIndex * data.pageSize,
@@ -92,7 +94,8 @@ function getAllTeam(num){
 					"orgtype":orgtype,
 					"region":region,
 					"rid":rid,
-					"mid":mid
+					"mid":mid,
+					"ckstatus":ckstatus
 				};
 			}, // [Function]:自定义请求参数
 			"success" : function(data, status) {

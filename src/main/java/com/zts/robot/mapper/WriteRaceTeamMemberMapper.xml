@@ -166,6 +166,9 @@ ORDER BY c.roleflg,b.serialnum
 	<if test="school != null and school !=''.toString()">
 			 AND b.school LIKE '%${school}%'
 	</if> 
+	<if test="ckstatus != null and ckstatus !=''.toString()">
+			 AND b.ckstatus= #{ckstatus}
+	</if> 
 	<if test="feestatus != null and feestatus !=''.toString()">
 			 AND a.feestatus= #{feestatus}
 	</if> 
@@ -195,6 +198,9 @@ ORDER BY c.roleflg,b.serialnum
 	<if test="school != null and school !=''.toString()">
 			 AND b.school LIKE '%${school}%'
 	</if> 
+	<if test="ckstatus != null and ckstatus !=''.toString()">
+			 AND b.ckstatus= #{ckstatus}
+	</if> 	
 	<if test="feestatus != null and feestatus !=''.toString()">
 			 AND a.feestatus= #{feestatus}
 	</if> 
@@ -378,7 +384,7 @@ ORDER BY c.roleflg,b.serialnum
 		,a.tcode,c.tname,c.school,c.orgtype,c.region
 		,d.uname,d.phone,d.email,d.invoicename,d.taxpayernumber,d.banknumber,d.addressphone,d.receiveaddress
 		,e.tchname,e.tchsex,e.tchdidtype,e.tchdid,e.tchphone,e.tchemail,e.diningtype,e.stuname,e.stunum
-		,a.infostatus,a.feestatus,a.createdate
+		,a.infostatus,a.feestatus,a.createdate,c.ckstatus
 		FROM (
 			SELECT DISTINCT a.tid,a.rid,a.signuid,a.infostatus,a.feestatus,a.createdate,a.tcode FROM re_raceteammember a
 			WHERE a.mid=#{mid}
@@ -431,6 +437,9 @@ ORDER BY c.roleflg,b.serialnum
 		<if test="infostatus != null and infostatus !=''.toString()">
 		AND a.infostatus=#{infostatus}
 		</if>
+		<if test="ckstatus != null and ckstatus !=''.toString()">
+		AND c.ckstatus=#{ckstatus}
+		</if>		
 		ORDER BY a.rid,a.tid
 	</select>
 
