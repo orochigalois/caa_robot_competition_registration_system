@@ -828,15 +828,15 @@ function adjustOrder(){
 	var memList=[];
 	$(".stuList .editbtn").each(function(i){
 		var obj={};
-//		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
-		obj.tmid=$(this).attr("tmid");
+		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
+//		obj.tmid=$(this).attr("tmid");
 		obj.serialnum=(i+1);
 		memList.push(obj);
 	})
 	$(".teaList .editbtn").each(function(i){
 		var obj={};
-//		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
-		obj.tmid=$(this).attr("tmid");
+		obj.tmid=JSON.parse($(this).attr("detail")).tmid;
+//		obj.tmid=$(this).attr("tmid");
 		obj.serialnum=(i+1);
 		memList.push(obj);
 	})

@@ -271,16 +271,16 @@ ORDER BY c.roleflg,b.serialnum
 					SELECT 
 					b.tname,b.school,b.orgtype,b.region
 					,c.uname,c.phone,c.email,c.invoicename,c.taxpayernumber,c.banknumber,c.addressphone,c.receiveaddress
-					,GROUP_CONCAT( d.tmname) AS tchname,GROUP_CONCAT( d.sex) AS tchsex,GROUP_CONCAT( d.didtype) AS tchdidtype
-					,GROUP_CONCAT( d.did) AS tchdid,GROUP_CONCAT( d.email) AS tchemail,GROUP_CONCAT( d.phone) AS tchphone
-					,GROUP_CONCAT( f.folk) AS tchfolk,GROUP_CONCAT( d.diningtype) AS tchdiningtype
+					,GROUP_CONCAT( d.tmname order by a.serialnum) AS tchname,GROUP_CONCAT( d.sex order by a.serialnum) AS tchsex,GROUP_CONCAT( d.didtype order by a.serialnum) AS tchdidtype
+					,GROUP_CONCAT( d.did order by a.serialnum) AS tchdid,GROUP_CONCAT( d.email order by a.serialnum) AS tchemail,GROUP_CONCAT( d.phone order by a.serialnum) AS tchphone
+					,GROUP_CONCAT( f.folk order by a.serialnum) AS tchfolk,GROUP_CONCAT( d.diningtype order by a.serialnum) AS tchdiningtype
 				
-					,GROUP_CONCAT( e.tmname) AS stuname,GROUP_CONCAT( e.sex) AS stusex,GROUP_CONCAT( e.didtype) AS studidtype
-					,GROUP_CONCAT( e.did) AS studid,GROUP_CONCAT( e.email) AS stuemail,GROUP_CONCAT( e.phone) AS stuphone
-					,GROUP_CONCAT( g.folk) AS stufolk,GROUP_CONCAT( e.diningtype) AS studiningtype
-					,a.tid,GROUP_CONCAT(a.tmid) AS tmid
+					,GROUP_CONCAT( e.tmname order by a.serialnum) AS stuname,GROUP_CONCAT( e.sex order by a.serialnum) AS stusex,GROUP_CONCAT( e.didtype order by a.serialnum) AS studidtype
+					,GROUP_CONCAT( e.did order by a.serialnum) AS studid,GROUP_CONCAT( e.email order by a.serialnum) AS stuemail,GROUP_CONCAT( e.phone order by a.serialnum) AS stuphone
+					,GROUP_CONCAT( g.folk order by a.serialnum) AS stufolk,GROUP_CONCAT( e.diningtype order by a.serialnum) AS studiningtype
+					,a.tid,GROUP_CONCAT(a.tmid order by a.serialnum) AS tmid
 					FROM (
-						SELECT DISTINCT a.tid,a.tmid FROM re_raceteammember a
+						SELECT DISTINCT a.tid,a.tmid,a.serialnum FROM re_raceteammember a
 						WHERE a.mid=#{mid}
 					) a 
 					LEFT JOIN tm_team b ON b.tid = a.tid
@@ -394,12 +394,12 @@ ORDER BY c.roleflg,b.serialnum
 		LEFT JOIN os_user d ON d.uid = a.signuid
 		LEFT JOIN (
 					SELECT
-					a.tid,GROUP_CONCAT(b.tmname) AS tchname,GROUP_CONCAT(b.sex) AS tchsex,GROUP_CONCAT(b.didtype) AS tchdidtype
-					,GROUP_CONCAT(b.did) AS tchdid,GROUP_CONCAT(b.phone) AS tchphone,GROUP_CONCAT(b.email) AS tchemail,
-					GROUP_CONCAT(b.diningtype) AS diningtype,
-					GROUP_CONCAT( c.tmname) AS stuname, COUNT(c.tmname) AS stunum
+					a.tid,GROUP_CONCAT(b.tmname order by a.serialnum) AS tchname,GROUP_CONCAT(b.sex order by a.serialnum) AS tchsex,GROUP_CONCAT(b.didtype order by a.serialnum) AS tchdidtype
+					,GROUP_CONCAT(b.did order by a.serialnum) AS tchdid,GROUP_CONCAT(b.phone order by a.serialnum) AS tchphone,GROUP_CONCAT(b.email order by a.serialnum) AS tchemail,
+					GROUP_CONCAT(b.diningtype order by a.serialnum) AS diningtype,
+					GROUP_CONCAT( c.tmname order by a.serialnum) AS stuname, COUNT(c.tmname) AS stunum
 					FROM (
-						SELECT DISTINCT a.tid,a.tmid FROM re_raceteammember a
+						SELECT DISTINCT a.tid,a.tmid,a.serialnum FROM re_raceteammember a
 						WHERE a.mid=#{mid}
 					) a 
 					LEFT JOIN tm_member b ON b.tmid = a.tmid AND b.roleflg='01'
