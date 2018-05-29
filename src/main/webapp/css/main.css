@@ -1,3 +1,6 @@
+html{
+	overflow-y:scroll;
+}
 body{
 	background:#f2f2f2;
 }
@@ -34,7 +37,7 @@ input{padding:0px;}
 #userinfo,#editInfo,#changepwd{
 	background:#fff;
 	text-align:center;
-	padding-bottom:30px
+	padding-bottom:30px;
 }
 .userphoto,.editPhone{
 	width:105px;
@@ -43,9 +46,10 @@ input{padding:0px;}
 	margin-bottom:30px;
 }
 .infolist,.editlist{
-	width:600px;
+	width:800px;
 	margin:0 auto;
 	overflow:hidden;
+	margin-top:30px;
 }
 .infolist li{
 	float:left;
@@ -78,7 +82,7 @@ input{padding:0px;}
 	text-decoration:none;
 	cursor:pointer;
 }
-#editinfo{margin-right:20px}
+#editinfo{margin-right:20px;}
 .hideInfo{display:none}
 .editlist li{
 	float: left;
@@ -91,7 +95,7 @@ input{padding:0px;}
 .editlist-r{text-align: left;font-size:14px;}
 .editspan-l{
 	display:inline-block;
-	width:104px;
+	width:110px;
 	font-size:14px;
 	text-align:right;
 	margin-right:3px;
@@ -102,7 +106,23 @@ input{padding:0px;}
 	text-align:right;
 	margin-right:3px;
 	margin-left: 20px;
-	width:104px;
+	width:110px;
+}
+.editspan-end{
+	display:inline-block;
+	width:3px;
+	font-size:14px;
+	text-align:left;
+	margin-left:2px;
+	color:#FF0000;
+}
+.editspan-end-0{
+	display:inline-block;
+	width:3px;
+	font-size:0px;
+	text-align:left;
+	margin-left:2px;
+	color:#FF0000;
 }
 #editphoto{cursor: pointer;}
 .infoinput-r[type=text]{
@@ -276,3 +296,43 @@ input{padding:0px;}
 }
 #abolish{background:#999;margin-left:120px;	margin-right:70px;}
 #ensure{background:#c00000}
+
+.selinput {
+    background: url(../images/xiala.png) no-repeat;
+    padding-right: 15px;
+    background-position: 224px 13px;
+}
+
+
+.editlist-l li .emulate li{
+	width:100%;
+	padding:0;
+	padding-left:10px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.emulate{
+	position:absolute;
+	width:170px;
+	background:#fff;
+	display:none;
+	left:584px;
+	z-index:1;
+}
+
+.emulate li{
+	height:24px;
+	width:170px;
+	border:1px solid #ccc;
+	border-top:0;
+	padding-left:10px;
+	color:#666;
+	background:#fff;
+	cursor:pointer;
+	line-height:24px;
+	margin-bottom:0;
+	font-size:14px;
+	text-align:left;
+}
+

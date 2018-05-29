@@ -1,4 +1,32 @@
 $(function(){
+	
+	$(document).click(function(){
+		$(".emulate").hide();
+	})
+	
+	$(".selinput").click(function(e){
+    	e.stopPropagation();
+    	var me=this;
+    	$(me).next().show();
+    	$(me).next().children().click(function(){
+    		$(me).val($(this).text());
+    		$("#editifinvoice").attr("altvalue",$(this).attr("altvalue"));
+    		if($(this).attr("altvalue")=='1'){
+    			$("#editinvoicenameli").removeAttr("style");
+    			$("#edittaxpayernumberli").removeAttr("style");
+    			$("#editbanknumberli").removeAttr("style");
+    			$("#editaddressphoneli").removeAttr("style");
+    		}else if($(this).attr("altvalue")=='0'){
+    			$("#editinvoicenameli").attr("style","display:none");
+    			$("#edittaxpayernumberli").attr("style","display:none");
+    			$("#editbanknumberli").attr("style","display:none");
+    			$("#editaddressphoneli").attr("style","display:none");
+    		}
+    		$(me).next().hide();
+    	})
+    })
+    
+    
 	//回显用户信息
 	findLoginUser();
 	//编辑用户信息并保存
@@ -128,10 +156,44 @@ function updateLoginUser(){
 			alertMsg("1","请选择性别!","fail");
 			return;
 		}
-		else if($("#editphone").val().trim()==""){
-			alertMsg("1","请输入手机号!","fail");
+		else if($("#editemail").val().trim()==""){
+			alertMsg("1","请输入邮箱!","fail");
 			return;
 		}
+		else if($("#editphone").val().trim()==""){
+			alertMsg("1","请输入电话!","fail");
+			return;
+		}
+		else if($("#editschool").val().trim()==""){
+			alertMsg("1","请输入学校/供职单位!","fail");
+			return;
+		}
+		else if($("#editreceiveaddress").val().trim()==""){
+			alertMsg("1","请输入收件地址!","fail");
+			return;
+		}
+		
+		var ifinvoice=$("#editifinvoice").attr("altvalue");
+		var editifinvoice = $('#editifinvoice').val();
+		var editinvoicename = $('#editinvoicename').val();
+		var edittaxpayernumber = $('#edittaxpayernumber').val();
+		
+		if(editifinvoice.trim()==""){
+			alertMsg("1","请选择开具发票！","fail")
+			return;
+		}else{
+			if(ifinvoice=='1'){
+				if(editinvoicename.trim()==""){
+					alertMsg("1","请输入发票抬头！","fail")
+					return;
+				}
+				if(edittaxpayernumber.trim()==""){
+					alertMsg("1","请输入纳税人识别号！","fail")
+					return;
+				}
+			}
+		}
+
 		/*else if($("#editinvoicename").val().trim()==""){
 			alertMsg("1","请输入发票名称!","fail");
 			return;

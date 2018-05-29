@@ -91,7 +91,7 @@
 	    				<span class="infospan-r" id="infoaddressphone"></span>
     				</li>
     				<li>
-	    				<span class="infospan-l">收发票地址：</span>
+	    				<span class="infospan-l">收件地址：</span>
 	    				<span class="infospan-r" id="inforeceiveaddress"></span>
     				</li>
     				<li>
@@ -126,6 +126,7 @@
     				<li class="editlist-l">
     					<span class="editspan-l">姓名：</span>
     					<input id="editname" class="infoinput-r" type="text" >
+    					<span class="editspan-end">*</span>
     				</li>
     				<li class="editlist-r">
     					<span class="editspan-r">性别：</span>
@@ -135,38 +136,54 @@
     				<li class="editlist-l">
     					<span class="editspan-l">邮箱：</span>
     					<input id="editemail" class="infoinput-r" type="text" readonly="readonly">
+    					<span class="editspan-end">*</span>
     				</li>
     				<li class="editlist-r">
     					<span class="editspan-r">电话：</span>
     					<input id="editphone" class="infoinput-r" type="text" >
+    					<span class="editspan-end">*</span>
     				</li>
     				<li class="editlist-l">
     					<span class="editspan-l">学校/供职单位：</span>
     					<input id="editschool" class="infoinput-r" type="text" >
+    					<span class="editspan-end">*</span>
     				</li>
     				<li class="editlist-r">
     					<span class="editspan-r">学院：</span>
-    					<input id="editdepartment" class="infoinput-r" type="text" >
+    					<input id="editdepartment" class="infoinput-r" type="text" altvalue="00">
     				</li>
     				<li class="editlist-l">
-    					<span class="editspan-l">发票抬头：</span>
+    					<span class="editspan-l">开具发票：</span>
+    					<input id="editifinvoice" class="infoinput-r selinput" type="text" altvalue="1" value="是">
+    					<ul class="emulate">
+    						<li altvalue="1">是</li>
+    						<li altvalue="0">否</li>
+   						</ul>	
+   						<span class="editspan-end-0">*</span>
+    				</li>
+    				<li class="editlist-r" id="editinvoicenameli">
+    					<span class="editspan-r">发票抬头：</span>
     					<input id="editinvoicename" class="infoinput-r" type="text" >
+    					<span class="editspan-end">*</span>
     				</li>
-    				<li class="editlist-r">
-    					<span class="editspan-r">纳税人识别号：</span>
+    				<li class="editlist-l" id='edittaxpayernumberli'>
+    					<span class="editspan-l">纳税人识别号：</span>
     					<input id="edittaxpayernumber" class="infoinput-r" type="text" >
+    					<span class="editspan-end">*</span>
     				</li>
-    				<li class="editlist-l">
-    					<span class="editspan-l">开户行及账号：</span>
+    				<li class="editlist-r" id='editbanknumberli'>
+    					<span class="editspan-r">开户行及账号：</span>
     					<input id="editbanknumber" class="infoinput-r" type="text" >
     				</li>
-    				<li class="editlist-r">
-    					<span class="editspan-r">地址及电话：</span>
+    				<li class="editlist-l" id='editaddressphoneli'>
+    					<span class="editspan-l">地址及电话：</span>
     					<input id="editaddressphone" class="infoinput-r" type="text" >
+    					<span class="editspan-end-0">*</span>
     				</li>
-    				<li class="editlist-l">
-    					<span class="editspan-l">收发票地址：</span>
+    				<li class="editlist-r">
+    					<span class="editspan-r">收件地址：</span>
     					<input id="editreceiveaddress" class="infoinput-r" type="text" >
+    					<span class="editspan-end">*</span>
     				</li>
     			</ul>
     			
