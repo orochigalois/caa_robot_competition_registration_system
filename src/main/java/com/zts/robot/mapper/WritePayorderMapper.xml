@@ -33,6 +33,9 @@
 	<if test="txnstatus != null and txnstatus !=''.toString()">
 	AND a.txnstatus=#{txnstatus}
 	</if>
+	<if test="uname != null and uname !=''.toString()">
+	AND b.uname like '%${uname}%'
+	</if>
 
  </select>
  <select id="signuidPayListByMid" resultType="HashMap">
@@ -53,6 +56,9 @@
 	</if>
 	<if test="txnstatus != null and txnstatus !=''.toString()">
 	AND a.txnstatus=#{txnstatus}
+	</if>
+	<if test="uname != null and uname !=''.toString()">
+	AND b.uname like '%${uname}%'
 	</if>
 	ORDER BY a.txntime DESC
 	limit #{beginNo}, #{endNo}

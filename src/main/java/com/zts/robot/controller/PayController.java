@@ -56,6 +56,7 @@ public class PayController {
 			String school = req.getParameter("school");
 			String txntype = req.getParameter("txntype");
 			String txnstatus = req.getParameter("txnstatus");
+			String uname = req.getParameter("uname");
 			
 			paramMap.put("mid", mid);
 			paramMap.put("signuid", signuid);
@@ -63,6 +64,7 @@ public class PayController {
 			paramMap.put("txntype", txntype);
 			paramMap.put("txnstatus", txnstatus);
 			paramMap.put("orderid", orderid);
+			paramMap.put("uname", uname);
 			
 			int totalSize = payService.signuidPayListByMidTotalSize(paramMap);
 			if (iDisplayLength==null||iDisplayLength != -1) {

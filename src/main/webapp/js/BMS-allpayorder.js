@@ -39,6 +39,7 @@ function getallorder(signuid,num){
 	var orderid=$("#orderid").val();
 	var txntype=$("#txntype").attr("altvalue");
 	var txnstatus=$("#txnstatus").attr("altvalue");
+	var uname=$("#uname").val();
 	$("#page").unbind().data("pagination", null).empty();	
 	$("#page").pagination({
 		pageIndex: num,
@@ -58,6 +59,7 @@ function getallorder(signuid,num){
 				param.orderid=orderid;
 				param.txntype=txntype;
 				param.txnstatus=txnstatus;
+				param.uname=uname;
 				sessionStorage.setItem("orderlistJson", JSON.stringify(param));
 				return {
 					iDisplayStart : data.pageIndex * data.pageSize,
@@ -66,7 +68,8 @@ function getallorder(signuid,num){
 					"txntype":txntype,
 					"txnstatus":txnstatus,
 					"signuid":signuid,
-					"mid":mid
+					"mid":mid,
+					"uname":uname
 				};
 			}, // [Function]:自定义请求参数
 			"success" : function(data, status) {

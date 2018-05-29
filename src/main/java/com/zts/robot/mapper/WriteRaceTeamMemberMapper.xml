@@ -175,6 +175,9 @@ ORDER BY c.roleflg,b.serialnum
 	<if test="infostatus != null and infostatus !=''.toString()">
 			 AND a.infostatus =#{infostatus}
 	</if> 
+	<if test="tcode != null and tcode !=''.toString()">
+			 AND a.tcode LIKE '%${tcode}%'
+	</if> 
 	</select>
 	<select id="findAllTeamsBySignuidPages" resultType="Map">
 	SELECT b.*,a.infostatus,a.feestatus,a.feedback,c.rid,c.rname,d.mname,e.paymenturl,a.tcode as rtcode FROM re_raceteammember a 
@@ -206,6 +209,9 @@ ORDER BY c.roleflg,b.serialnum
 	</if> 
 	<if test="infostatus != null and infostatus !=''.toString()">
 			 AND a.infostatus =#{infostatus}
+	</if>
+	<if test="tcode != null and tcode !=''.toString()">
+			 AND a.tcode LIKE '%${tcode}%'
 	</if> 
 	GROUP BY a.rid,a.tid
 	ORDER BY b.createdate,c.createdate
