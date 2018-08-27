@@ -21,3 +21,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /target/
+
+.svn/
+.svn/pristine/01/0121bdc96ca760ac1b35707746df1aea1f0b507e.svn-base
