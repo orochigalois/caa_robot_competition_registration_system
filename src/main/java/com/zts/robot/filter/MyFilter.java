@@ -47,7 +47,7 @@ public class MyFilter implements javax.servlet.Filter {
 				}
 			}	
 			if(path.equals("/robot/") || path.equals("/") ){
-				servletResponse.sendRedirect("http://reg.robomatch.org/login.html");
+				servletResponse.sendRedirect("http://robotreg.drct-caa.org.cn/login.html");
 				return;
 			}
 			if(path.indexOf("login.html")> -1){
@@ -65,10 +65,10 @@ public class MyFilter implements javax.servlet.Filter {
 					String roleflg = json.optString("roleflg");
 					String url;
 					if("03".equals(roleflg)){
-						url="http://reg.robomatch.org/jsp/main.html";
+						url="http://robotreg.drct-caa.org.cn/jsp/main.html";
 						
 					}else{
-						url="http://reg.robomatch.org/jsp/BMS-matchInfo.html";
+						url="http://robotreg.drct-caa.org.cn/jsp/BMS-matchInfo.html";
 					}
 					servletResponse.sendRedirect(url);
 				}

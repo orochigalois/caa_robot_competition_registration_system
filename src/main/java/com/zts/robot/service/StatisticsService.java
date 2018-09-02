@@ -280,7 +280,7 @@ public class StatisticsService {
 		int i=0;
 		
 		//删除文件zip及文件夹
-		 String dir = "C:/ROOT/staticrobot/badge";
+		 String dir = "~/ROOT/staticrobot/badge";
 		 DeleteFileUtil.delete(dir);
 		//循环生成胸卡
 		for(Map<String, Object> map:memberList){
@@ -301,7 +301,7 @@ public class StatisticsService {
 			
 			String savePdfPath =  MyProperties.getKey("RootPathkey")+"badge/"+match.getMname()+"/"+tmname+tmid+"胸卡.pdf";
 			//String url =  MyProperties.getKey("RootFileUrlkey")+"badge/"+tmname+"胸卡.pdf";
-			String url =  "D:/ROOT/staticrobot/badge/"+match.getMname()+"/"+tmname+tmid+"胸卡.pdf";
+			String url =  "~/ROOT/staticrobot/badge/"+match.getMname()+"/"+tmname+tmid+"胸卡.pdf";
 			
 			/*File file = new File(savePdfPath);
 			if(!file.exists()){//文件是否存在
@@ -355,7 +355,7 @@ public class StatisticsService {
 			
 		}
 		//保存这个赛事下的所有胸卡的zip
-		String sourceFilePath = "C:/ROOT/staticrobot/badge"; // 待压缩的文件路径 
+		String sourceFilePath = "~/ROOT/staticrobot/badge"; // 待压缩的文件路径 
         String zipFilePath = "C:/ROOT";  //压缩后存放路径 
         String fileName = "pdfZip";  //:压缩后文件的名称 
         boolean flag = FileToZip.fileToZip(sourceFilePath, zipFilePath, fileName);  

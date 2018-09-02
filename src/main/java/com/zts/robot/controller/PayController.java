@@ -361,7 +361,7 @@ public class PayController {
 			
 		}
 		
-		resp.sendRedirect("http://reg.robomatch.org/jsp/payRelevant.html");
+		resp.sendRedirect("http://robotreg.drct-caa.org.cn/jsp/payRelevant.html");
 		LogUtil.writeLog("FrontRcvResponse前台接收报文返回结束");
 	}
 	

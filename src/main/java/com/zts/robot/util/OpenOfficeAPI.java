@@ -20,13 +20,13 @@ public class OpenOfficeAPI {
    
     public static void main(String[] args) throws Exception {
         // 模板文件路径
-        String templatePath = "D:/ROOT/staticrobot/badge/陈野胸卡.pdf";
+        String templatePath = "~/ROOT/staticrobot/badge/陈野胸卡.pdf";
         // 生成的文件路径
-        String targetPath = "D:/ROOT/staticrobot/badge/陈野胸卡1.pdf";
+        String targetPath = "~/ROOT/staticrobot/badge/陈野胸卡1.pdf";
         // 书签名
         String fieldName = "field";
         // 图片路径
-        String imagePath = "D:/ROOT/staticrobot/badge/11.jpg";
+        String imagePath = "~/ROOT/staticrobot/badge/11.jpg";
 
         // 读取模板文件
         InputStream input = new FileInputStream(new File(templatePath));
@@ -62,9 +62,9 @@ public class OpenOfficeAPI {
 
 public static void pdfaddpicurl(String templatePath, String imagePath) throws IOException, DocumentException{
 	 // 模板文件路径
-    // templatePath = "D:/ROOT/staticrobot/badge/陈野胸卡.pdf";
+    // templatePath = "~/ROOT/staticrobot/badge/陈野胸卡.pdf";
     // 图片路径
-    // imagePath = "D:/ROOT/staticrobot/badge/11.jpg";
+    // imagePath = "~/ROOT/staticrobot/badge/11.jpg";
      // 读取模板文件
      InputStream input = new FileInputStream(new File(templatePath));
      PdfReader reader = new PdfReader(input);

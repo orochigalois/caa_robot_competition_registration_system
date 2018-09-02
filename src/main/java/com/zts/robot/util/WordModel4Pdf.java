@@ -34,7 +34,7 @@ public class WordModel4Pdf {
 			WordModel4Pdf.initLibreOffice();
 			String wordModelPathCup = "C:/projects/奖励证书模板V3.0.docx";
 			for(int i=0;i<10000;i++){
-				String savePdfPath="C:/ROOT/staticrobot/pdf/"+i+"奖励证书.pdf";
+				String savePdfPath="~/ROOT/staticrobot/pdf/"+i+"奖励证书.pdf";
 				XComponent xCompCup =WordModel4Pdf.loadWordModel(wordModelPathCup);
 				Map<String, String> dataParamMap = new HashMap<String, String>();
 				dataParamMap.put("编号", "a"+i);

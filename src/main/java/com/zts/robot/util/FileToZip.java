@@ -261,7 +261,7 @@ public final class FileToZip {
 	
       
     public static void main(String[] args){  
-        String sourceFilePath = "D:/ROOT/staticrobot/pdfImage";  
+        String sourceFilePath = "~/ROOT/staticrobot/pdfImage";  
         String zipFilePath = "D:/ROOT";  
         String fileName = "12700153file";  
         boolean flag = FileToZip.fileToZip(sourceFilePath, zipFilePath, fileName);  

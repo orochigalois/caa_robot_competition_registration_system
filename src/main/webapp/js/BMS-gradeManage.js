@@ -1200,13 +1200,13 @@ function download(num){
 	var rname=$(".curRace").text().replace("\\", "").replace("/", "").replace(":", "").replace("*", "")
 	.replace("?", "").replace("\"", "").replace("<", "").replace(">", "").replace("|", "");
 	if(num=="01"){
-		var url='http://reg.robomatch.org/staticrobot/zip/'+mname+'/'
+		var url='http://robotreg.drct-caa.org.cn/staticrobot/zip/'+mname+'/'
 				+rname+'/'+mname+rname+'获奖证书ZIP.zip'
 	}else if(num=="02"){
-		var url='http://reg.robomatch.org/staticrobot/zip/'+mname+'/'
+		var url='http://robotreg.drct-caa.org.cn/staticrobot/zip/'+mname+'/'
 				+rname+'/'+mname+rname+'奖励证书ZIP.zip'
 	}else if(num=="03"){
-		var url='http://reg.robomatch.org/staticrobot/zip/'+mname+'/'
+		var url='http://robotreg.drct-caa.org.cn/staticrobot/zip/'+mname+'/'
 				+rname+'/'+mname+rname+'参赛证明ZIP.zip';
 	}
 	window.open(url,'_blank')

@@ -402,8 +402,8 @@ function download_log(){
 	var mname=$(".currentmatch").text().replace("\\", "").replace("/", "").replace(":", "").replace("*", "")
 	.replace("?", "").replace("\"", "").replace("<", "").replace(">", "").replace("|", "");
 	
-	var url='http://reg.robomatch.org/staticrobot/zip/'+mname+'_日志'+'/'+mname+'_日志ZIP.zip';
-//	var url='file:///C:/ROOT/staticrobot/zip/'+mname+'_日志';
+	var url='http://robotreg.drct-caa.org.cn/staticrobot/zip/'+mname+'_日志'+'/'+mname+'_日志ZIP.zip';
+//	var url='file:///~/ROOT/staticrobot/zip/'+mname+'_日志';
 	//window.open(url,'_blank')
 //	//打包zip
 	var mid=sessionStorage.getItem("currentmid");

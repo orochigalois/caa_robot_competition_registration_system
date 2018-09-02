@@ -1,9 +1,9 @@
-1- ÉÏ´«Ä£°å
+1- ä¸Šä¼ æ¨¡æ¿
 put them into server
 under C:\ROOT\staticrobot\modelImage
 
-´Ó ÈüÊÂÐÅÏ¢>ÈüÊÂÐÞ¸Ä ÉÏ´«pdf
+ä»Ž èµ›äº‹ä¿¡æ¯>èµ›äº‹ä¿®æ”¹ ä¸Šä¼ pdf
 
 
-2- ÖÆ×÷Ä£°å
-ÑÏ¸ñ°´ÕÕpdfµÄ±íµ¥Ë³ÐòÖÆ×÷
+2- åˆ¶ä½œæ¨¡æ¿
+ä¸¥æ ¼æŒ‰ç…§pdfçš„è¡¨å•é¡ºåºåˆ¶ä½œ
