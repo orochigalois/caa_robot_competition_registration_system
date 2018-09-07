@@ -45,7 +45,7 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.html</url-pattern>
   </servlet-mapping>
-  <!-- <filter>
+ <!-- <filter>
     <filter-name>MyFilter</filter-name>
     <filter-class>com.zts.robot.filter.MyFilter</filter-class>
     <init-param>
