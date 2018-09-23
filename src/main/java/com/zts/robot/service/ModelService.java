@@ -215,13 +215,23 @@ public class ModelService {
 
 				}
 				
-				
 				String zipFilePath = MyProperties.getKey("RootPathkey")+"zip/"+mname+"/"+rname+"/";
-				File file = new File(zipFilePath);
-				if (!file.exists()) {  
-	                // 如果路径不存在,则创建  
-					 file.mkdirs();
+				
+				File zipfile = new File(zipFilePath);
+				if (zipfile.exists()) {  
+					// 如果路径存在,则删除
+					
+					try {
+						//Deleting the directory recursively.
+						delete(zipfile);
+						System.out.println("Directory has been deleted recursively !");
+					} catch (IOException e) {
+						System.out.println("Problem occurs when deleting the directory ");
+						e.printStackTrace();
+					}
 	            }
+				 // 如果路径不存在,则创建  
+				zipfile.mkdirs();
 				
 				String sourceFilePath = MyProperties.getKey("RootPathkey")+"pdf/"+mname+"/"+rname+"/参赛证明";				
 				String fileName = mname+rname+"参赛证明ZIP";
