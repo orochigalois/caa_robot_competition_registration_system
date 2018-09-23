@@ -51,6 +51,25 @@ public class ModelService {
 	private AwardsMapper awardsMapper;
 	@Autowired
 	private  RaceTeamMemberMapper raceTeamMemberMapper;
+
+	public void delete(File file) throws IOException {
+ 
+		for (File childFile : file.listFiles()) {
+ 
+			if (childFile.isDirectory()) {
+				delete(childFile);
+			} else {
+				if (!childFile.delete()) {
+					throw new IOException();
+				}
+			}
+		}
+ 
+		if (!file.delete()) {
+			throw new IOException();
+		}
+	}
+
 	
 	public void createNewPDFModel(String rid, String mid, JSONArray array, Map<String, Object> resultMap) throws DocumentException, IOException {
 		// TODO 自动生成的方法存根
@@ -62,6 +81,25 @@ public class ModelService {
 		
 		String mname = removeUnlawfulFileName(match.getMname());
 		String rname = removeUnlawfulFileName(race.getRname());
+
+		String ifsavePdfPath = MyProperties.getKey("RootPathkey")+"pdf/"+mname+"/"+rname;
+		File ifFile = new File(ifsavePdfPath);
+		if (ifFile.exists()) {
+			// 如果路径存在,则删除
+		
+			try {
+				//Deleting the directory recursively.
+				delete(ifFile);
+				System.out.println("Directory has been deleted recursively !");
+			} catch (IOException e) {
+				System.out.println("Problem occurs when deleting the directory ");
+				e.printStackTrace();
+			}
+
+			
+		}
+
+
 		//奖励证书
 		String wordModelPathCup = match.getCupmodel().replace(MyProperties.getKey("RootFileUrlkey"), MyProperties.getKey("RootPathkey"));
 		//wordModelPathCup="D:/pdf/奖励证书模板V4.0表单.pdf";
