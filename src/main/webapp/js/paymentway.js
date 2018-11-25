@@ -35,7 +35,7 @@ function payexpense(flg){
 	htmls+='<div class="shade"></div><div class="payorder"><h1 class="wTitle">支付订单</h1>'
 		 +'<ul class="orderinfo clearfix"><li>订单号：<span id="ordernum">'+timeFormat("02")+randomNum(5)+'</span></li>'
 		 +'<li>订单时间：<span id="curTime">'+timeFormat("01")+'</span></li>';
-	if(flg=="01"||flg=="02"){
+	if(flg=="01"||flg=="02"||flg=='03'){
 		htmls+='<li>交易金额：<input type="text" id="txnAmt"></li>'
 	}
 	htmls+=	'</ul>';
@@ -159,9 +159,14 @@ function paydownline(){
 function paybyvoucher(){
 	var orderId=$("#ordernum").text();
 	var txnTime=$("#curTime").text();
+	var txnAmt=$("#txnAmt").val();
 	var signuid=sessionStorage.getItem("uid");
 	var paymenturl=$(".hideurl").val();
 	var mid=sessionStorage.getItem("currentmid");
+	if(txnAmt.trim()==""){
+		alertMsg("1","请填写订单金额！","fail");
+		return;
+	}
 	if(paymenturl==""){
 		alertMsg("1","请上传缴费凭证！","fail");
 		return;
@@ -173,7 +178,8 @@ function paybyvoucher(){
         async:false,
         data: {
         	"orderId":orderId,
-        	"txnTime":orderId.slice(0,14),
+			"txnTime":orderId.slice(0,14),
+			"txnAmt":parseInt(txnAmt*100),
         	"signuid":signuid,
         	"paymenturl":paymenturl,
         	"mid":mid        	

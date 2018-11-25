@@ -137,8 +137,8 @@ function approveTeam(){
 }
 
 function submitResult(flg,tid,rid){
-	closeAppro();
 	var feedback=$("#feedback").val();
+	closeAppro();
 	var mid=sessionStorage.getItem("currentmid");
 	$.ajax({
 		type: "GET",

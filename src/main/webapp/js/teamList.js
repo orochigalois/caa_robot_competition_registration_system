@@ -54,6 +54,7 @@ function getAllTeam(num){
 						if(team.infostatus=="00"){htmls+='<span class="teamstatus1">已通过</span>'}
 						else if(team.infostatus=="01"){htmls+='<span class="teamstatus2">待审核</span>'}
 						else{htmls+='<span class="teamstatus3">已拒绝</span>'}
+						htmls+='<td>'+team.feedback+'</td>'
 						if(compareTime()){
 							htmls+='</td><td>'
 							+'<a class="manageteam1">管理</a>'

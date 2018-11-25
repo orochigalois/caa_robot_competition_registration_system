@@ -165,13 +165,13 @@ public class PayController {
 	@ResponseBody
 	public Map<String, Object> proofPayConsume(HttpServletRequest req, HttpServletResponse resp){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
+		String txnAmt = req.getParameter("txnAmt");
 		String orderId = req.getParameter("orderId");
 		String txnTime = req.getParameter("txnTime");
 		String signuid =  req.getParameter("signuid");
 		String mid = req.getParameter("mid");
 		String paymenturl =  req.getParameter("paymenturl");
-		String txnstatus =  req.getParameter("txnstatus");
+		//String txnstatus =  req.getParameter("txnstatus");
 		
 		Payorder payorder = new Payorder();
 		payorder.setMid(mid);
@@ -180,9 +180,9 @@ public class PayController {
 		//支付类型（00现金01银联02凭证）
 		payorder.setTxntype("02");
 		//交易状态00已支付确认/01待支付确认02作废
-		payorder.setTxnstatus(txnstatus);		
+		payorder.setTxnstatus("01");		
 		payorder.setTxntime(txnTime);
-		payorder.setTxnamt(0);
+		payorder.setTxnamt(Integer.parseInt(txnAmt));
 		payorder.setPaymenturl(paymenturl);
 		try {
 			payService.PayConsume(payorder);
