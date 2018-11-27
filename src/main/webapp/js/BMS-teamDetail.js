@@ -3,15 +3,19 @@ $(function(){
 	getAllRace();
 })
 var tid=sessionStorage.getItem("tid");
+var rid=sessionStorage.getItem("rid");
 
 function getTeamDetail(){
+	var mid=sessionStorage.getItem("currentmid");
 	$.ajax({
 		type: "GET",
-        url: "../findAllMembersByTid",
+        url: "../findRaceAllMembersByRidTid",
         dataType: "JSON",
         async:false,
         data: {
-        		"tid":tid
+				"tid":tid,
+				"rid":rid,
+				"mid":mid
         	},
         success: function(data){
         	if(data.status == 0){
@@ -76,11 +80,12 @@ function getTeamDetail(){
 function getAllRace(){
 	$.ajax({
 		type: "GET",
-        url: "../findAllTeamsRace",
+        url: "../findTeamsRaceInfo",
         dataType: "JSON",
         async:false,
         data: {
-        		"tid":tid
+				"tid":tid,
+				"rid":rid
         	},
         success: function(data){
         	if(data.status == 0){

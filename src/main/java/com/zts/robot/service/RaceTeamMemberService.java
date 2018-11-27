@@ -308,6 +308,11 @@ public class RaceTeamMemberService {
 		return mapper.findAllTeamsRace(tid);
 	}
 
+	public List<Map<String, Object>> findTeamsRaceInfo(String tid,String rid) {
+		// TODO Auto-generated method stub
+		return mapper.findTeamsRaceInfo(tid,rid);
+	}
+
 	public void updateFeestatusByTeamRace(String tid, String rid, String feestatus, Map<String, Object> resultMap) {
 		// TODO Auto-generated method stub
 		String oldfeestatus=mapper.findFeestatusByTeamRace(tid,rid);//查询本身缴费状态

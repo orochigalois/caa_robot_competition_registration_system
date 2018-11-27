@@ -76,11 +76,12 @@ function getTeamDetail(){
 function getAllRace(){
 	$.ajax({
 		type: "GET",
-        url: "../findAllTeamsRace",
+        url: "../findTeamsRaceInfo",
         dataType: "JSON",
         async:false,
         data: {
-        		"tid":tid
+        		"tid":tid,
+        		"rid":rid
         	},
         success: function(data){
         	if(data.status == 0){

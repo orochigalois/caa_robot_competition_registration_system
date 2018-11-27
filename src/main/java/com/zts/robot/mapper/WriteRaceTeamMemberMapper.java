@@ -61,6 +61,8 @@ public interface WriteRaceTeamMemberMapper {
 	void updateInfostatus(Map<String, Object> paramMap);
 	
 	List<Map<String, Object>> findAllTeamsRace(String tid);
+
+	List<Map<String, Object>> findTeamsRaceInfo(String tid,String rid);
 	
 	void delRaceTeamByTid(String tid, String rid);
 	

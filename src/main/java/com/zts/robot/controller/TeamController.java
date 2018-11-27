@@ -626,6 +626,31 @@ public class TeamController {
 	}
 	
 	/**
+	 * 查询这个队伍报名的赛项相关信息
+	 * @param request
+	 * @param response
+	 * @param iDisplayLength
+	 * @param iDisplayStart
+	 * @return
+	 */
+	@RequestMapping("/findTeamsRaceInfo")
+	@ResponseBody
+	public Map<String, Object> findTeamsRaceInfo(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			String tid = request.getParameter("tid");
+			String rid = request.getParameter("rid");
+			List<Map<String, Object>> list = rtmService.findTeamsRaceInfo(tid,rid);
+			resultMap.put("list", list);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
+	/**
 	 * 缴费审批（按照队伍赛项）
 	 * @param request
 	 * @param response

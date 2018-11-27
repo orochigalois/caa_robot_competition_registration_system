@@ -233,6 +233,11 @@ ORDER BY c.roleflg,b.serialnum
 	LEFT JOIN re_raceteammember b ON a.rid=b.rid
 	WHERE b.tid=#{0}
 	</select>
+	<select id="findTeamsRaceInfo" resultType="Map">
+	SELECT DISTINCT a.rid,a.rname,b.infostatus,b.tcode FROM ma_race a
+	LEFT JOIN re_raceteammember b ON a.rid=b.rid
+	WHERE b.tid=#{0} and a.rid=#{1}
+	</select>
 	<select id="isSignUpRaceByRidTmid" resultType="Integer">
 		SELECT COUNT(*) FROM re_raceteammember a WHERE a.rid=#{0} AND a.tmid=#{1}
 	</select>
