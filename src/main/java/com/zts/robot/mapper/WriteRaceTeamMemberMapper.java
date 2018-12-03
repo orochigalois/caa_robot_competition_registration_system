@@ -63,6 +63,8 @@ public interface WriteRaceTeamMemberMapper {
 	List<Map<String, Object>> findAllTeamsRace(String tid);
 
 	List<Map<String, Object>> findTeamsRaceInfo(String tid,String rid);
+
+	List<Map<String, Object>> findRaceTechStuMax(String mid,String rid);
 	
 	void delRaceTeamByTid(String tid, String rid);
 	

@@ -77,6 +77,8 @@ function createCompetition(){
 	var stend=$("#stend").val();
 	var ndend=$("#ndend").val();
 	var rdend=$("#rdend").val();
+	var techmax=$("#techmax").val();
+	var stumax=$("#stumax").val();
 	var attachurl=[];
 	if(frname.trim()==""){
 		alertMsg("2","请填写大项名称！","fail")
@@ -136,6 +138,28 @@ function createCompetition(){
 			rdend = "";
 		}
 	}
+	if(techmax.trim()==""){
+		alertMsg("2","请填写教师人数上限！","fail")
+		return;
+	}else{
+		var reg=/^[0-9]*$/;
+		if(!reg.test(techmax.trim())){
+			alertMsg("1","请输入数字教师人数上限！","fail");
+			return;
+		}
+	}
+
+	if(stumax.trim()==""){
+		alertMsg("2","请填写队员人数上限！","fail")
+		return;
+	}else{
+		var reg=/^[0-9]*$/;
+		if(!reg.test(stumax.trim())){
+			alertMsg("1","请输入数字队员人数上限！","fail");
+			return;
+		}
+	}
+
 	$("[name=filename]").each(function(){
 		attachurl.push($(this).val())
 	})
@@ -157,7 +181,9 @@ function createCompetition(){
         	"islog":islog_altvalue,
         	"stend":stend,
         	"ndend":ndend,
-        	"rdend":rdend,
+			"rdend":rdend,
+			"techmax":techmax,
+			"stumax":stumax
         	},
         success: function(data){
         	console.log(data)

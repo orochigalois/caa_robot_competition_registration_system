@@ -651,6 +651,31 @@ public class TeamController {
 	}
 
 	/**
+	 * 查询赛项教师，队员人数上限
+	 * @param request
+	 * @param response
+	 * @param iDisplayLength
+	 * @param iDisplayStart
+	 * @return
+	 */
+	@RequestMapping("/findRaceTechStuMax")
+	@ResponseBody
+	public Map<String, Object> findRaceTechStuMax(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			String mid = request.getParameter("mid");
+			String rid = request.getParameter("rid");
+			List<Map<String, Object>> list = rtmService.findRaceTechStuMax(mid,rid);
+			resultMap.put("list", list);
+			resultMap.put("status", 0);
+		} catch (Exception e) {
+			resultMap.put("status", 1);
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
+	/**
 	 * 缴费审批（按照队伍赛项）
 	 * @param request
 	 * @param response

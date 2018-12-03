@@ -100,6 +100,12 @@
       <if test="rdend != null" >
         rdend,
       </if>
+      <if test="techmax != null" >
+        techmax,
+      </if>
+      <if test="stumax != null" >
+        stumax,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="rid != null" >
@@ -156,6 +162,12 @@
       <if test="rdend != null" >
         #{rdend,jdbcType=VARCHAR},
       </if>
+      <if test="techmax != null" >
+        #{techmax,jdbcType=INTEGER},
+      </if>
+      <if test="stumax != null" >
+        #{stumax,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.Race" >
@@ -211,6 +223,12 @@
       </if>
       <if test="rdend != null" >
         rdend = #{rdend,jdbcType=VARCHAR},
+      </if>
+      <if test="techmax != null" >
+        techmax = #{techmax,jdbcType=INTEGER},
+      </if>
+      <if test="stumax != null" >
+        stumax = #{stumax,jdbcType=INTEGER},
       </if>
     </set>
     where rid = #{rid,jdbcType=VARCHAR}

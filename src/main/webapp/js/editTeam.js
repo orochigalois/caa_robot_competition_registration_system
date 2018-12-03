@@ -26,6 +26,7 @@ $(function(){
 
 var tid=sessionStorage.getItem("tid");
 var rid=sessionStorage.getItem("rid");
+var mid=sessionStorage.getItem("currentmid");
 
 function getTeamDetail(){
 	var mid=sessionStorage.getItem("currentmid");
@@ -98,7 +99,7 @@ function saveTeam(){
 	var departname=$("#tdepartname").val();
 	var orgtype=$("#orgtype").val();
 	var region=$("#region").val();
-	var mid=sessionStorage.getItem("currentmid");
+	
 	if(tname.trim()==""){
 		alertMsg("1","请输入队伍名称！","fail");
 		return;
@@ -734,6 +735,40 @@ function delMem(){
 }
 
 function searchBydid(roleflg){
+	//校验教师，学生数量
+	var stumax;
+	var techmax;
+	$.ajax({
+		type: "GET",
+        url: "../findRaceTechStuMax",
+        dataType: "JSON",
+        async:false,
+        data: {
+        	"mid":mid,
+        	"rid":rid
+        	},
+        success: function(data){
+        	if(data.status == 0){
+				stumax= data.list[0].stumax;
+				techmax= data.list[0].techmax;
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+
+	if(roleflg=="01"){
+		if($(".teaList tbody tr").length>=techmax){
+			alertMsg("1","指导老师只能添加"+techmax+"位","fail");
+			return;
+		}
+	}else{
+		if($(".stuList tbody tr").length>=stumax){
+			alertMsg("1","队员只能添加"+stumax+"位","fail");
+			return;
+		}
+	}
+
 	var htmls="";
 	htmls+='<div id="shade"></div><div id="didinfo">'
 		+'<img class="guanbi" src="../images/guanbi.png" onclick="closeInfoWin()">';

@@ -313,6 +313,11 @@ public class RaceTeamMemberService {
 		return mapper.findTeamsRaceInfo(tid,rid);
 	}
 
+	public List<Map<String, Object>> findRaceTechStuMax(String mid,String rid) {
+		// TODO Auto-generated method stub
+		return mapper.findRaceTechStuMax(mid,rid);
+	}
+
 	public void updateFeestatusByTeamRace(String tid, String rid, String feestatus, Map<String, Object> resultMap) {
 		// TODO Auto-generated method stub
 		String oldfeestatus=mapper.findFeestatusByTeamRace(tid,rid);//查询本身缴费状态

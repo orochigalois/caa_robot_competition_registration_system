@@ -36,6 +36,10 @@ public class Race {
     private String ndend;
     
     private String rdend;
+    
+    private Integer techmax;
+    
+    private Integer stumax;
 
     public String getRid() {
         return rid;
@@ -179,5 +183,21 @@ public class Race {
     
     public void setrdend(String rdend) {
         this.rdend = rdend == null ? null : rdend.trim();
+    }
+    
+    public void settechmax(Integer techmax) {
+        this.techmax = techmax;
+    }
+
+    public Integer gettechmax() {
+        return techmax;
+    }
+    
+    public void setstumax(Integer stumax) {
+        this.stumax = stumax;
+    }
+
+    public Integer getstumax() {
+        return stumax;
     }
 }

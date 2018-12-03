@@ -23,6 +23,8 @@ $(function(){
     })
 })
 
+var rid=sessionStorage.getItem("rid");
+
 function moveUp(obj){
 	var tr=$(obj).parent().parent().clone();
 	$(obj).parent().parent().prev().before(tr);
@@ -587,7 +589,7 @@ function editSaveInfo(){
 	closeInfoWin();
 }
 
-function saveTeam(){	
+function saveTeam(){
 	var tname=$("#tname").val();
 	var school=$("#tschool").val();
 	var departname=$("#tdepartname").val();
@@ -616,7 +618,6 @@ function saveTeam(){
 		alertMsg("1","请添加队员！","fail");
 		return;
 	}
-	var rid=sessionStorage.getItem("rid");
 	var memList=[];
 	$(".teaList .editbtn").each(function(i){
 		var detail=JSON.parse($(this).attr("detail"))
@@ -675,6 +676,40 @@ function distinctMem(){
 }
 
 function searchBydid(roleflg){
+	//校验教师，学生数量
+	var stumax;
+	var techmax;
+	$.ajax({
+		type: "GET",
+        url: "../findRaceTechStuMax",
+        dataType: "JSON",
+        async:false,
+        data: {
+        	"mid":mid,
+        	"rid":rid
+        	},
+        success: function(data){
+        	if(data.status == 0){
+				stumax= data.list[0].stumax;
+				techmax= data.list[0].techmax;
+        	}else if(data.status == 1){
+        		alertMsg("2",data.errmsg,"fail")
+        	}
+        },
+	})
+
+	if(roleflg=="01"){
+		if($(".teaList tbody tr").length>=techmax){
+			alertMsg("1","指导老师只能添加"+techmax+"位","fail");
+			return;
+		}
+	}else{
+		if($(".stuList tbody tr").length>=stumax){
+			alertMsg("1","队员只能添加"+stumax+"位","fail");
+			return;
+		}
+	}
+	
 	var htmls="";
 	htmls+='<div id="shade"></div><div id="didinfo">'
 		+'<img class="guanbi" src="../images/guanbi.png" onclick="closeInfoWin()">';
