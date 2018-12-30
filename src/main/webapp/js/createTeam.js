@@ -85,8 +85,8 @@ function addNewMember(roleflg,didtype,did){
 	if(roleflg=="01"){htmls+='<h1>添加指导教师</h1>'}
 	else{htmls+='<h1>添加队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname"></div>'
-			+'<div class="perinfodiv"><span>民族</span><input type="text" readonly id="folk" altvalue="" class="selinput"><ul class="emulate"></ul></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>民族</span><input type="text" readonly id="folk" altvalue="" class="selinput"><ul class="emulate"></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" readonly="readonly" altvalue="'
 			+didtype+'" class="selinput" value="';
     if(didtype=="00"){htmls+='身份证'}
@@ -94,10 +94,10 @@ function addNewMember(roleflg,didtype,did){
 	else{htmls+='港澳台通行证'}		
     	htmls+=	'">'
 			+'<ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
-			+'<li altvalue="02">港澳台通行证</li></ul></div>'
+			+'<li altvalue="02">港澳台通行证</li></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did" value="'
-			+did+'"></div>'
-			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"></div>'
+			+did+'"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"><span class="editspan-end">*</span></div>'
 			+'</div><div class="div-c">'
 			+'<div class="perinfodiv" id="sex"><span>性别</span>'
 			var sexnum=parseInt(did.slice(-2,-1));
@@ -110,16 +110,16 @@ function addNewMember(roleflg,didtype,did){
     		}
     		var birthnum=did.slice(6,14);
     	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" readonly onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"'
-    		+' value="'+birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6)+'"></div>'
-			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"></div>'
-			+'<div class="perinfodiv"><span>手机</span><input type="text" id="phone"></div>'
+    		+' value="'+birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6)+'"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>手机</span><input type="text" id="phone"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>院系</span><input type="text" id="departname"></div>'
 			+'</div><div class="div-r">'
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post"><img src="" id="portrait">'
 			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span><input id="diningtype" type="text" readonly="readonly" altvalue="" class="selinput">'
-			+'<ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul></div>'
+			+'<ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="saveInfo(\''+roleflg+'\')">添加</a></div></div></div>';
     $("body").append(htmls);
     var html2=""
@@ -150,7 +150,7 @@ function addOldMember(roleflg,info){
 	if(roleflg=="01"){htmls+='<h1>添加指导教师</h1>'}
 	else{htmls+='<h1>添加队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" id="folk" readonly altvalue="'+info.folk
 			+'" class="selinput" value="';
     $.each(folkname,function(i,nation){
@@ -158,18 +158,18 @@ function addOldMember(roleflg,info){
 			htmls+=nation.folk
 		}
 	})
-	htmls+=	'"><ul class="emulate"></ul></div>'
+	htmls+=	'"><ul class="emulate"></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" readonly="readonly"'
 			+' altvalue="'+info.didtype+'" class="selinput" value="';
     if(info.didtype=="00"){htmls+='身份证'}
 	else if(info.didtype=="01"){htmls+='护照'}
 	else{htmls+='港澳台通行证'}
     htmls+='"><ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
-			+'<li altvalue="02">港澳台通行证</li></ul></div>'
+			+'<li altvalue="02">港澳台通行证</li></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did"'
-			+' value="'+info.did+'"></div>'
+			+' value="'+info.did+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"'
-			+' value="'+info.school+'"></div>'
+			+' value="'+info.school+'"><span class="editspan-end">*</span></div>'
 			+'</div><div class="div-c">'
 			+'<div class="perinfodiv" id="sex"><span>性别</span>'
 	if(info.sex=="01"){
@@ -181,11 +181,11 @@ function addOldMember(roleflg,info){
 	}
 			
 	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" readonly '
-			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"></div>'
+			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"'
-			+' value="'+info.email+'"></div>'
+			+' value="'+info.email+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>手机</span><input type="text" id="phone"'
-			+' value="'+info.phone+'"></div>'
+			+' value="'+info.phone+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>院系</span><input type="text" id="departname"'
 			+' value="'+info.departname+'"></div>'
 			+'</div><div class="div-r">'
@@ -199,7 +199,7 @@ function addOldMember(roleflg,info){
 	if(info.diningtype=="01"){htmls+='普通'}
 	else if(info.diningtype=="02"){htmls+='清真'}
 	else{htmls+='素食'}		
-	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul></div>'
+	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="saveInfo(\''+roleflg+'\')">添加</a></div></div></div>';
     $("body").append(htmls);
     var html2=""
@@ -294,20 +294,6 @@ function saveInfo(flg){
 		alertMsg("1","请选择证件类型！","fail");
 		return;
 	}
-	if(email.trim()==""){
-		alertMsg("1","请填写邮箱！","fail");
-		return;
-	}else{
-		var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-		if(!reg.test(email)){
-			alertMsg("1","邮箱格式不正确！","fail");
-			return;
-		}
-	}
-	if(sex==""||sex==undefined){
-		alertMsg("1","请选择性别！","fail");
-		return;
-	}
 	if(did.trim()==""){
 		alertMsg("1","请填写证件号！","fail");
 		return;
@@ -315,6 +301,28 @@ function saveInfo(flg){
 		var reg=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 		if(didtype=="00"&&!IdentityCodeValid(did)){
 			alertMsg("1","证件号格式不正确！","fail");
+			return;
+		}
+	}
+	if(school==""){
+		alertMsg("1","请填写学校！","fail");
+		return;
+	}
+	if(sex==""||sex==undefined){
+		alertMsg("1","请选择性别！","fail");
+		return;
+	}
+	if(birthday=="--"){
+		alertMsg("1","请填写生日！","fail");
+		return;
+	}
+	if(email.trim()==""){
+		alertMsg("1","请填写邮箱！","fail");
+		return;
+	}else{
+		var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		if(!reg.test(email)){
+			alertMsg("1","邮箱格式不正确！","fail");
 			return;
 		}
 	}
@@ -328,14 +336,15 @@ function saveInfo(flg){
 			return;
 		}
 	}
-	if(diningtype==""){
-		alertMsg("1","请选择用餐类型！","fail");
-		return;
-	}
 	if(picurl==""){
 		alertMsg("1","请上传头像！","fail");
 		return;
 	}
+	if(diningtype==""){
+		alertMsg("1","请选择用餐类型！","fail");
+		return;
+	}
+	
 	var info={};
 	info.roleflg=roleflg;
 	info.tmname=tmname;
@@ -402,7 +411,7 @@ function editMember(obj){
 	if(info.roleflg=="01"){htmls+='<h1>修改指导教师</h1>'}
 	else{htmls+='<h1>修改队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" id="folk" readonly altvalue="'+info.folk
 			+'" class="selinput" value="';
     $.each(folkname,function(i,nation){
@@ -410,18 +419,18 @@ function editMember(obj){
 			htmls+=nation.folk
 		}
 	})
-	htmls+=	'"><ul class="emulate"></ul></div>'
+	htmls+=	'"><ul class="emulate"></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" readonly="readonly"'
 			+' altvalue="'+info.didtype+'" class="selinput" value="';
     if(info.didtype=="00"){htmls+='身份证'}
 	else if(info.didtype=="01"){htmls+='护照'}
 	else{htmls+='港澳台通行证'}
     htmls+='"><ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
-			+'<li altvalue="02">港澳台通行证</li></ul></div>'
+			+'<li altvalue="02">港澳台通行证</li></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did"'
-			+' value="'+info.did+'"></div>'
+			+' value="'+info.did+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"'
-			+' value="'+info.school+'"></div>'
+			+' value="'+info.school+'"><span class="editspan-end">*</span></div>'
 			+'</div><div class="div-c">'
 			+'<div class="perinfodiv" id="sex"><span>性别</span>'
 	if(info.sex=="01"){
@@ -433,11 +442,11 @@ function editMember(obj){
 	}
 			
 	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" readonly '
-			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"></div>'
+			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"'
-			+' value="'+info.email+'"></div>'
+			+' value="'+info.email+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>手机</span><input type="text" id="phone"'
-			+' value="'+info.phone+'"></div>'
+			+' value="'+info.phone+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>院系</span><input type="text" id="departname"'
 			+' value="'+info.departname+'"></div>'
 			+'</div><div class="div-r">'
@@ -451,7 +460,7 @@ function editMember(obj){
 	if(info.diningtype=="01"){htmls+='普通'}
 	else if(info.diningtype=="02"){htmls+='清真'}
 	else{htmls+='素食'}		
-	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul></div>'
+	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="editSaveInfo()">保存</a></div></div></div>';
     $("body").append(htmls);
     var html2=""
@@ -506,20 +515,6 @@ function editSaveInfo(){
 		alertMsg("1","请选择证件类型！","fail");
 		return;
 	}
-	if(email.trim()==""){
-		alertMsg("1","请填写邮箱！","fail");
-		return;
-	}else{
-		var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-		if(!reg.test(email)){
-			alertMsg("1","邮箱格式不正确！","fail");
-			return;
-		}
-	}
-	if(sex==""||sex==undefined){
-		alertMsg("1","请选择性别！","fail");
-		return;
-	}
 	if(did.trim()==""){
 		alertMsg("1","请填写证件号！","fail");
 		return;
@@ -527,6 +522,28 @@ function editSaveInfo(){
 		var reg=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 		if(didtype=="00"&&!IdentityCodeValid(did)){
 			alertMsg("1","证件号格式不正确！","fail");
+			return;
+		}
+	}
+	if(school==""){
+		alertMsg("1","请填写学校！","fail");
+		return;
+	}
+	if(sex==""||sex==undefined){
+		alertMsg("1","请选择性别！","fail");
+		return;
+	}
+	if(birthday=="--"){
+		alertMsg("1","请填写生日！","fail");
+		return;
+	}
+	if(email.trim()==""){
+		alertMsg("1","请填写邮箱！","fail");
+		return;
+	}else{
+		var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		if(!reg.test(email)){
+			alertMsg("1","邮箱格式不正确！","fail");
 			return;
 		}
 	}
@@ -540,14 +557,15 @@ function editSaveInfo(){
 			return;
 		}
 	}
-	if(diningtype==""){
-		alertMsg("1","请选择用餐类型！","fail");
-		return;
-	}
 	if(picurl==""){
 		alertMsg("1","请上传头像！","fail");
 		return;
 	}
+	if(diningtype==""){
+		alertMsg("1","请选择用餐类型！","fail");
+		return;
+	}
+	
 	var info={};
 	info.roleflg=roleflg;
 	info.tmname=tmname;
