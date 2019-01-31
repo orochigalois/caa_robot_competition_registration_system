@@ -79,6 +79,8 @@ function createCompetition(){
 	var rdend=$("#rdend").val();
 	var techmax=$("#techmax").val();
 	var stumax=$("#stumax").val();
+	var stuoldmin=$("#stuoldmin").val();
+	var stuoldmax=$("#stuoldmax").val();
 	var attachurl=[];
 	if(frname.trim()==""){
 		alertMsg("2","请填写大项名称！","fail")
@@ -160,6 +162,28 @@ function createCompetition(){
 		}
 	}
 
+	if(stuoldmin.trim()==""){
+		alertMsg("2","请填写队员最小年龄！","fail")
+		return;
+	}else{
+		var reg=/^[0-9]*$/;
+		if(!reg.test(stuoldmin.trim())){
+			alertMsg("1","请输入数字队员最小年龄！","fail");
+			return;
+		}
+	}
+
+	if(stuoldmax.trim()==""){
+		alertMsg("2","请填写队员最大年龄！","fail")
+		return;
+	}else{
+		var reg=/^[0-9]*$/;
+		if(!reg.test(stuoldmax.trim())){
+			alertMsg("1","请输入数字队员最大年龄！","fail");
+			return;
+		}
+	}
+
 	$("[name=filename]").each(function(){
 		attachurl.push($(this).val())
 	})
@@ -183,7 +207,9 @@ function createCompetition(){
         	"ndend":ndend,
 			"rdend":rdend,
 			"techmax":techmax,
-			"stumax":stumax
+			"stumax":stumax,
+			"stuoldmin":stuoldmin,
+			"stuoldmax":stuoldmax
         	},
         success: function(data){
         	console.log(data)

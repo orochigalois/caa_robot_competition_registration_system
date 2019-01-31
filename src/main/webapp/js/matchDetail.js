@@ -37,7 +37,11 @@ function getCompt(){
         		}
         		$("#stend").html(info.stend);
         		$("#ndend").html(info.ndend);
-        		$("#rdend").html(info.rdend);
+				$("#rdend").html(info.rdend);
+				$("#techmax").html(info.techmax);
+				$("#stumax").html(info.stumax);
+				$("#stuoldmin").html(info.stuoldmin);
+				$("#stuoldmax").html(info.stuoldmax);
         		if(info.attachurl!=""){
         			var urlarr=info.attachurl.split(",");
         			var htmls="";

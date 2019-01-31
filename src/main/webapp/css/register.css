@@ -22,7 +22,7 @@ ul,li{
     margin-top: -1px;
 }
 
-/*×¢²áµÚÒ»²½*/
+/*×¢ï¿½ï¿½ï¿½Ò»ï¿½ï¿½*/
 .regbox{
 	width:1000px;
 	margin:0 auto;
@@ -81,7 +81,7 @@ ul,li{
 	margin-top:120px;
 	padding-bottom:120px;
 }
-/*×¢²áµÚ¶þ²½*/
+/*×¢ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½*/
 .codebox{
 	width:324px;
 	margin:0 auto;
@@ -153,7 +153,7 @@ ul,li{
 	color:#e5e5e5;
 }
 
-/*×¢²áµÚÈý²½*/
+/*×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .infobox{
 	overflow:hidden;
 	
@@ -210,7 +210,7 @@ ul,li{
 	padding-left:18px;
 	font-size:14px;
 }
-#gender{
+#gender,#ifinvoice{
 	background:url(../images/down.png) no-repeat;
 	background-position:204px;
 	cursor:pointer;

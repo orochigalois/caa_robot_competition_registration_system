@@ -50,43 +50,51 @@
     			<div class="info-r">
     				<div class="infoitem">
     				<span>姓名</span>
-    				<input type="text" id="name">
+    				<input type="text" id="name"><span style="color:red;width:2px;padding-left:2px;">*</span>
 	    			</div>
 	    			<div class="infoitem">
 	    				<span>性别</span>
 	    				<input type="text" readonly id="gender" altvalue="">
-	    				<ul class="emulate" >
+	    				<ul class="emulate" id="genderli" >
 	    					<li altvalue="01">男</li>
 	    					<li altvalue="02">女</li>
-	    				</ul>
+	    				</ul><span style="color:red;width:2px;padding-left:2px;">*</span>
 	    			</div>
 	    			<div class="infoitem">
 	    				<span>电话</span>
-	    				<input type="text" id="phone">
+	    				<input type="text" id="phone"><span style="color:red;width:2px;padding-left:2px;">*</span>
 	    			</div>
 	    			<div class="infoitem">
 	    				<span>学校</span>
-	    				<input type="text" id="school">
+	    				<input type="text" id="school"><span style="color:red;width:2px;padding-left:2px;">*</span>
 	    			</div>
 	    			<div class="infoitem">
 	    				<span>学院</span>
 	    				<input type="text" id="department">
+					</div>
+					<div class="infoitem">
+	    				<span>开具发票</span>
+	    				<input type="text" readonly id="ifinvoice" altvalue="">
+	    				<ul class="emulate" id="ifinvoiceli" >
+							<li altvalue="01">是</li>
+	    					<li altvalue="00">否</li>
+	    				</ul><span style="color:red;width:2px;padding-left:2px;">*</span>
 	    			</div>
-	    			<div class="infoitem">
+	    			<div class="infoitem" id="invoicenamediv"> 
 	    				<span>发票名称</span>
-	    				<input type="text" id="invoicename">
-	    			</div><div class="infoitem">
+	    				<input type="text" id="invoicename"><span style="color:red;width:2px;padding-left:2px;">*</span>
+	    			</div><div class="infoitem" id="taxpayernumberdiv">
 	    				<span>纳税人识别号</span>
-	    				<input type="text" id="taxpayernumber">
-	    			</div><div class="infoitem">
+	    				<input type="text" id="taxpayernumber"><span style="color:red;width:2px;padding-left:2px;">*</span>
+	    			</div><div class="infoitem" id="banknumberdiv">
 	    				<span>开户行及账号</span>
 	    				<input type="text" id="banknumber">
-	    			</div><div class="infoitem">
+	    			</div><div class="infoitem" id="addressphonediv">
 	    				<span>地址及电话</span>
 	    				<input type="text" id="addressphone">
 	    			</div><div class="infoitem">
 	    				<span>收发票地址</span>
-	    				<input type="text" id="receiveaddress">
+	    				<input type="text" id="receiveaddress"><span style="color:red;width:2px;padding-left:2px;">*</span>
 	    			</div>
 	    			<a id="complete" class="Abtn" onclick="completeSign()">完成</a>
 	    			<span class="haveacount">已有账号？去<a href="../login.html" id="entry">登录</a></span>

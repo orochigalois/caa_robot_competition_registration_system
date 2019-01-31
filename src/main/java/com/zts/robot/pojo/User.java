@@ -33,6 +33,8 @@ public class User {
 
     private String delflg;
 
+    private String ifinvoice;
+
     private String invoicename;
 
     private String taxpayernumber;
@@ -171,6 +173,14 @@ public class User {
 
     public void setDelflg(String delflg) {
         this.delflg = delflg == null ? null : delflg.trim();
+    }
+
+    public String getIfinvoice() {
+        return ifinvoice;
+    }
+
+    public void setIfinvoice(String ifinvoice) {
+        this.ifinvoice = ifinvoice == null ? null : ifinvoice.trim();
     }
 
     public String getInvoicename() {

@@ -50,6 +50,7 @@ input{padding:0px;}
 	margin:0 auto;
 	overflow:hidden;
 	margin-top:30px;
+	padding-bottom: 40px;
 }
 .infolist li{
 	float:left;
@@ -91,7 +92,11 @@ input{padding:0px;}
 	width:50%;
 	height:24px;	
 }
-.editlist-l{text-align: right;}
+.editlist-l{
+	text-align: right;     
+	position: relative;
+	overflow: visible;
+}  
 .editlist-r{text-align: left;font-size:14px;}
 .editspan-l{
 	display:inline-block;
@@ -300,7 +305,7 @@ input{padding:0px;}
 .selinput {
     background: url(../images/xiala.png) no-repeat;
     padding-right: 15px;
-    background-position: 224px 13px;
+    background-position: 150px 9px;
 }
 
 
@@ -317,7 +322,7 @@ input{padding:0px;}
 	width:170px;
 	background:#fff;
 	display:none;
-	left:584px;
+	left:225px;
 	z-index:1;
 }
 

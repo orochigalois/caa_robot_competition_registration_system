@@ -64,6 +64,8 @@ function getCompt(){
 				$("#rdend").val(info.rdend);
 				$("#techmax").val(info.techmax);
 				$("#stumax").val(info.stumax);
+				$("#stuoldmin").val(info.stuoldmin);
+				$("#stuoldmax").val(info.stuoldmax);
         		if(info.attachurl!=""){
         			var urlarr=info.attachurl.split(",");
         			var htmls="";
@@ -103,6 +105,8 @@ function updateCompetition(){
 	var rdend=$("#rdend").val();
 	var techmax=$("#techmax").val();
 	var stumax=$("#stumax").val();
+	var stuoldmin=$("#stuoldmin").val();
+	var stuoldmax=$("#stuoldmax").val();
 	
 	var rules=$("#rules").val();
 	var attachurl=[];
@@ -176,6 +180,28 @@ function updateCompetition(){
 		}
 	}
 
+	if(stuoldmin.trim()==""){
+		alertMsg("2","请填写队员最小年龄！","fail")
+		return;
+	}else{
+		var reg=/^[0-9]*$/;
+		if(!reg.test(stuoldmin.trim())){
+			alertMsg("1","请输入数字队员最小年龄！","fail");
+			return;
+		}
+	}
+
+	if(stuoldmax.trim()==""){
+		alertMsg("2","请填写队员最大年龄！","fail")
+		return;
+	}else{
+		var reg=/^[0-9]*$/;
+		if(!reg.test(stuoldmax.trim())){
+			alertMsg("1","请输入数字队员最大年龄！","fail");
+			return;
+		}
+	}
+
 	if(introduce.trim()==""){
 		alertMsg("2","请填写赛项简介！","fail")
 		return;
@@ -212,6 +238,8 @@ function updateCompetition(){
 			"rdend":rdend,
 			"techmax":techmax,
 			"stumax":stumax,
+			"stuoldmin":stuoldmin,
+			"stuoldmax":stuoldmax
         	},
         success: function(data){
         	console.log(data)

@@ -54,6 +54,36 @@ function compareTime(){
 }
 
 function skippage(obj){
-	sessionStorage.setItem("mid",$(obj).attr("mid"));
-	window.open("matchList.html" ,"_self")
+	var uid = sessionStorage.getItem("uid");
+	var j = 1;
+	//用户信息不全 则无法报名
+	$.ajax({
+		type: "GET",
+        url: "../findLoginUser",
+        dataType: "JSON",
+        async:false,
+        data: {"uid":uid},
+        success:function(data){
+        	
+			//提醒用户补全基本信息
+			if(data.user.uname==""||data.user.email==""||data.user.school==""||data.user.phone==""||data.user.receiveaddress==""){
+				alertMsg("1","请补全您的基本信息，否则将无法报名！","fail");
+				j=0;
+				return;
+			}
+			
+        	if(data.user.ifinvoice=="01"){
+				if(data.user.invoicename==""||data.user.taxpayernumber==""){
+					alertMsg("1","请补全您的基本信息，否则将无法报名","fail");
+					j=0;
+					return;
+				}
+			}
+        }
+	})
+
+	if(j==1){
+		sessionStorage.setItem("mid",$(obj).attr("mid"));
+		window.open("matchList.html" ,"_self")
+	}
 }

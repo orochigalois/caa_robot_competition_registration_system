@@ -41,6 +41,10 @@ public class Race {
     
     private Integer stumax;
 
+    private Integer stuoldmin;
+    
+    private Integer stuoldmax;
+
     public String getRid() {
         return rid;
     }
@@ -199,5 +203,21 @@ public class Race {
 
     public Integer getstumax() {
         return stumax;
+    }
+
+    public void setstuoldmin(Integer stuoldmin) {
+        this.stuoldmin = stuoldmin;
+    }
+
+    public Integer getstuoldmin() {
+        return stuoldmin;
+    }
+
+    public void setstuoldmax(Integer stuoldmax) {
+        this.stuoldmax = stuoldmax;
+    }
+
+    public Integer getstuoldmax() {
+        return stuoldmax;
     }
 }

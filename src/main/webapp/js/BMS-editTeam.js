@@ -304,6 +304,14 @@ function editSaveInfo(){
 		alertMsg("2","请上传头像！","fail");
 		return;
 	}
+	//验证队员年龄
+	if(roleflg=="02"){
+		if(!checktmAge(birthday)){
+			alertMsg("1","该队员年龄不符合，不可参加此赛项！","fail");
+			return;
+		}
+	}
+
 	var info={};
 	info.tmid=tmid;
 	info.roleflg=roleflg;
@@ -620,6 +628,15 @@ function saveInfo(flg){
 		alertMsg("2","请上传头像！","fail");
 		return;
 	}
+
+	//验证队员年龄
+	if(roleflg=="02"){
+		if(!checktmAge(birthday)){
+			alertMsg("1","该队员年龄不符合，不可参加此赛项！","fail");
+			return;
+		}
+	}
+
 	var info={};
 	info.tid=tid;
 	info.roleflg=roleflg;
@@ -681,6 +698,57 @@ function saveInfo(flg){
 		$(".teaList tbody").append(htmls)
 	}
 	else{$(".stuList tbody").append(htmls)}*/
+}
+
+//根据生日获取年龄
+function getAge(dateString) {
+    var today = new Date();
+	var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+function checktmAge(birthday){
+	//获取当前年龄
+	var age=getAge(birthday);
+	alert(age);
+
+	var stuoldmin;
+	var stuoldmax;
+	//获取年龄限制
+	$.ajax({
+		type: "GET",
+        url: "../findRaceInfoByRid",
+        dataType: "JSON",
+        async:false,
+        data: {
+        	"rid":rid
+        	},
+        success: function(data){
+        	console.log(data)
+        	if(data.status == 0){
+				var info=data.info;
+				stuoldmin = info.stuoldmin;
+				stuoldmax = info.stuoldmax;
+        	}else if(data.status == 1){
+        		alertMsg("1",data.errmsg,"fail")
+        	}
+        },
+        error:function(data){
+        	alertMsg("1","后台获取数据错误！","fail")
+        }
+	})
+
+	//校验年龄限制
+	if(age<stuoldmin || age >stuoldmax){
+		return false;
+	}else{
+		return true;
+	}
 }
 
 function delMem(obj){

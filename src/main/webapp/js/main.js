@@ -11,12 +11,12 @@ $(function(){
     	$(me).next().children().click(function(){
     		$(me).val($(this).text());
     		$("#editifinvoice").attr("altvalue",$(this).attr("altvalue"));
-    		if($(this).attr("altvalue")=='1'){
+    		if($(this).attr("altvalue")=='01'){
     			$("#editinvoicenameli").removeAttr("style");
     			$("#edittaxpayernumberli").removeAttr("style");
     			$("#editbanknumberli").removeAttr("style");
     			$("#editaddressphoneli").removeAttr("style");
-    		}else if($(this).attr("altvalue")=='0'){
+    		}else if($(this).attr("altvalue")=='00'){
     			$("#editinvoicenameli").attr("style","display:none");
     			$("#edittaxpayernumberli").attr("style","display:none");
     			$("#editbanknumberli").attr("style","display:none");
@@ -79,20 +79,32 @@ function findLoginUser(){
         	$("#infoemail").text(data.user.email);
         	$("#infophone").text(data.user.phone);
         	$("#infoschool").text(data.user.school);
-        	$("#infocollege").text(data.user.department);
-        	$("#infoinvoicename").text(data.user.invoicename);
-        	$("#infotaxpayernumber").text(data.user.taxpayernumber);
-        	$("#infobanknumber").text(data.user.banknumber);
-        	$("#infoaddressphone").text(data.user.addressphone);
-        	$("#inforeceiveaddress").text(data.user.receiveaddress);
+			$("#infocollege").text(data.user.department);
+			$("#editifinvoice").text(data.user.ifinvoice);
+			$("#infoinvoicename").text(data.user.invoicename);
+			$("#infotaxpayernumber").text(data.user.taxpayernumber);
+			$("#infobanknumber").text(data.user.banknumber);
+			$("#infoaddressphone").text(data.user.addressphone);
+			$("#inforeceiveaddress").text(data.user.receiveaddress);
         	if(data.user.status == "00"){
         		$("#infostatus").text("正常");
         	}else if(data.user.status == "01"){
         		$("#infostatus").text("未审批");
         	}else if(data.user.status == "02"){
         		$("#infostatus").text("禁用");
-        	}
-        	
+			}
+			//提醒用户补全基本信息
+			if(data.user.uname==""||data.user.email==""||data.user.school==""||data.user.phone==""||data.user.receiveaddress==""){
+				alertMsg("1","请补全您的基本信息，否则将无法报名！","fail");
+				return;
+			}
+			
+        	if(data.user.ifinvoice=="01"){
+				if(data.user.invoicename==""||data.user.taxpayernumber==""){
+					alertMsg("1","请补全您的开具发票基本信息，否则将无法报名！","fail");
+					return;
+				}
+			}
         }
 	})
 }
@@ -118,12 +130,22 @@ function editFindLoginUser(){
         	$("#editemail").val(data.user.email);
         	$("#editphone").val(data.user.phone);
         	$("#editschool").val(data.user.school);
-        	$("#editdepartment").val(data.user.department);
-        	$("#editinvoicename").val(data.user.invoicename);
-        	$("#edittaxpayernumber").val(data.user.taxpayernumber);
-        	$("#editbanknumber").val(data.user.banknumber);
-        	$("#editaddressphone").val(data.user.addressphone);
-        	$("#editreceiveaddress").val(data.user.receiveaddress);
+			$("#editdepartment").val(data.user.department);
+			if(data.user.ifinvoice=="00"){
+				$("#editinvoicenameli").attr("style","display:none");
+    			$("#edittaxpayernumberli").attr("style","display:none");
+    			$("#editbanknumberli").attr("style","display:none");
+    			$("#editaddressphoneli").attr("style","display:none");
+			}
+			if(data.user.ifinvoice=="01"){
+				$("#editinvoicename").val(data.user.invoicename);
+				$("#edittaxpayernumber").val(data.user.taxpayernumber);
+				$("#editbanknumber").val(data.user.banknumber);
+				$("#editaddressphone").val(data.user.addressphone);
+			}
+			$("#editreceiveaddress").val(data.user.receiveaddress);
+			$("#editifinvoice").attr("altvalue",data.user.ifinvoice);
+			$("#editifinvoice").val($("#editifinvoice").next().find("[altvalue="+data.user.ifinvoice+"]").text());
         }
 	})
 }
@@ -182,7 +204,7 @@ function updateLoginUser(){
 			alertMsg("1","请选择开具发票！","fail")
 			return;
 		}else{
-			if(ifinvoice=='1'){
+			if(ifinvoice=='01'){
 				if(editinvoicename.trim()==""){
 					alertMsg("1","请输入发票抬头！","fail")
 					return;
@@ -191,6 +213,11 @@ function updateLoginUser(){
 					alertMsg("1","请输入纳税人识别号！","fail")
 					return;
 				}
+			}else if(ifinvoice=='00'){
+				$("#editinvoicename").val("");
+				$("#edittaxpayernumber").val("");
+				$("#editbanknumber").val("");
+				$("#editaddressphone").val("");
 			}
 		}
 
@@ -222,7 +249,8 @@ function updateLoginUser(){
 	        	"phone":$("#editphone").val(),
 	        	"school":$("#editschool").val(),
 	        	"department":$("#editdepartment").val(),
-	        	"sex":$("input:checked").val(),
+				"sex":$("input:checked").val(),
+				"ifinvoice":ifinvoice,
 	        	"invoicename":$("#editinvoicename").val(),
 	        	"taxpayernumber":$("#edittaxpayernumber").val(),
 	        	"banknumber":$("#editbanknumber").val(),

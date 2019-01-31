@@ -28,7 +28,7 @@
   <sql id="Base_Column_List" >
     uid, email, password, roleflg, uname, phone, school, department, status, picurl, 
     sex, did, didtype, qq, createdate, delflg, invoicename, taxpayernumber, banknumber, 
-    addressphone, receiveaddress, paymenturl
+    addressphone, receiveaddress, paymenturl, ifinvoice
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -127,6 +127,9 @@
       <if test="paymenturl != null" >
         paymenturl,
       </if>
+      <if test="ifinvoice != null" >
+        ifinvoice,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uid != null" >
@@ -195,6 +198,9 @@
       <if test="paymenturl != null" >
         #{paymenturl,jdbcType=VARCHAR},
       </if>
+      <if test="ifinvoice != null" >
+        #{ifinvoice,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zts.robot.pojo.User" >
@@ -262,6 +268,9 @@
       </if>
       <if test="paymenturl != null" >
         paymenturl = #{paymenturl,jdbcType=VARCHAR},
+      </if>
+      <if test="ifinvoice != null" >
+        ifinvoice = #{ifinvoice,jdbcType=VARCHAR},
       </if>
     </set>
     where uid = #{uid,jdbcType=VARCHAR}

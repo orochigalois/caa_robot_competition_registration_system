@@ -11,9 +11,34 @@ $(function(){
 	})
 	$("#gender").click(function(){
 		$(this).next().show();
-		$(".emulate li").click(function(){
+		
+		$("#genderli li").click(function(){
+			// $("#ifinvoiveli").hide();
 			$("#gender").val($(this).text());
 			$("#gender").attr("altvalue",$(this).attr("altvalue"));
+			$(this).parent().hide();
+		})
+	})
+
+	$("#ifinvoice").click(function(){
+		$(this).next().show();
+		$("#ifinvoiceli li").click(function(){
+			// $("#genderli").hide();
+			$("#ifinvoice").val($(this).text());
+			$("#ifinvoice").attr("altvalue",$(this).attr("altvalue"));
+
+			if($(this).attr("altvalue")=='01'){
+    			$("#invoicenamediv").removeAttr("style");
+    			$("#banknumberdiv").removeAttr("style");
+    			$("#addressphonediv").removeAttr("style");
+    			$("#taxpayernumberdiv").removeAttr("style");
+    		}else if($(this).attr("altvalue")=='00'){
+    			$("#invoicenamediv").attr("style","display:none");
+    			$("#banknumberdiv").attr("style","display:none");
+    			$("#addressphonediv").attr("style","display:none");
+    			$("#taxpayernumberdiv").attr("style","display:none");
+			}
+			
 			$(this).parent().hide();
 		})
 	})
@@ -167,6 +192,7 @@ function completeSign(){
 	var code=sessionStorage.getItem("code");
 	var password=sessionStorage.getItem("password");
 	var email=sessionStorage.getItem("email");
+	
 	if(name.trim()==""){
 		alertMsg("1","请填写姓名！","fail")
 		return;
@@ -185,6 +211,35 @@ function completeSign(){
 		alertMsg("1","电话格式错误！","fail")
 		return;
 	}
+	if(school.trim()==""){
+		alertMsg("1","请填写学校！","fail")
+		return;
+	}
+
+	var ifinvoice=$("#ifinvoice").attr("altvalue");
+	var ifinvoiceval = $('#ifinvoice').val();
+
+	if(ifinvoiceval.trim()==""){
+		alertMsg("1","请选择开具发票！","fail")
+		return;
+	}else{
+		if(ifinvoice=='01'){
+			if(invoicename.trim()==""){
+				alertMsg("1","请输入发票名称！","fail")
+				return;
+			}
+			if(taxpayernumber.trim()==""){
+				alertMsg("1","请填写纳税人识别号！","fail")
+				return;
+			}
+		}else if(ifinvoice=='00'){
+			$("#invoicename").val("");
+			$("#banknumber").val("");
+			$("#addressphone").val("");
+			$("#taxpayernumber").val("");
+		}
+	}
+
 	/*if(invoicename.trim()==""){
 		alertMsg("1","请填写发票名称！","fail")
 		return;
@@ -196,11 +251,11 @@ function completeSign(){
 	if(addressphone.trim()==""){
 		alertMsg("1","请填写地址及电话！","fail")
 		return;
-	}
+	}*/
 	if(receiveaddress.trim()==""){
 		alertMsg("1","请填写收发票地址！","fail")
 		return;
-	}*/
+	}
 	$.ajax({
         type: "GET",
         url: "../signUser",
@@ -219,7 +274,8 @@ function completeSign(){
         	"taxpayernumber":taxpayernumber,
         	"banknumber":banknumber,
         	"addressphone":addressphone,
-        	"receiveaddress":receiveaddress,
+			"receiveaddress":receiveaddress,
+			"ifinvoice":ifinvoice
         },
         dataType: "json",
         success: function(data){

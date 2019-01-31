@@ -28,7 +28,7 @@
 	a.rid,a.mid,a.rname,a.frname,a.introduce,a.description 
 	,a.startdate,a.enddate,a.rules,a.attachurl
 	,a.createdate,a.createuid,a.islog,a.stend,a.ndend,a.rdend,
-	a.techmax,a.stumax
+	a.techmax,a.stumax,a.stuoldmin,a.stuoldmax
 	FROM ma_race a 
 	WHERE a.delflg='00' AND a.rid=#{0}
   </select>
