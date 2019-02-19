@@ -87,7 +87,7 @@ function addNewMember(roleflg,didtype,did){
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
 			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" readonly id="folk" altvalue="" class="selinput"><ul class="emulate"></ul><span class="editspan-end">*</span></div>'
-			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" readonly="readonly" altvalue="'
+			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" disabled="disabled" altvalue="'
 			+didtype+'" class="selinput" value="';
     if(didtype=="00"){htmls+='身份证'}
 	else if(didtype=="01"){htmls+='护照'}
@@ -96,7 +96,7 @@ function addNewMember(roleflg,didtype,did){
 			+'<ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
 			+'<li altvalue="02">港澳台通行证</li></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did" value="'
-			+did+'"><span class="editspan-end">*</span></div>'
+			+did+'" disabled="disabled" ><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"><span class="editspan-end">*</span></div>'
 			+'</div><div class="div-c">'
 			+'<div class="perinfodiv" id="sex"><span>性别</span>'
@@ -109,7 +109,7 @@ function addNewMember(roleflg,didtype,did){
     				+'<input value="02" type="radio" name="sex" id="female">女</div>'
     		}
     		var birthnum=did.slice(6,14);
-    	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" readonly onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"'
+    	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text"  onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"'
     		+' value="'+birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6)+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>手机</span><input type="text" id="phone"><span class="editspan-end">*</span></div>'
@@ -121,7 +121,16 @@ function addNewMember(roleflg,didtype,did){
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span><input id="diningtype" type="text" readonly="readonly" altvalue="" class="selinput">'
 			+'<ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="saveInfo(\''+roleflg+'\')">添加</a></div></div></div>';
-    $("body").append(htmls);
+	$("body").append(htmls);
+	
+	//只有证件类型为身份证，生日只读
+	if(didtype=="00"){
+		$('#birthday').attr("disabled","disabled")
+		$('#birthday').attr("style","background:#CCCCCC");
+	}
+	$('#did').attr("style","background:#CCCCCC");
+	$('#didtype').attr("style","background:#CCCCCC");
+
     var html2=""
     $.each(folkname,function(i,nation){
 		html2+='<li altvalue="'+nation.folkid+'">'+nation.folk+'</li>'
@@ -159,7 +168,7 @@ function addOldMember(roleflg,info){
 		}
 	})
 	htmls+=	'"><ul class="emulate"></ul><span class="editspan-end">*</span></div>'
-			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" readonly="readonly"'
+			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" disabled="disabled"'
 			+' altvalue="'+info.didtype+'" class="selinput" value="';
     if(info.didtype=="00"){htmls+='身份证'}
 	else if(info.didtype=="01"){htmls+='护照'}
@@ -167,7 +176,7 @@ function addOldMember(roleflg,info){
     htmls+='"><ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
 			+'<li altvalue="02">港澳台通行证</li></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did"'
-			+' value="'+info.did+'"><span class="editspan-end">*</span></div>'
+			+' value="'+info.did+'" disabled="disabled"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"'
 			+' value="'+info.school+'"><span class="editspan-end">*</span></div>'
 			+'</div><div class="div-c">'
@@ -201,7 +210,16 @@ function addOldMember(roleflg,info){
 	else{htmls+='素食'}		
 	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="saveInfo(\''+roleflg+'\')">添加</a></div></div></div>';
-    $("body").append(htmls);
+	$("body").append(htmls);
+	
+	//只有证件类型为身份证，生日只读
+	if(info.didtype=="00"){
+		$('#birthday').attr("disabled","disabled");
+		$('#birthday').attr("style","background:#CCCCCC");
+	}
+	$('#did').attr("style","background:#CCCCCC");
+	$('#didtype').attr("style","background:#CCCCCC");
+
     var html2=""
         $.each(folkname,function(i,nation){
     		html2+='<li altvalue="'+nation.folkid+'">'+nation.folk+'</li>'
