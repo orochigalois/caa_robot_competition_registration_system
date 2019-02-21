@@ -162,6 +162,16 @@ public class UploadFileController {
 					String name="";
 					String mname="";
 					String rname="";
+					String tcode="";
+					String tmname="";
+					if("00".equals(savetype)){
+						tcode = request.getParameter("tcode");
+						mname = request.getParameter("mname");
+						tmname = request.getParameter("tmname");
+						System.out.print(tcode); 
+						System.out.print(mname); 
+						System.out.print(tmname); 
+					}
 					if ("03".equals(savetype)) {
 						name = request.getParameter("filenewname");
 						mname = request.getParameter("mname");
@@ -197,8 +207,13 @@ public class UploadFileController {
 					// 文件夹路径
 					//String folderpath = parentfolder + "/" + sonfolder + "/";
 					String folderpath = parentfolder + "/" + mname + "/" + rname + "/";
-					// 文件名
-					String filename=Tools.dateStr()+Tools.getRandom(4)+"_"+name;
+					String filename;
+					if ("00".equals(savetype)) {
+						filename=tcode+"_"+tmname;
+					}else{
+						// 文件名
+						filename=Tools.dateStr()+Tools.getRandom(4)+"_"+name;
+					}
 					
 					
 					/*_____Alex add 2018.02.25*/
@@ -231,7 +246,7 @@ public class UploadFileController {
 						File toPic = new File(path);
 						Thumbnails.of(toPic).size(143, 200).outputFormat("jpg")
 								.toFile(toPic);
-					}
+					}					
 					}
 					
 				}

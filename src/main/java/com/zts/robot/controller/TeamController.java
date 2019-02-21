@@ -196,7 +196,7 @@ public class TeamController {
 			resultMap.put("status", 1);
 			e.printStackTrace();
 		}
-		return resultMap;
+		return resultMap;                           
 	}
 	
 	

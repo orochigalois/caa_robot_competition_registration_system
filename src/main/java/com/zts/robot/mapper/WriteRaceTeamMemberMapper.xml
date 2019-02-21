@@ -24,7 +24,7 @@
 	</update>
 	<select id="findRaceAllMembersByRidTid" resultType="Map">
 		SELECT 
-a.mid,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,b.tcode
+a.mid,f.mname,a.tid,a.tname,a.school AS tmschool,a.departname AS tmdepartname,a.orgtype,a.region,b.tcode
 ,c.tmname,c.birthday,c.sex,c.phone,c.picurl
 ,c.tmid,c.email,c.ckstatus,c.did,c.didtype
 ,c.school,c.departname,c.folk,c.diningtype,c.roleflg,c.disclaimerurl
@@ -33,6 +33,7 @@ FROM tm_team a
 LEFT JOIN (
 SELECT DISTINCT a.tmid,a.tid,a.serialnum,a.tcode FROM re_raceteammember a WHERE a.tid= #{0} and a.rid= #{1}
 ) b ON b.tid = a.tid
+LEFT join ma_match f on f.mid=a.mid
 LEFT JOIN tm_member c ON c.tmid = b.tmid
 LEFT JOIN os_user d ON d.uid=a.signuid
 LEFT JOIN ma_race e ON e.rid= #{1}

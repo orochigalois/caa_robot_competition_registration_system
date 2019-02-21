@@ -23,10 +23,12 @@ $(function(){
     })*/
 	getTeamDetail()
 })
-
+  
 var tid=sessionStorage.getItem("tid");
 var rid=sessionStorage.getItem("rid");
 var mid=sessionStorage.getItem("currentmid");
+var tcode;
+var mname;
 
 function getTeamDetail(){
 	var mid=sessionStorage.getItem("currentmid");
@@ -42,6 +44,8 @@ function getTeamDetail(){
         	},
         success: function(data){
         	if(data.status == 0){
+				tcode=data.list[0].tcode;
+				mname=data.list[0].mname;
         		$("#rname").html(data.list[0].rname);
         		$("#tname").val(data.list[0].tname);
         		$("#tschool").val(data.list[0].tmschool);
@@ -189,7 +193,7 @@ function editMember(obj){
 		htmls+='<input value="01" type="radio" name="sex">男'
 			+'<input value="02" type="radio" name="sex" id="female" checked>女</div>'
 	}
-			
+	
 	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" readonly '
 			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"'
@@ -202,7 +206,10 @@ function editMember(obj){
 			+'</div><div class="div-r">'
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post">'
 			+'<img src="'+info.picurl+'" id="portrait">'
-			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00"></form>'
+			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
+			+'<input hidden name="tcode" value="'+tcode+'">'
+			+'<input hidden name="mname" value="'+mname+'">'
+			+'<input hidden name="tmname" value="" id="form_tmname"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span>'
 			+'<input id="diningtype" type="text" readonly="readonly" altvalue="'+info.diningtype
@@ -212,7 +219,8 @@ function editMember(obj){
 	else{htmls+='素食'}		
 	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="editSaveInfo()">保存</a></div></div></div>';
-    $("body").append(htmls);
+	$("body").append(htmls);
+
     var html2=""
         $.each(folkname,function(i,nation){
     		html2+='<li altvalue="'+nation.folkid+'">'+nation.folk+'</li>'
@@ -381,10 +389,21 @@ function editSaveInfo(){
 }
 
 function uploadImg(){
+	//因为图片命名为队伍编号_队伍名称.jpg
+	//所以必须有名字
+	var tmname=$("#tmname").val();
+	if(tmname.trim()==""){
+		alertMsg("1","上传照片之前，请填写姓名！","fail");
+		return;
+	}
+	//取修改后的名称,赋值给form
+	$("#form_tmname").val(tmname);
+
+	//上传图片
 	var filetype=$("#file").val().slice($("#file").val().lastIndexOf(".")+1).toUpperCase()
 	if (filetype == 'JPG'||filetype == 'PNG'||filetype == 'JPEG'){
 		$("#myform").ajaxSubmit({
-			url : "../uploadFiles",
+			url : "../uploadFiles_path",
 			dataType : 'json',
 			async : false,
 			success : function(data) {
@@ -455,7 +474,7 @@ function addNewMember(roleflg,didtype,did){
     			htmls+='<input value="01" type="radio" checked name="sex">男'
     				+'<input value="02" type="radio" name="sex" id="female">女</div>'
     		}
-    		var birthnum=did.slice(6,14);
+		var birthnum=did.slice(6,14);
     	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"'
     		+' value="'+birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6)+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"><span class="editspan-end">*</span></div>'
@@ -463,7 +482,10 @@ function addNewMember(roleflg,didtype,did){
 			+'<div class="perinfodiv"><span>院系</span><input type="text" id="departname"></div>'
 			+'</div><div class="div-r">'
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post"><img src="" id="portrait">'
-			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00"></form>'
+			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
+			+'<input hidden name="tcode" value="'+tcode+'">'
+			+'<input hidden name="mname" value="'+mname+'">'
+			+'<input hidden name="tmname" value="" id="form_tmname"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span><input id="diningtype" type="text" readonly="readonly" altvalue="" class="selinput">'
 			+'<ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
@@ -534,7 +556,7 @@ function addOldMember(roleflg,info){
 		htmls+='<input value="01" type="radio" name="sex">男'
 			+'<input value="02" type="radio" name="sex" id="female" checked>女</div>'
 	}
-			
+	
 	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" '
 			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"'
@@ -546,7 +568,10 @@ function addOldMember(roleflg,info){
 			+'</div><div class="div-r">'
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post">'
 			+'<img src="'+picurl+'" id="portrait">'
-			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00"></form>'
+			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
+			+'<input hidden name="tcode" value="'+tcode+'">'
+			+'<input hidden name="mname" value="'+mname+'">'
+			+'<input hidden name="tmname" value="" id="form_tmname"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span>'
 			+'<input id="diningtype" type="text" readonly="readonly" altvalue="'+info.diningtype
@@ -773,7 +798,6 @@ function getAge(dateString) {
 function checktmAge(birthday){
 	//获取当前年龄
 	var age=getAge(birthday);
-	alert(age);
 
 	var stuoldmin;
 	var stuoldmax;
@@ -1042,9 +1066,6 @@ function autofillbirthday(){
 	$('#birthday').attr("style","background:#CCCCCC");
 
 	var birthnum=did.slice(6,14);
-	// alert(didtype);
-	// alert(birthnum);
 	var birthday=birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6);
-	// alert(birthday);
 	$("#birthday").val(birthday);
 }
