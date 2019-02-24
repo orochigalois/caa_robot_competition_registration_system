@@ -162,13 +162,13 @@ public class UploadFileController {
 					String name="";
 					String mname="";
 					String rname="";
-					String tcode="";
+					String strdid="";
 					String tmname="";
 					if("00".equals(savetype)){
-						tcode = request.getParameter("tcode");
+						strdid = request.getParameter("strdid");
 						mname = request.getParameter("mname");
 						tmname = request.getParameter("tmname");
-						System.out.print(tcode); 
+						System.out.print(strdid); 
 						System.out.print(mname); 
 						System.out.print(tmname); 
 					}
@@ -209,7 +209,7 @@ public class UploadFileController {
 					String folderpath = parentfolder + "/" + mname + "/" + rname + "/";
 					String filename;
 					if ("00".equals(savetype)) {
-						filename=tcode+"_"+tmname;
+						filename=strdid+"_"+tmname;
 					}else{
 						// 文件名
 						filename=Tools.dateStr()+Tools.getRandom(4)+"_"+name;

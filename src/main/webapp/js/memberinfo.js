@@ -1,5 +1,6 @@
 $(function(){
 	getcurmatchname();
+
 	enddate=sessionStorage.getItem("enddate");
 	var jsonobj=JSON.parse(sessionStorage.getItem("usermemlistJson"));
 	var num="";
@@ -10,6 +11,9 @@ $(function(){
 	}
 	getAllMem(num);
 })
+
+var mname;
+
 var enddate="";
 function getAllMem(num){
 	var mid=sessionStorage.getItem("currentmid");
@@ -134,7 +138,7 @@ function editMember(obj){
 	if(info.roleflg=="01"){htmls+='<h1>修改指导教师</h1>'}
 	else{htmls+='<h1>修改队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'" onchange="warningimg()"></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" id="folk" readonly altvalue="'+info.folk
 			+'" class="selinput" value="';
     $.each(folkname,function(i,nation){
@@ -151,7 +155,7 @@ function editMember(obj){
     htmls+='"><ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
 			+'<li altvalue="02">港澳台通行证</li></ul></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did"'
-			+' value="'+info.did+'"></div>'
+			+' value="'+info.did+'" onchange="warningimg()" onblur="autofillbirthday()"></div>'
 			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"'
 			+' value="'+info.school+'"></div>'
 			+'</div><div class="div-c">'
@@ -163,7 +167,9 @@ function editMember(obj){
 		htmls+='<input value="01" type="radio" name="sex">男'
 			+'<input value="02" type="radio" name="sex" id="female" checked>女</div>'
 	}
-			
+	
+	mname=$(".currentmatch").text();
+
 	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" readonly '
 			+'value="'+info.birthday+'" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"></div>'
 			
@@ -176,7 +182,10 @@ function editMember(obj){
 			+'</div><div class="div-r">'
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post">'
 			+'<img src="'+info.picurl+'" id="portrait">'
-			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00"></form>'
+			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
+			+'<input hidden name="mname" value="'+mname+'">'
+			+'<input hidden name="tmname" value="" id="form_tmname">'
+			+'<input hidden name="strdid" value="" id="form_strdid"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span>'
 			+'<input id="diningtype" type="text" readonly="readonly" altvalue="'+info.diningtype
@@ -186,7 +195,14 @@ function editMember(obj){
 	else{htmls+='素食'}		
 	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="editSaveInfo()">保存</a></div></div></div>';
-    $("body").append(htmls);
+	$("body").append(htmls);
+	
+	//只有证件类型为身份证，生日只读
+	if(info.didtype=="00"){
+		$('#birthday').attr("disabled","disabled")
+		$('#birthday').attr("style","background:#CCCCCC");
+	}
+
     var html2=""
         $.each(folkname,function(i,nation){
     		html2+='<li altvalue="'+nation.folkid+'">'+nation.folk+'</li>'
@@ -207,6 +223,16 @@ function editMember(obj){
         })
 }
 
+function warningimg(){
+	var src=$('#portrait').attr("src");
+	if(src!=""){
+		alertMsg("1","修改姓名或证件号码后，请重新上传头像！","fail");
+		$('#portrait').attr("src","");
+		return;
+	}
+}
+
+
 function editSaveInfo(){
 	var obj = temp
 	var htmls="";
@@ -224,6 +250,7 @@ function editSaveInfo(){
 	var departname=$("#departname").val();
 	var diningtype=$("#diningtype").attr("altvalue");
 	var mid=JSON.parse($(obj).parent().attr("detail")).mid;
+	var picurl_t=$("#portrait").attr("src");
 	if(tmname.trim()==""){
 		alertMsg("1","请填写姓名！","fail");
 		return;
@@ -277,7 +304,7 @@ function editSaveInfo(){
 		alertMsg("1","请选择用餐类型！","fail");
 		return;
 	}
-	if(picurl==""){
+	if(picurl_t==""){
 		alertMsg("1","请上传头像！","fail");
 		return;
 	}
@@ -403,6 +430,7 @@ function saveInfo(flg){
 	var departname=$("#departname").val();
 	var diningtype=$("#diningtype").attr("altvalue");
 	var mid=sessionStorage.getItem("currentmid");
+	var picurl_t=$("#portrait").attr("src");
 	if(tmname.trim()==""){
 		alertMsg("1","请填写姓名！","fail");
 		return;
@@ -456,7 +484,7 @@ function saveInfo(flg){
 		alertMsg("1","请选择用餐类型！","fail");
 		return;
 	}
-	if(picurl==""){
+	if(picurl_t==""){
 		alertMsg("1","请上传头像！","fail");
 		return;
 	}
@@ -530,10 +558,47 @@ function closeEnrollWin(){
 }
 
 function uploadImg(){
+	//因为图片命名为证件号码后6位_姓名.jpg
+	var didtype=$("#didtype").attr("altvalue");
+	var did=$("#did").val();
+	var strdid;
+
+	//00身份证 01护照 02 港澳台
+	if(didtype=="00"){
+		strdid="S"
+	}else if(didtype=="01"){
+		strdid="H"
+	}else if(didtype=="02"){
+		strdid="G"
+	}else{
+		strdid="N"
+	}
+
+	if(didtype!="00"){
+		if(did.length<6){
+			did="000000"+did;
+		}
+	}
+	//截取证件号码的后六位
+	strdid += did.slice(-6);
+	$("#form_strdid").val(strdid);
+	//=========组织照片名称 end===================
+
+
+	//上传图片
+	var tmname=$("#tmname").val();
+	if(tmname.trim()==""){
+		alertMsg("1","上传头像之前，请填写姓名！","fail");
+		return;
+	}
+	//取修改后的名称,赋值给form
+	$("#form_tmname").val(tmname);
+
+		
 	var filetype=$("#file").val().slice($("#file").val().lastIndexOf(".")+1).toUpperCase()
 	if (filetype == 'JPG'||filetype == 'PNG'||filetype == 'JPEG'){
 		$("#myform").ajaxSubmit({
-			url : "../uploadFiles",
+			url : "../uploadFiles_path",
 			dataType : 'json',
 			async : false,
 			success : function(data) {
@@ -696,4 +761,27 @@ function setcurmatch(){
 	$(".shade,.mymatchlist").remove();
 	getcurmatchname();
 	getAllMem();
+}
+
+function autofillbirthday(){
+	var didtype=$("#didtype").attr("altvalue");
+	if(didtype!="00"){
+		$('#birthday').removeAttr("disabled");
+		$('#birthday').removeAttr("style");
+		return;
+	}
+
+	var did=$("#did").val();
+	var reg=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+		if(didtype=="00"&&!IdentityCodeValid(did)){
+			alertMsg("1","证件号格式不正确！","fail");
+			return;
+		}
+
+	$('#birthday').attr("disabled","disabled");
+	$('#birthday').attr("style","background:#CCCCCC");
+
+	var birthnum=did.slice(6,14);
+	var birthday=birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6);
+	$("#birthday").val(birthday);
 }

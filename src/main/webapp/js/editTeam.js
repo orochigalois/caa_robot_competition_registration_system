@@ -1,4 +1,5 @@
 $(function(){
+	getcurmatchname();
 	var htmls="";
 	$.each(regions,function(i,value){
 		htmls+='<li>'+value+'</li>'
@@ -164,7 +165,7 @@ function editMember(obj){
 	if(info.roleflg=="01"){htmls+='<h1>修改指导教师</h1>'}
 	else{htmls+='<h1>修改队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'" onchange="warningimg()"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" id="folk" readonly altvalue="'+info.folk
 			+'" class="selinput" value="';
     $.each(folkname,function(i,nation){
@@ -181,7 +182,7 @@ function editMember(obj){
     htmls+='"><ul class="emulate"><li altvalue="00">身份证</li><li altvalue="01">护照</li>'
 			+'<li altvalue="02">港澳台通行证</li></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件号</span><input type="text" id="did"'
-			+' value="'+info.did+'" onblur="autofillbirthday()"><span class="editspan-end">*</span></div>'
+			+' value="'+info.did+'" onchange="warningimg()" onblur="autofillbirthday()"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>学校</span><input type="text" id="school"'
 			+' value="'+info.school+'"><span class="editspan-end">*</span></div>'
 			+'</div><div class="div-c">'
@@ -207,9 +208,9 @@ function editMember(obj){
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post">'
 			+'<img src="'+info.picurl+'" id="portrait">'
 			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
-			+'<input hidden name="tcode" value="'+tcode+'">'
 			+'<input hidden name="mname" value="'+mname+'">'
-			+'<input hidden name="tmname" value="" id="form_tmname"></form>'
+			+'<input hidden name="tmname" value="" id="form_tmname">'
+			+'<input hidden name="strdid" value="" id="form_strdid"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span>'
 			+'<input id="diningtype" type="text" readonly="readonly" altvalue="'+info.diningtype
@@ -220,6 +221,12 @@ function editMember(obj){
 	htmls+='"><ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
 			+'</div></div><div class="memsave"><a id="savebtn" onclick="editSaveInfo()">保存</a></div></div></div>';
 	$("body").append(htmls);
+
+	//只有证件类型为身份证，生日只读
+	if(info.didtype=="00"){
+		$('#birthday').attr("disabled","disabled");
+		$('#birthday').attr("style","background:#CCCCCC");
+	}
 
     var html2=""
         $.each(folkname,function(i,nation){
@@ -259,6 +266,7 @@ function editSaveInfo(){
 	var departname=$("#departname").val();
 	var diningtype=$("#diningtype").attr("altvalue");
 	var mid=JSON.parse($(obj).attr("detail")).mid;
+	var picurl_t=$("#portrait").attr("src");
 	if(tmname.trim()==""){
 		alertMsg("1","请填写姓名！","fail");
 		return;
@@ -279,7 +287,7 @@ function editSaveInfo(){
 		return;
 	}else{
 		var reg=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-		if(didtype=="00"&&!IdentityCodeValid.test(did)){
+		if(didtype=="00"&&!IdentityCodeValid(did)){
 			alertMsg("1","证件号格式不正确！","fail");
 			return;
 		}
@@ -316,7 +324,7 @@ function editSaveInfo(){
 			return;
 		}
 	}
-	if(picurl==""){
+	if(picurl_t==""){
 		alertMsg("1","请上传头像！","fail");
 		return;
 	}
@@ -389,11 +397,37 @@ function editSaveInfo(){
 }
 
 function uploadImg(){
-	//因为图片命名为队伍编号_队伍名称.jpg
-	//所以必须有名字
+	//因为图片命名为证件号码后6位_姓名.jpg
+	var didtype=$("#didtype").attr("altvalue");
+	var did=$("#did").val();
+	var strdid;
+
+	//00身份证 01护照 02 港澳台
+	if(didtype=="00"){
+		strdid="S"
+	}else if(didtype=="01"){
+		strdid="H"
+	}else if(didtype=="02"){
+		strdid="G"
+	}else{
+		strdid="N"
+	}
+
+	if(didtype!="00"){
+		if(did.length<6){
+			did="000000"+did;
+		}
+	}
+	//截取证件号码的后六位
+	strdid += did.slice(-6);
+	$("#form_strdid").val(strdid);
+	//=========组织照片名称 end===================
+
+
+	//上传图片
 	var tmname=$("#tmname").val();
 	if(tmname.trim()==""){
-		alertMsg("1","上传照片之前，请填写姓名！","fail");
+		alertMsg("1","上传头像之前，请填写姓名！","fail");
 		return;
 	}
 	//取修改后的名称,赋值给form
@@ -425,6 +459,15 @@ function uploadImg(){
   
 }
 
+function warningimg(){
+	var src=$('#portrait').attr("src");
+	if(src!=""){
+		alertMsg("1","修改姓名或证件号码后，请重新上传头像！","fail");
+		$('#portrait').attr("src","");
+		return;
+	}
+}
+
 //图片预览
 function readAsDataURL(){
   var simpleFile = document.getElementById("file").files[0];
@@ -451,7 +494,7 @@ function addNewMember(roleflg,didtype,did){
 	if(roleflg=="01"){htmls+='<h1>添加指导教师</h1>'}
 	else{htmls+='<h1>添加队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" onchange="warningimg()"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" id="folk" altvalue="" class="selinput"><ul class="emulate"></ul><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>证件类型</span><input id="didtype" type="text" name="" disabled="disabled" altvalue="'
 			+didtype+'" class="selinput" value="';
@@ -474,7 +517,13 @@ function addNewMember(roleflg,didtype,did){
     			htmls+='<input value="01" type="radio" checked name="sex">男'
     				+'<input value="02" type="radio" name="sex" id="female">女</div>'
     		}
-		var birthnum=did.slice(6,14);
+		var birthnum
+		if(didtype=="00"){
+			birthnum=did.slice(6,14);
+		}else{
+			birthnum="";
+		}
+		
     	htmls+='<div class="perinfodiv"><span>生日</span><input id="birthday" type="text" onclick="laydate({ elem:\'#birthday\', format:\'YYYY-MM-DD\'} )"'
     		+' value="'+birthnum.slice(0,4)+'-'+birthnum.slice(4,6)+'-'+birthnum.slice(6)+'"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>邮箱</span><input type="text" id="email"><span class="editspan-end">*</span></div>'
@@ -483,9 +532,9 @@ function addNewMember(roleflg,didtype,did){
 			+'</div><div class="div-r">'
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post"><img src="" id="portrait">'
 			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
-			+'<input hidden name="tcode" value="'+tcode+'">'
 			+'<input hidden name="mname" value="'+mname+'">'
-			+'<input hidden name="tmname" value="" id="form_tmname"></form>'
+			+'<input hidden name="tmname" value="" id="form_tmname">'
+			+'<input hidden name="strdid" value="" id="form_strdid"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span><input id="diningtype" type="text" readonly="readonly" altvalue="" class="selinput">'
 			+'<ul class="emulate"><li altvalue="01">普通</li><li altvalue="02">清真</li><li altvalue="03">素食</li></ul><span class="editspan-end">*</span></div>'
@@ -527,7 +576,7 @@ function addOldMember(roleflg,info){
 	if(roleflg=="01"){htmls+='<h1>添加指导教师</h1>'}
 	else{htmls+='<h1>添加队员</h1>'}
     htmls+='<div class="changeinfo clearfix"><div class="div-l">'
-			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'"><span class="editspan-end">*</span></div>'
+			+'<div class="perinfodiv"><span>姓名</span><input type="text" id="tmname" value="'+info.tmname+'" onchange="warningimg()"><span class="editspan-end">*</span></div>'
 			+'<div class="perinfodiv"><span>民族</span><input type="text" id="folk" readonly altvalue="'+info.folk
 			+'" class="selinput" value="';
     $.each(folkname,function(i,nation){
@@ -569,9 +618,9 @@ function addOldMember(roleflg,info){
 			+'<span id="zhaopian">照片</span><form id="myform" enctype="multipart/form-data" method="post">'
 			+'<img src="'+picurl+'" id="portrait">'
 			+'<input type="file" class="imgfile" id="file" name="files" onchange="uploadImg()"><input hidden name="savetype" value="00">'
-			+'<input hidden name="tcode" value="'+tcode+'">'
 			+'<input hidden name="mname" value="'+mname+'">'
-			+'<input hidden name="tmname" value="" id="form_tmname"></form>'
+			+'<input hidden name="tmname" value="" id="form_tmname">'
+			+'<input hidden name="strdid" value="" id="form_strdid"></form>'
 			+'<span id="imgformat">413*626px,不超过1000kb</span>'
 			+'<div class="perinfodiv"><span style="vertical-align: middle;">用餐类型</span>'
 			+'<input id="diningtype" type="text" readonly="readonly" altvalue="'+info.diningtype

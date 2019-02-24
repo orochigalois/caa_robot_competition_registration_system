@@ -252,7 +252,7 @@ function uploadModel(obj){
 	    						+'<input hidden id="rname" name="rname" value="'+rname+'">'
 	    						+'</form></div>';
 						$(obj).parent().parent().parent().html(htmls);
-						alertMsg("1","上传成功！","success")
+						alertMsg("1","上传成功,请点击保存！","success")
 					}else if(data.status==1){
 						alertMsg("1",data.errmsg,"fail")
 					}

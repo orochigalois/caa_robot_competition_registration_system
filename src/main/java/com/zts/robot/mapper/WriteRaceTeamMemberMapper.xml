@@ -68,10 +68,11 @@ ORDER BY c.roleflg,b.serialnum
 		where t.signuid=#{0} and tm.delflg!='01' AND tm.tmstatus='00' AND t.tstatus='00' and rtm.mid=#{1}
 	</select>
 	<select id="findAllMembersBySignuid" resultType="Map" parameterType="Map">
-	select tm.tmname, tm.birthday, tm.sex, tm.phone, tm.picurl,tm.tmid, tm.email,tm.ckstatus,tm.school,tm.disclaimerurl,
+	select a.mname,tm.tmname, tm.birthday, tm.sex, tm.phone, tm.picurl,tm.tmid, tm.email,tm.ckstatus,tm.school,tm.disclaimerurl,
 	tm.diningtype,tm.roleflg,tm.tmcode,tm.didtype,tm.did,tm.mid,tm.departname,tm.folk,
 			GROUP_CONCAT(t.tid)as 'strteamid',GROUP_CONCAT(t.tname)as 'strteamname', rtm.rid, r.rname, rtm.infostatus, rtm.feestatus
 		from tm_member tm
+		left join ma_match a on a.mid=tm.mid
 		left join re_raceteammember rtm on tm.tmid=rtm.tmid
 		left join tm_team t on t.tid=rtm.tid
 		left join ma_race r on r.rid=rtm.rid
