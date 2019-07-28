@@ -1,6 +1,7 @@
 body{
-	background:url(../images/back.png) no-repeat;
-	backgorund-color:#032459;
+	background:url(../images/back.png);
+	background-color:#032459;
+	background-size: cover;
 }
 ul,li{
 	margin:0;

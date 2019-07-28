@@ -13,6 +13,7 @@ $(function(){
 		if(jsonobj.txnstatus!=""){
 			$("#txnstatus").val($("#txnstatus").next().find("[altvalue="+jsonobj.txnstatus+"]").text());
 		}
+		$("#uname").val(jsonobj.uname);
 	}else{
 		num=0
 	}
@@ -60,7 +61,8 @@ function getallorder(signuid,num){
 				param.txntype=txntype;
 				param.txnstatus=txnstatus;
 				param.uname=uname;
-				sessionStorage.setItem("orderlistJson", JSON.stringify(param));
+				// sessionStorage.setItem("orderlistJson", JSON.stringify(param)); you can delete it, juist write error
+				sessionStorage.setItem("gradelistJson", JSON.stringify(param));
 				return {
 					iDisplayStart : data.pageIndex * data.pageSize,
 					iDisplayLength : data.pageSize,
